@@ -1,0 +1,59 @@
+﻿@model STracker.EventDetail
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>EventDetail</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="Form">
+        <div class="form-group">
+            @Html.LabelFor(model => model.WhoDid, "Did", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("WhoDid", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.WhoDid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*@foreach (STracker.Action item in ViewBag.ListActionDone)
+    {
+        <span class="col-lg-1">@Html.CheckBox("ActionDone", false, new { id = "ActionDone", value = @item.ID }) @item.Name</span>
+
+}*@
+
+
+        @for (int i = 0; i < Model.ListActionDone.Count; i++)
+        {
+                @Html.CheckBoxFor(model => true, Model.ListActionDone[i].Name)
+        }
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToWho, "To", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ToWho", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ToWho, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

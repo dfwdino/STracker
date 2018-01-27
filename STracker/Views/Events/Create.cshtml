@@ -1,0 +1,209 @@
+﻿@model STracker.Models.CreateEvent
+
+@{
+    STrackerEntities db = new STrackerEntities();
+    int NumberOfEntries = 0;
+    int NumberOfPositions = 0;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false)
+        <div class="container">
+            <div class="row">
+                <div class="col">Date: @Html.EditorFor(m => m.Date)</div>
+            </div>
+            <br />
+            <div name="form" id="form" class="actsposition">
+
+            </div>
+
+            <br />
+
+            <div name="formpositions" id="formpositions" class="actsposition">
+
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col">Over Rating: @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col">Number of Orgams: @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+            </div>
+
+            <br />
+
+            <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
+
+            <div class="row"><div class="col">@Html.EditorFor(m => m.Notes)</div></div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+                    <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div name="formoutline" id="formoutline" style="display:none">
+        <div name="entryform" id="entryform" class="acts">
+            <br />
+            <div class="row">
+                <div class="col">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.Actions)
+                    {
+                        <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction" id="Acts[@item.ID]" value="@item.ID" />
+                        <label for="Acts[@item.ID]">@item.Name</label>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">to @Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].ToWho, new SelectList(ViewBag.People, "ID", "Name"))</div>
+                <div class="col-lg-2 deleteme" id="remove">remove entry</div>
+            </div>
+            <br />
+        </div>
+    </div>
+
+    <div name="sexoutline" id="sexoutline" style="display:none;">
+        <div name="sexpositions" id="sexpositions" class="sexp">
+            <br />
+            <div class="row">
+                <div class="col">
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottonPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.Positions)
+                    {
+                        <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition" id="Positions[@item.ID]" value="@item.ID" />
+                        <label for="Positions[@item.ID]">@item.Type</label>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 Fdeleteme" id="remove">remove positions</div>
+            </div>
+            <br />
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script>
+    var NumberOfEntries = 0;
+    var NumberOfPositions = 0;
+
+    $("#addnewentry").click(function () {
+        makecopy();
+    });
+
+    $("#addnewposition").click(function () {
+        addPosition();
+    });
+
+    $(function () {
+        makecopy();
+        addPosition()
+    });
+
+    $('form').on('click', '.deleteme', function () {
+        document.getElementById('form').removeChild(document.getElementById("entryform_" + this.id.split('_')[1]));
+    });
+
+    $('form').on('click', '.Fdeleteme', function () {
+        document.getElementById('formpositions').removeChild(document.getElementById("sexpositions_" + this.id.split('_')[1]));
+    });
+
+
+    function makecopy() {
+
+        var formoutline = ""
+        if (NumberOfEntries > 0) {
+            formoutline = "<br/><hr><br/>"
+        }
+        formoutline += $('#formoutline').html();
+        formoutline = formoutline.replace(/\[0]/g, "[" + NumberOfEntries + "]")
+            .replace(/\entryform/g, "entryform_" + NumberOfEntries)
+            .replace("remove", "remove_" + NumberOfEntries)
+
+        $(formoutline).appendTo("#form");
+
+        NumberOfEntries++;
+
+    }
+
+    function addPosition() {
+
+        var sexoutline = ""
+
+        sexoutline += $('#sexoutline').html();
+        sexoutline = sexoutline.replace(/\[0]/g, "[" + NumberOfPositions + "]")
+            .replace(/\"sexpositions"/g, "sexpositions_" + NumberOfPositions)
+            .replace("remove", "remove_" + NumberOfPositions);
+        
+        $("<hr>").appendTo(sexoutline);
+        $(sexoutline).appendTo("#formpositions");
+
+        NumberOfPositions++;
+
+    }
+
+</script>
+
+<style>
+    .container {
+        padding-top: 10px;
+        margin-left: 0px !important;
+    }
+
+    .actsposition {
+        border-style: solid;
+        border-color: burlywood;
+    }
+
+    .acts {
+        border-style: solid;
+        border-color: #0094ff;
+        margin: 10px 10px 10px 10px;
+        padding-left: 10px;
+    }
+
+    .sexp {
+        border-style: solid;
+        border-color: red;
+        margin: 10px 10px 10px 10px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .Fdeleteme, .deleteme {
+        text-transform: uppercase;
+        color: red;
+    }
+</style>

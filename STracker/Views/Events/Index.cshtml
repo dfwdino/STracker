@@ -1,0 +1,72 @@
+﻿@model List<STracker.Models.EventList>
+@{
+
+}
+<div class="index">
+    @foreach (var item in Model)
+    {
+
+        <div class="entry">
+            <div class="row">
+                <div class="col">@Html.Label("Date:") @item.EventDate.ToShortDateString()</div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-3">@Html.Label("Orgams had:") @item.OrgamNumber</div>
+                <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
+            </div>
+
+            <br />
+            <h5>Things done</h5>
+            <div style="padding-bottom:20px" class="acts">
+
+                @foreach (var acts in item.EventActs)
+                {
+                    <div class="row">
+                        <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
+                    </div>
+                }
+            </div>
+            <h5>Fucking Done</h5>
+            <div class="sexp">
+                @if (item.Fucks.Where(m => m.BottonPerson != null).Count() > 0)
+                {
+                    foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
+                    {
+                        <div class="row">
+                            <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
+                        </div>
+                    }
+                }
+                else
+                {<div class="row">
+                        <div class="col-12">NONE.</div>
+                    </div>
+                    <span></span>
+                }
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">@Html.Label("Notes:")</div>
+            </div>
+            <div class="col-12" style="padding-bottom:15px;">@item.Notes</div>
+        </div>
+    }
+</div>
+<style>
+    .entry {
+        border-bottom: solid;
+        border-bottom-color: red;
+        margin-bottom: 25px;
+    }
+
+    .index {
+        margin-top: 15px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+</style>
