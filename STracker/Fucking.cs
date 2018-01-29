@@ -19,6 +19,7 @@ namespace STracker
         public int EventID { get; set; }
         public int TopPerson { get; set; }
         public int BottomPerson { get; set; }
+        public bool Deleted { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual Position Position { get; set; }

@@ -12,16 +12,17 @@ namespace STracker
     using System;
     using System.Collections.Generic;
     
-    public partial class Action
+    public partial class EventAction
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Action()
+        public EventAction()
         {
             this.EventDetails = new HashSet<EventDetail>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
+        public bool Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventDetail> EventDetails { get; set; }

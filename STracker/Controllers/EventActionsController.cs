@@ -10,24 +10,24 @@ using STracker;
 
 namespace STracker.Controllers
 {
-    public class ActionsController : Controller
+    public class EventActionsController : Controller
     {
         private STrackerEntities db = new STrackerEntities();
 
-        // GET: Actions
+        // GET: EventActions
         public ActionResult Index()
         {
-            return View(db.Actions.OrderBy(m => m.Name).ToList());
+            return View(db.EventActions.ToList());
         }
 
-        // GET: Actions/Details/5
+        // GET: EventActions/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
+            EventAction action = db.EventActions.Find(id);
             if (action == null)
             {
                 return HttpNotFound();
@@ -35,37 +35,37 @@ namespace STracker.Controllers
             return View(action);
         }
 
-        // GET: Actions/Create
+        // GET: EventActions/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Actions/Create
+        // POST: EventActions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name")] Action action)
+        public ActionResult Create([Bind(Include = "ID,Name")] EventAction eventaction)
         {
             if (ModelState.IsValid)
             {
-                db.Actions.Add(action);
+                db.EventActions.Add(eventaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(action);
+            return View(eventaction);
         }
 
-        // GET: Actions/Edit/5
+        // GET: EventActions/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
+            EventAction action = db.EventActions.Find(id);
             if (action == null)
             {
                 return HttpNotFound();
@@ -73,12 +73,12 @@ namespace STracker.Controllers
             return View(action);
         }
 
-        // POST: Actions/Edit/5
+        // POST: EventActions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name")] Action action)
+        public ActionResult Edit([Bind(Include = "ID,Name")] EventAction action)
         {
             if (ModelState.IsValid)
             {
@@ -89,14 +89,14 @@ namespace STracker.Controllers
             return View(action);
         }
 
-        // GET: Actions/Delete/5
+        // GET: EventActions/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
+            EventAction action = db.EventActions.Find(id);
             if (action == null)
             {
                 return HttpNotFound();
@@ -104,13 +104,13 @@ namespace STracker.Controllers
             return View(action);
         }
 
-        // POST: Actions/Delete/5
+        // POST: EventActions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Action action = db.Actions.Find(id);
-            db.Actions.Remove(action);
+            EventAction action = db.EventActions.Find(id);
+            db.EventActions.Remove(action);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

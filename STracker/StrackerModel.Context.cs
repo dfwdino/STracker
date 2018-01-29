@@ -25,11 +25,11 @@ namespace STracker
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventDetail> EventDetails { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<Fucking> Fuckings { get; set; }
+        public virtual DbSet<EventAction> EventActions { get; set; }
     }
 }

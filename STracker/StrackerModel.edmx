@@ -5,13 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="STrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Actions">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="ID" />
@@ -22,6 +15,15 @@
           <Property Name="OverAllRating" Type="int" />
           <Property Name="Remove" Type="bit" Nullable="false" />
           <Property Name="OrgamNumber" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventActions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EventDetails">
           <Key>
@@ -32,6 +34,7 @@
           <Property Name="WhoDid" Type="int" Nullable="false" />
           <Property Name="ActionDone" Type="int" Nullable="false" />
           <Property Name="ToWho" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Fucking">
           <Key>
@@ -42,6 +45,7 @@
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="TopPerson" Type="int" Nullable="false" />
           <Property Name="BottomPerson" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="People">
           <Key>
@@ -51,6 +55,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="Hide" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -61,10 +66,10 @@
           <Property Name="Removed" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_ActionsToEventActions">
-          <End Role="Actions" Type="Self.Actions" Multiplicity="1" />
+          <End Role="EventActions" Type="Self.EventActions" Multiplicity="1" />
           <End Role="EventDetails" Type="Self.EventDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Actions">
+            <Principal Role="EventActions">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EventDetails">
@@ -157,14 +162,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="STrackerModelStoreContainer">
-          <EntitySet Name="Actions" EntityType="Self.Actions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fucking" EntityType="Self.Fucking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ActionsToEventActions" Association="Self.FK_ActionsToEventActions">
-            <End Role="Actions" EntitySet="Actions" />
+            <End Role="EventActions" EntitySet="EventActions" />
             <End Role="EventDetails" EntitySet="EventDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_EventDetails_Event" Association="Self.FK_EventDetails_Event">
@@ -200,14 +205,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="STrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Action">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="Action" ToRole="EventDetail" />
-        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="ID" />
@@ -220,6 +217,7 @@
           <Property Name="Remove" Type="Boolean" Nullable="false" />
           <Property Name="OrgamNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="EventDetail">
           <Key>
@@ -233,7 +231,8 @@
           <NavigationProperty Name="Event" Relationship="Self.FK_EventDetails_Event" FromRole="EventDetails" ToRole="Event" />
           <NavigationProperty Name="Person" Relationship="Self.FK_PeopleToWho" FromRole="EventDetails" ToRole="People" />
           <NavigationProperty Name="Person1" Relationship="Self.FK_PeopleWhoDid" FromRole="EventDetails" ToRole="People" />
-          <NavigationProperty Name="Action" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventDetail" ToRole="Action" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EventAction" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventDetail" ToRole="EventAction" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -247,6 +246,7 @@
           <Property Name="Hide" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Person" ToRole="Fucking" />
           <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_EventDetails_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -285,7 +285,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="STrackerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Actions" EntityType="Self.Action" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="EventDetails" EntityType="Self.EventDetail" />
           <EntitySet Name="People" EntityType="Self.Person" />
@@ -300,10 +299,6 @@
           <AssociationSet Name="FK_PeopleWhoDid" Association="Self.FK_PeopleWhoDid">
             <End Role="People" EntitySet="People" />
             <End Role="EventDetails" EntitySet="EventDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ActionsToEventActions" Association="STrackerModel.FK_ActionsToEventActions">
-            <End Role="Action" EntitySet="Actions" />
-            <End Role="EventDetail" EntitySet="EventDetails" />
           </AssociationSet>
           <EntitySet Name="Positions" EntityType="STrackerModel.Position" />
           <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
@@ -323,19 +318,12 @@
             <End Role="Person" EntitySet="People" />
             <End Role="Fucking" EntitySet="Fuckings" />
           </AssociationSet>
+          <EntitySet Name="EventActions" EntityType="STrackerModel.EventAction" />
+          <AssociationSet Name="FK_ActionsToEventActions" Association="STrackerModel.FK_ActionsToEventActions">
+            <End Role="EventAction" EntitySet="EventActions" />
+            <End Role="EventDetail" EntitySet="EventDetails" />
+          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_ActionsToEventActions">
-          <End Type="STrackerModel.Action" Role="Action" Multiplicity="1" />
-          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Action">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EventDetail">
-              <PropertyRef Name="ActionDone" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Position">
           <Key>
             <PropertyRef Name="ID" />
@@ -358,6 +346,7 @@
           <Property Name="BottomPerson" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Fucking" ToRole="Person" />
           <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Fucking_Event">
           <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
@@ -407,23 +396,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EventAction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventAction" ToRole="EventDetail" />
+        </EntityType>
+        <Association Name="FK_ActionsToEventActions">
+          <End Type="STrackerModel.EventAction" Role="EventAction" Multiplicity="1" />
+          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventAction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventDetail">
+              <PropertyRef Name="ActionDone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="STrackerModelStoreContainer" CdmEntityContainer="STrackerEntities">
-          <EntitySetMapping Name="Actions">
-            <EntityTypeMapping TypeName="STrackerModel.Action">
-              <MappingFragment StoreEntitySet="Actions">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="STrackerModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="OrgamNumber" ColumnName="OrgamNumber" />
                 <ScalarProperty Name="Remove" ColumnName="Remove" />
                 <ScalarProperty Name="OverAllRating" ColumnName="OverAllRating" />
@@ -436,6 +439,7 @@
           <EntitySetMapping Name="EventDetails">
             <EntityTypeMapping TypeName="STrackerModel.EventDetail">
               <MappingFragment StoreEntitySet="EventDetails">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="WhoDid" ColumnName="WhoDid" />
@@ -447,6 +451,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="STrackerModel.Person">
               <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Hide" ColumnName="Hide" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -466,10 +471,20 @@
           <EntitySetMapping Name="Fuckings">
             <EntityTypeMapping TypeName="STrackerModel.Fucking">
               <MappingFragment StoreEntitySet="Fucking">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="BottomPerson" ColumnName="BottomPerson" />
                 <ScalarProperty Name="TopPerson" ColumnName="TopPerson" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="PoistionID" ColumnName="PoistionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventActions">
+            <EntityTypeMapping TypeName="STrackerModel.EventAction">
+              <MappingFragment StoreEntitySet="EventActions">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

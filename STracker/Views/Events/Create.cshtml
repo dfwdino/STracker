@@ -40,7 +40,7 @@
             <br />
 
             <div class="row">
-                <div class="col">Number of Orgams: @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+                <div class="col">Number of Orgasms: @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
             </div>
 
             <br />
@@ -64,12 +64,12 @@
         <div name="entryform" id="entryform" class="acts">
             <br />
             <div class="row">
-                <div class="col">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
+                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
             </div>
             <br />
             <div class="row">
                 <div class="col-lg-12">
-                    @foreach (var item in ViewBag.Actions)
+                    @foreach (var item in ViewBag.EventAction)
                     {
                         <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction" id="Acts[@item.ID]" value="@item.ID" />
                         <label for="Acts[@item.ID]">@item.Name</label>
@@ -89,7 +89,7 @@
         <div name="sexpositions" id="sexpositions" class="sexp">
             <br />
             <div class="row">
-                <div class="col">
+                <div class="col" style="margin-left:15px">
                     @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
                     @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottonPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
                 </div>

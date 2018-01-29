@@ -73,4 +73,7 @@
     <Build Include="Security\NT AUTHORITY_IUSR.sql" />
     <Build Include="Security\RoleMemberships.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SqlSchemaCompare.scmp" />
+  </ItemGroup>
 </Project>

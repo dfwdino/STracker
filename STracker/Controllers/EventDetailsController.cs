@@ -17,7 +17,7 @@ namespace STracker.Controllers
         // GET: EventDetails
         public ActionResult Index()
         {
-            var eventDetails = db.EventDetails.Include(e => e.Event).Include(e => e.Person).Include(e => e.Person1).Include(e => e.Action);
+            var eventDetails = db.EventDetails.Include(e => e.Event).Include(e => e.Person).Include(e => e.Person1).Include(e => e.EventAction);
             return View(eventDetails.ToList());
         }
 
@@ -42,11 +42,11 @@ namespace STracker.Controllers
             ViewBag.EventID = new SelectList(db.Events, "ID", "Notes");
             ViewBag.ToWho = new SelectList(db.People, "ID", "Name");
             ViewBag.WhoDid = new SelectList(db.People, "ID", "Name");
-            ViewBag.ActionDone = new SelectList(db.Actions, "ID", "Name");
-            ViewBag.ListActionDone = db.Actions.ToList<Action>();
+            ViewBag.ActionDone = new SelectList(db.EventActions, "ID", "Name");
+            ViewBag.ListActionDone = db.EventActions.ToList<EventAction>();
 
             EventDetail ed = new EventDetail();
-            //ed.ListActionDone = db.Actions.ToList<Action>();
+            //ed.ListActionDone = db.EventActions.ToList<Action>();
             return View(ed);
         }
 
@@ -67,7 +67,7 @@ namespace STracker.Controllers
             ViewBag.EventID = new SelectList(db.Events, "ID", "Notes", eventDetail.EventID);
             ViewBag.ToWho = new SelectList(db.People, "ID", "Name", eventDetail.ToWho);
             ViewBag.WhoDid = new SelectList(db.People, "ID", "Name", eventDetail.WhoDid);
-            ViewBag.ActionDone = new SelectList(db.Actions, "ID", "Name", eventDetail.ActionDone);
+            ViewBag.ActionDone = new SelectList(db.EventActions, "ID", "Name", eventDetail.ActionDone);
             return View(eventDetail);
         }
 
@@ -86,7 +86,7 @@ namespace STracker.Controllers
             ViewBag.EventID = new SelectList(db.Events, "ID", "Notes", eventDetail.EventID);
             ViewBag.ToWho = new SelectList(db.People, "ID", "Name", eventDetail.ToWho);
             ViewBag.WhoDid = new SelectList(db.People, "ID", "Name", eventDetail.WhoDid);
-            ViewBag.ActionDone = new SelectList(db.Actions, "ID", "Name", eventDetail.ActionDone);
+            ViewBag.ActionDone = new SelectList(db.EventActions, "ID", "Name", eventDetail.ActionDone);
             return View(eventDetail);
         }
 
@@ -106,7 +106,7 @@ namespace STracker.Controllers
             ViewBag.EventID = new SelectList(db.Events, "ID", "Notes", eventDetail.EventID);
             ViewBag.ToWho = new SelectList(db.People, "ID", "Name", eventDetail.ToWho);
             ViewBag.WhoDid = new SelectList(db.People, "ID", "Name", eventDetail.WhoDid);
-            ViewBag.ActionDone = new SelectList(db.Actions, "ID", "Name", eventDetail.ActionDone);
+            ViewBag.ActionDone = new SelectList(db.EventActions, "ID", "Name", eventDetail.ActionDone);
             return View(eventDetail);
         }
 

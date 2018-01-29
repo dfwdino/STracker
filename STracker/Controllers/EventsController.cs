@@ -33,7 +33,7 @@ namespace STracker.Controllers
                 foreach (var item in stevent.EventDetails)
                 {
                     if (item.Person1.Name.Equals(eld.Who) && item.Person.Name.Equals(eld.ToWho)) {
-                        eld.DidWhat += eld.DidWhat.Length.Equals(0) ? item.Action.Name : ", " + item.Action.Name;
+                        eld.DidWhat += eld.DidWhat.Length.Equals(0) ? item.EventAction.Name : ", " + item.EventAction.Name;
                     }
                     else
                     {
@@ -44,7 +44,7 @@ namespace STracker.Controllers
                         eld = new Models.EventListDetails();
                         eld.Who = item.Person1.Name;
                         eld.ToWho = item.Person.Name;
-                        eld.DidWhat = item.Action.Name;
+                        eld.DidWhat = item.EventAction.Name;
                     }
                     
                 }
@@ -88,7 +88,7 @@ namespace STracker.Controllers
             people.Add(new Person() { ID = 0, Name = "--Select---" });
             
             ViewBag.People = people.OrderBy(m => m.ID).ToList();
-            ViewBag.Actions = db.Actions.ToList().OrderBy(m => m.Name);
+            ViewBag.EventAction = db.EventActions.ToList().OrderBy(m => m.Name);
             ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
 
@@ -113,13 +113,13 @@ namespace STracker.Controllers
 
                 foreach (var item in ce.EventDetails)
                 {
-                    foreach (int actions in item.SelectedAction)
+                    foreach (int EventAction in item.SelectedAction)
                     {
                         EventDetail ed = new EventDetail();
 
                         ed.WhoDid = item.WhoDid;
                         ed.ToWho = item.ToWho;
-                        ed.ActionDone = actions;
+                        ed.ActionDone = EventAction;
 
                         stEvent.EventDetails.Add(ed);
                     }
@@ -151,10 +151,10 @@ namespace STracker.Controllers
             List<Person> people = db.People.ToList();
             people.Add(new Person() { ID = 0, Name = "--Select---" });
             ViewBag.People = people.OrderBy(m => m.ID).ToList();
-            ViewBag.Actions = db.Actions.ToList().OrderBy(m => m.Name);
+            ViewBag.EventAction = db.EventActions.ToList().OrderBy(m => m.Name);
             ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
 
-            ViewBag.SelectedActions = ce.EventDetails;
+            ViewBag.Selected.EventAction = ce.EventDetails;
             ViewBag.SelectedPositions = ce.Fucks;
 
 

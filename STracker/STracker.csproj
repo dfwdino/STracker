@@ -164,13 +164,13 @@
     <Content Include="Views\Events\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action.cs">
-      <DependentUpon>StrackerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ActionsController.cs" />
+    <Compile Include="Controllers\EventActionsController.cs" />
     <Compile Include="Controllers\EventDetailsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="EventAction.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Fucking.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
@@ -242,11 +242,11 @@
     <Content Include="Views\People\Details.cshtml" />
     <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
-    <Content Include="Views\Actions\Create.cshtml" />
-    <Content Include="Views\Actions\Delete.cshtml" />
-    <Content Include="Views\Actions\Details.cshtml" />
-    <Content Include="Views\Actions\Edit.cshtml" />
-    <Content Include="Views\Actions\Index.cshtml" />
+    <Content Include="Views\EventActions\Create.cshtml" />
+    <Content Include="Views\EventActions\Delete.cshtml" />
+    <Content Include="Views\EventActions\Details.cshtml" />
+    <Content Include="Views\EventActions\Edit.cshtml" />
+    <Content Include="Views\EventActions\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

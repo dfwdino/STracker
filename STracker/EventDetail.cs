@@ -19,10 +19,13 @@ namespace STracker
         public int WhoDid { get; set; }
         public int ActionDone { get; set; }
         public int ToWho { get; set; }
-    
+        public bool Deleted { get; set; }
+        public List<EventAction> ListActionDone { get; set; }
+
+
         public virtual Event Event { get; set; }
         public virtual Person Person { get; set; }
         public virtual Person Person1 { get; set; }
-        public virtual Action Action { get; set; }
+        public virtual EventAction EventAction { get; set; }
     }
 }
