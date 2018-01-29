@@ -33,22 +33,22 @@
             </div>
 
             <br />
+            <div style="margin-left:15px">
+                <div class="row">
+                    <div class="col">Over Rating: @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+                </div>
+                <br />
 
-            <div class="row">
-                <div class="col">Over Rating: @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+                <div class="row">
+                    <div class="col">Number of Orgasms: @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+                </div>
+
+                <br />
+
+                <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
+
+                <div class="row"><div class="col">@Html.TextAreaFor(m => m.Notes, 10, 45, null)</div></div>
             </div>
-            <br />
-
-            <div class="row">
-                <div class="col">Number of Orgasms: @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
-            </div>
-
-            <br />
-
-            <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
-
-            <div class="row"><div class="col">@Html.EditorFor(m => m.Notes)</div></div>
-
             <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
@@ -205,5 +205,9 @@
     .Fdeleteme, .deleteme {
         text-transform: uppercase;
         color: red;
+    }
+
+    #Notes{
+        column-width:50
     }
 </style>

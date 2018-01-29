@@ -17,7 +17,7 @@ namespace STracker.Controllers
         // GET: EventActions
         public ActionResult Index()
         {
-            return View(db.EventActions.ToList());
+            return View(db.EventActions.OrderBy(m => m.Name).ToList());
         }
 
         // GET: EventActions/Details/5

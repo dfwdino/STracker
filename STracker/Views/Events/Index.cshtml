@@ -8,34 +8,33 @@
 
         <div class="entry">
             <div class="row">
-                <div class="col">@Html.Label("Date:") @item.EventDate.ToShortDateString()</div>
+                <div class="col-md-3">@Html.Label("Date:") @item.EventDate.ToShortDateString()</div>
             </div>
-
-            <br />
 
             <div class="row">
                 <div class="col-md-3">@Html.Label("Orgams had:") @item.OrgamNumber</div>
                 <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
             </div>
-
-            <br />
-            <h5>Things done</h5>
-            <div style="padding-bottom:20px" class="acts">
+                     
+            <h3>Things done</h3>
+            <div style="padding-bottom:20px;border:1px solid black" class="acts">
 
                 @foreach (var acts in item.EventActs)
                 {
-                    <div class="row">
+                    <div class="row" style="margin-left:5px;">
                         <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
                     </div>
                 }
             </div>
-            <h5>Fucking Done</h5>
-            <div class="sexp">
+
+
+            <h3>Fucking Done</h3>
+            <div class="sexp" style="padding-bottom:20px;border:1px solid red">
                 @if (item.Fucks.Where(m => m.BottonPerson != null).Count() > 0)
                 {
                     foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
                     {
-                        <div class="row">
+                        <div class="row" style="margin-left:5px;">
                             <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
                         </div>
                     }
@@ -47,6 +46,7 @@
                     <span></span>
                 }
             </div>
+           
             <br />
             <div class="row">
                 <div class="col-md-1">@Html.Label("Notes:")</div>
@@ -55,6 +55,7 @@
         </div>
     }
 </div>
+
 <style>
     .entry {
         border-bottom: solid;
@@ -64,6 +65,11 @@
 
     .index {
         margin-top: 15px;
+       
+    }
+
+    .entry {
+        margin-left: 15px;
     }
 
     label {
