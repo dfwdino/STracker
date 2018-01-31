@@ -46,11 +46,23 @@ namespace STracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name")] Person person)
+        public ActionResult Create(Person person)
         {
             if (ModelState.IsValid)
             {
-                db.People.Add(person);
+                Person tempperson = new Person();
+                tempperson.Name = person.Name;
+                tempperson.Notes = person.Notes;
+                
+                db.People.Add(tempperson);
+
+                foreach (SocalSite item in person.SocalSites)
+                {
+                    tempperson.SocalSites.Add(item);
+                }
+
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

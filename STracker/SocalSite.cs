@@ -15,10 +15,10 @@ namespace STracker
     public partial class SocalSite
     {
         public int ID { get; set; }
-        public string SocalSite1 { get; set; }
         public string Link { get; set; }
         public Nullable<int> PersonID { get; set; }
         public bool Deleted { get; set; }
+        public string SiteName { get; set; }
     
         public virtual Person Person { get; set; }
     }

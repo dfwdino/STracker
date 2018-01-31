@@ -189,6 +189,7 @@
     <Compile Include="Models\FuckingCreate.cs" />
     <Compile Include="Models\FuckingList.cs" />
     <Compile Include="Models\EventListDetails.cs" />
+    <Compile Include="Models\PeopleCreateModel.cs" />
     <Compile Include="Person.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>

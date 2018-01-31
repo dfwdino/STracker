@@ -46,17 +46,12 @@
           <Property Name="Hide" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'STracker.People.SocalSites' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SocalSites">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="SocalSite" />
-            <PropertyRef Name="Link" />
-            <PropertyRef Name="Deleted" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SocalSite" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SiteName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Link" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PersonID" Type="int" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
@@ -220,17 +215,9 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="Events" store:Type="Tables" />
           <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="Events" store:Type="Tables" />
           <EntitySet Name="People" EntityType="Self.People" Schema="People" store:Type="Tables" />
+          <EntitySet Name="SocalSites" EntityType="Self.SocalSites" Schema="People" store:Type="Tables" />
           <EntitySet Name="Fucking" EntityType="Self.Fucking" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="Sexual" store:Type="Tables" />
-          <EntitySet Name="SocalSites" EntityType="Self.SocalSites" store:Type="Tables" store:Schema="People">
-            <DefiningQuery>SELECT 
-    [SocalSites].[ID] AS [ID], 
-    [SocalSites].[SocalSite] AS [SocalSite], 
-    [SocalSites].[Link] AS [Link], 
-    [SocalSites].[PersonID] AS [PersonID], 
-    [SocalSites].[Deleted] AS [Deleted]
-    FROM [People].[SocalSites] AS [SocalSites]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="STIREsults" EntityType="Self.STIREsults" store:Type="Tables" store:Schema="People">
             <DefiningQuery>SELECT 
     [STIREsults].[ID] AS [ID], 
@@ -416,16 +403,15 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
         <EntityType Name="SocalSite">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="SocalSite1" />
             <PropertyRef Name="Link" />
             <PropertyRef Name="Deleted" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SocalSite1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PersonID" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="STrackerModel.FK_SocalSites_People" FromRole="SocalSite" ToRole="Person" />
+          <Property Name="SiteName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="STIREsult">
           <Key>
@@ -636,10 +622,10 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <EntitySetMapping Name="SocalSites">
             <EntityTypeMapping TypeName="STrackerModel.SocalSite">
               <MappingFragment StoreEntitySet="SocalSites">
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="SocalSite1" ColumnName="SocalSite" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

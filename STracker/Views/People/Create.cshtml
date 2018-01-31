@@ -1,36 +1,123 @@
-﻿@model STracker.Person
+﻿@model STracker.Models.PeopleCreateModel
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int SocailNumber = 0;
 }
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Person</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-2">@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })</div>
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+            <br />
+            <div class="row">
+                <div name="SocailArea" id="SocailArea">
 
-        <div class="form-group">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="margin:10px 0 10px 5px">
+                    <input type="button" class="btn btn-default" id="addsocail" name="addsocail" value="New socail" />
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2">@Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label" })</div>
+                <div class="col-md-2">
+                    @Html.TextAreaFor(m => m.Notes, 10, 45, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+            </div>
+
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
+
         </div>
     </div>
 }
 
+
+    <div name="SocalOutline" id="SocalOutline" style="display:none;">
+        <div name="SocalForm" id="SocalForm">
+            <div class="col-md-2">
+                @Html.Label("Socal Site:", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => Model.SocalSites[@SocailNumber].SiteName, htmlAttributes: new { @placeholder = "Socail Site? Fetlife" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => Model.SocalSites[@SocailNumber].Link, htmlAttributes: new { @placeholder = "www.site.com/username" })
+            </div>
+        </div>
+        <br />
+    </div>
+
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+<script>
+    var SocailNumber = 0;
+
+
+    $("#addsocail").click(function () {
+        addSocail();
+    });
+
+
+    $(function () {
+        addSocail();
+    });
+
+    $('form').on('click', '.deleteme', function () {
+        document.getElementById('form').removeChild(document.getElementById("entryform_" + this.id.split('_')[1]));
+    });
+
+
+    function addSocail() {
+
+        var formoutline = "";
+        if (SocailNumber > 0) {
+            formoutline = "<hr>"
+        }
+
+        formoutline += $('#SocalOutline').html();
+        formoutline = formoutline.replace(/\[0]/g, "[" + SocailNumber + "]")
+            .replace(/\SocalForm/g, "SocalForm_" + SocailNumber)
+        //.replace("remove", "remove_" + NumberOfEntries)
+
+        $(formoutline).appendTo("#SocailArea");
+
+        SocailNumber++;
+
+    }
+
+</script>
+
+
+<style>
+    .form-group {
+        padding-top: 10px;
+        margin-left: 0px !important;
+    }
+</style>

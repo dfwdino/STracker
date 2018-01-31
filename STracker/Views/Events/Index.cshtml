@@ -15,38 +15,42 @@
                 <div class="col-md-3">@Html.Label("Orgams had:") @item.OrgamNumber</div>
                 <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
             </div>
-                     
-            <h3>Actions</h3>
-            <div style="padding-bottom:20px;border:1px solid black" class="acts">
 
-                @foreach (var acts in item.EventActs)
-                {
-                    <div class="row" style="margin-left:5px;">
-                        <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
-                    </div>
-                }
+            <h3>Actions</h3>
+            <div style="" class="acts">
+                <div style="padding-top:10px;padding-left:5px;">
+                    @foreach (var acts in item.EventActs)
+                    {
+                        <div class="row" style="margin-left:5px;">
+                            <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
+                        </div>
+
+                    }
+                </div>
             </div>
 
 
             <h3>Sex</h3>
-            <div class="sexp" style="padding-bottom:20px;border:1px solid red">
+            <div class="sexp" style="">
                 @if (item.Fucks.Where(m => m.BottonPerson != null).Count() > 0)
                 {
-                    foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
-                    {
-                        <div class="row" style="margin-left:5px;">
-                            <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
-                        </div>
-                    }
+                    <div style="margin-top:10px;margin-left:5px;">
+                        @foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
+                        {
+                            <div class="row" style="margin-left:5px;">
+                                <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
+                            </div>
+                        }
+                    </div>
                 }
                 else
-                {<div class="row" style="margin-left:5px;">
-    <div class="col-12">NONE.</div>
-</div>
+                {<div class="row" style="margin-left:5px;margin-top:10px">
+                        <div class="col-12">NONE.</div>
+                    </div>
                     <span></span>
                 }
             </div>
-           
+
             <br />
             <div class="row">
                 <div class="col-md-1">@Html.Label("Notes:")</div>
@@ -59,13 +63,12 @@
 <style>
     .entry {
         border-bottom: solid;
-        border-bottom-color: red;
+        border-bottom-color: blue;
         margin-bottom: 25px;
     }
 
     .index {
         margin-top: 15px;
-       
     }
 
     .entry {
@@ -74,5 +77,16 @@
 
     label {
         font-weight: bold;
+    }
+    .sexp {
+        padding-bottom: 20px;
+        /*border: 1px solid red;*/
+    }
+    .acts {
+        padding-bottom: 20px;
+        /*border: 1px solid black*/
+    }
+    h3{
+        border-bottom: 1px solid black;
     }
 </style>
