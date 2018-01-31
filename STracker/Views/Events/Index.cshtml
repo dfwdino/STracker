@@ -16,7 +16,7 @@
                 <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
             </div>
                      
-            <h3>Things done</h3>
+            <h3>Actions</h3>
             <div style="padding-bottom:20px;border:1px solid black" class="acts">
 
                 @foreach (var acts in item.EventActs)
@@ -28,7 +28,7 @@
             </div>
 
 
-            <h3>Fucking Done</h3>
+            <h3>Sex</h3>
             <div class="sexp" style="padding-bottom:20px;border:1px solid red">
                 @if (item.Fucks.Where(m => m.BottonPerson != null).Count() > 0)
                 {
@@ -40,9 +40,9 @@
                     }
                 }
                 else
-                {<div class="row">
-                        <div class="col-12">NONE.</div>
-                    </div>
+                {<div class="row" style="margin-left:5px;">
+    <div class="col-12">NONE.</div>
+</div>
                     <span></span>
                 }
             </div>

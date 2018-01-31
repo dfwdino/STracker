@@ -26,10 +26,12 @@ namespace STracker
         }
     
         public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<EventAction> EventActions { get; set; }
         public virtual DbSet<EventDetail> EventDetails { get; set; }
         public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<Fucking> Fuckings { get; set; }
-        public virtual DbSet<EventAction> EventActions { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<SocalSite> SocalSites { get; set; }
+        public virtual DbSet<STIREsult> STIREsults { get; set; }
     }
 }

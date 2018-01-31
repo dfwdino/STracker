@@ -60,18 +60,30 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="Sexual\" />
+    <Folder Include="Sexual\Tables\" />
+    <Folder Include="People\" />
+    <Folder Include="People\Tables\" />
+    <Folder Include="Events\" />
+    <Folder Include="Events\Tables\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Positions.sql" />
-    <Build Include="dbo\Tables\People.sql" />
-    <Build Include="dbo\Tables\Fucking.sql" />
-    <Build Include="dbo\Tables\EventDetails.sql" />
-    <Build Include="dbo\Tables\Event.sql" />
-    <Build Include="dbo\Tables\Actions.sql" />
     <Build Include="Security\NT AUTHORITY_SYSTEM.sql" />
     <Build Include="Security\NT AUTHORITY_NETWORK SERVICE.sql" />
     <Build Include="Security\NT AUTHORITY_IUSR.sql" />
     <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Sexual\Tables\Fucking.sql" />
+    <Build Include="Sexual\Tables\Positions.sql" />
+    <Build Include="People\Tables\People.sql" />
+    <Build Include="People\Tables\STIREsults.sql" />
+    <Build Include="People\Tables\SocalSites.sql" />
+    <Build Include="Events\Tables\EventDetails.sql" />
+    <Build Include="Events\Tables\Event.sql" />
+    <Build Include="Events\Tables\EventActions.sql" />
+    <Build Include="Security\System.sql" />
+    <Build Include="Security\Sexual.sql" />
+    <Build Include="Security\People.sql" />
+    <Build Include="Security\Events.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />

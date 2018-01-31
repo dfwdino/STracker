@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Event] (
+﻿CREATE TABLE [Events].[Event] (
     [ID]            INT            IDENTITY (1, 1) NOT NULL,
     [Date]          DATETIME       NOT NULL,
     [Notes]         NVARCHAR (255) NULL,

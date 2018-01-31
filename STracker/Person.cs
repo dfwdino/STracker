@@ -20,6 +20,8 @@ namespace STracker
             this.EventDetails = new HashSet<EventDetail>();
             this.EventDetails1 = new HashSet<EventDetail>();
             this.Fuckings = new HashSet<Fucking>();
+            this.SocalSites = new HashSet<SocalSite>();
+            this.STIREsults = new HashSet<STIREsult>();
             this.Fuckings1 = new HashSet<Fucking>();
         }
     
@@ -35,6 +37,10 @@ namespace STracker
         public virtual ICollection<EventDetail> EventDetails1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fucking> Fuckings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SocalSite> SocalSites { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STIREsult> STIREsults { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fucking> Fuckings1 { get; set; }
     }

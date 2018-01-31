@@ -168,7 +168,13 @@
     <Compile Include="Controllers\EventActionsController.cs" />
     <Compile Include="Controllers\EventDetailsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="Event.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EventAction.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventDetail.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Fucking.cs">
@@ -176,12 +182,6 @@
     </Compile>
     <Compile Include="Models\EventList.cs" />
     <Compile Include="Controllers\EventsController.cs" />
-    <Compile Include="Event.cs">
-      <DependentUpon>StrackerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EventDetail.cs">
-      <DependentUpon>StrackerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,6 +196,12 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocalSite.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STIREsult.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="StrackerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

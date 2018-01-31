@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[People] (
+﻿CREATE TABLE [People].[People] (
     [ID]      INT            IDENTITY (1, 1) NOT NULL,
     [Name]    NVARCHAR (50)  NOT NULL,
     [Notes]   NVARCHAR (MAX) NULL,

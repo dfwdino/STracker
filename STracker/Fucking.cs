@@ -22,8 +22,8 @@ namespace STracker
         public bool Deleted { get; set; }
     
         public virtual Event Event { get; set; }
-        public virtual Position Position { get; set; }
         public virtual Person Person { get; set; }
         public virtual Person Person1 { get; set; }
+        public virtual Position Position { get; set; }
     }
 }

@@ -36,6 +36,46 @@
           <Property Name="ToWho" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Hide" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'STracker.People.SocalSites' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SocalSites">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="SocalSite" />
+            <PropertyRef Name="Link" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SocalSite" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PersonID" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'STracker.People.STIREsults' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="STIREsults">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="STI" />
+            <PropertyRef Name="Result" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STI" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Result" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PersonID" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Fucking">
           <Key>
             <PropertyRef Name="ID" />
@@ -45,16 +85,6 @@
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="TopPerson" Type="int" Nullable="false" />
           <Property Name="BottomPerson" Type="int" Nullable="false" />
-          <Property Name="Deleted" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="People">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="Hide" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Positions">
@@ -149,6 +179,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SocalSites_People">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="SocalSites" Type="Self.SocalSites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SocalSites">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STIREsults_People">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="STIREsults" Type="Self.STIREsults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="STIREsults">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TopPerson">
           <End Role="People" Type="Self.People" Multiplicity="1" />
           <End Role="Fucking" Type="Self.Fucking" Multiplicity="*" />
@@ -162,12 +216,30 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="STrackerModelStoreContainer">
-          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Fucking" EntityType="Self.Fucking" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="Events" store:Type="Tables" />
+          <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="Events" store:Type="Tables" />
+          <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="Events" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="People" store:Type="Tables" />
+          <EntitySet Name="Fucking" EntityType="Self.Fucking" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="SocalSites" EntityType="Self.SocalSites" store:Type="Tables" store:Schema="People">
+            <DefiningQuery>SELECT 
+    [SocalSites].[ID] AS [ID], 
+    [SocalSites].[SocalSite] AS [SocalSite], 
+    [SocalSites].[Link] AS [Link], 
+    [SocalSites].[PersonID] AS [PersonID], 
+    [SocalSites].[Deleted] AS [Deleted]
+    FROM [People].[SocalSites] AS [SocalSites]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="STIREsults" EntityType="Self.STIREsults" store:Type="Tables" store:Schema="People">
+            <DefiningQuery>SELECT 
+    [STIREsults].[ID] AS [ID], 
+    [STIREsults].[STI] AS [STI], 
+    [STIREsults].[Result] AS [Result], 
+    [STIREsults].[PersonID] AS [PersonID], 
+    [STIREsults].[Deleted] AS [Deleted]
+    FROM [People].[STIREsults] AS [STIREsults]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_ActionsToEventActions" Association="Self.FK_ActionsToEventActions">
             <End Role="EventActions" EntitySet="EventActions" />
             <End Role="EventDetails" EntitySet="EventDetails" />
@@ -196,6 +268,14 @@
             <End Role="People" EntitySet="People" />
             <End Role="EventDetails" EntitySet="EventDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_SocalSites_People" Association="Self.FK_SocalSites_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="SocalSites" EntitySet="SocalSites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STIREsults_People" Association="Self.FK_STIREsults_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="STIREsults" EntitySet="STIREsults" />
+          </AssociationSet>
           <AssociationSet Name="FK_TopPerson" Association="Self.FK_TopPerson">
             <End Role="People" EntitySet="People" />
             <End Role="Fucking" EntitySet="Fucking" />
@@ -205,6 +285,56 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="STrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="STrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Events" EntityType="STrackerModel.Event" />
+          <EntitySet Name="EventActions" EntityType="STrackerModel.EventAction" />
+          <EntitySet Name="EventDetails" EntityType="STrackerModel.EventDetail" />
+          <EntitySet Name="People" EntityType="STrackerModel.Person" />
+          <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
+          <EntitySet Name="Positions" EntityType="STrackerModel.Position" />
+          <EntitySet Name="SocalSites" EntityType="STrackerModel.SocalSite" />
+          <EntitySet Name="STIREsults" EntityType="STrackerModel.STIREsult" />
+          <AssociationSet Name="FK_EventDetails_Event" Association="STrackerModel.FK_EventDetails_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventDetail" EntitySet="EventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fucking_Event" Association="STrackerModel.FK_Fucking_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionsToEventActions" Association="STrackerModel.FK_ActionsToEventActions">
+            <End Role="EventAction" EntitySet="EventActions" />
+            <End Role="EventDetail" EntitySet="EventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeopleToWho" Association="STrackerModel.FK_PeopleToWho">
+            <End Role="Person" EntitySet="People" />
+            <End Role="EventDetail" EntitySet="EventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeopleWhoDid" Association="STrackerModel.FK_PeopleWhoDid">
+            <End Role="Person" EntitySet="People" />
+            <End Role="EventDetail" EntitySet="EventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fucking_BottomPerson" Association="STrackerModel.FK_Fucking_BottomPerson">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SocalSites_People" Association="STrackerModel.FK_SocalSites_People">
+            <End Role="Person" EntitySet="People" />
+            <End Role="SocalSite" EntitySet="SocalSites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STIREsults_People" Association="STrackerModel.FK_STIREsults_People">
+            <End Role="Person" EntitySet="People" />
+            <End Role="STIREsult" EntitySet="STIREsults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopPerson" Association="STrackerModel.FK_TopPerson">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fucking_Positions" Association="STrackerModel.FK_Fucking_Positions">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="ID" />
@@ -212,118 +342,68 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EventDetails" Relationship="Self.FK_EventDetails_Event" FromRole="Event" ToRole="EventDetails" />
           <Property Name="OverAllRating" Type="Int32" />
           <Property Name="Remove" Type="Boolean" Nullable="false" />
           <Property Name="OrgamNumber" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_EventDetails_Event" FromRole="Event" ToRole="EventDetail" />
+          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
+        </EntityType>
+        <EntityType Name="EventAction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventAction" ToRole="EventDetail" />
         </EntityType>
         <EntityType Name="EventDetail">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int32" Nullable="false" />
           <Property Name="WhoDid" Type="Int32" Nullable="false" />
           <Property Name="ActionDone" Type="Int32" Nullable="false" />
           <Property Name="ToWho" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_EventDetails_Event" FromRole="EventDetails" ToRole="Event" />
-          <NavigationProperty Name="Person" Relationship="Self.FK_PeopleToWho" FromRole="EventDetails" ToRole="People" />
-          <NavigationProperty Name="Person1" Relationship="Self.FK_PeopleWhoDid" FromRole="EventDetails" ToRole="People" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_EventDetails_Event" FromRole="EventDetail" ToRole="Event" />
           <NavigationProperty Name="EventAction" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventDetail" ToRole="EventAction" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_PeopleToWho" FromRole="EventDetail" ToRole="Person" />
+          <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_PeopleWhoDid" FromRole="EventDetail" ToRole="Person" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="EventDetails" Relationship="Self.FK_PeopleToWho" FromRole="People" ToRole="EventDetails" />
-          <NavigationProperty Name="EventDetails1" Relationship="Self.FK_PeopleWhoDid" FromRole="People" ToRole="EventDetails" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Hide" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Person" ToRole="Fucking" />
-          <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_PeopleToWho" FromRole="Person" ToRole="EventDetail" />
+          <NavigationProperty Name="EventDetails1" Relationship="STrackerModel.FK_PeopleWhoDid" FromRole="Person" ToRole="EventDetail" />
+          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Person" ToRole="Fucking" />
+          <NavigationProperty Name="SocalSites" Relationship="STrackerModel.FK_SocalSites_People" FromRole="Person" ToRole="SocalSite" />
+          <NavigationProperty Name="STIREsults" Relationship="STrackerModel.FK_STIREsults_People" FromRole="Person" ToRole="STIREsult" />
+          <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
         </EntityType>
-        <Association Name="FK_EventDetails_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="1" />
-          <End Role="EventDetails" Type="Self.EventDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EventDetails">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PeopleToWho">
-          <End Role="People" Type="Self.Person" Multiplicity="1" />
-          <End Role="EventDetails" Type="Self.EventDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EventDetails">
-              <PropertyRef Name="ToWho" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PeopleWhoDid">
-          <End Role="People" Type="Self.Person" Multiplicity="1" />
-          <End Role="EventDetails" Type="Self.EventDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EventDetails">
-              <PropertyRef Name="WhoDid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="STrackerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Events" EntityType="Self.Event" />
-          <EntitySet Name="EventDetails" EntityType="Self.EventDetail" />
-          <EntitySet Name="People" EntityType="Self.Person" />
-          <AssociationSet Name="FK_EventDetails_Event" Association="Self.FK_EventDetails_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="EventDetails" EntitySet="EventDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PeopleToWho" Association="Self.FK_PeopleToWho">
-            <End Role="People" EntitySet="People" />
-            <End Role="EventDetails" EntitySet="EventDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PeopleWhoDid" Association="Self.FK_PeopleWhoDid">
-            <End Role="People" EntitySet="People" />
-            <End Role="EventDetails" EntitySet="EventDetails" />
-          </AssociationSet>
-          <EntitySet Name="Positions" EntityType="STrackerModel.Position" />
-          <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
-          <AssociationSet Name="FK_Fucking_Event" Association="STrackerModel.FK_Fucking_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Fucking" EntitySet="Fuckings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Fucking_Positions" Association="STrackerModel.FK_Fucking_Positions">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Fucking" EntitySet="Fuckings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Fucking_BottomPerson" Association="STrackerModel.FK_Fucking_BottomPerson">
-            <End Role="Person" EntitySet="People" />
-            <End Role="Fucking" EntitySet="Fuckings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TopPerson" Association="STrackerModel.FK_TopPerson">
-            <End Role="Person" EntitySet="People" />
-            <End Role="Fucking" EntitySet="Fuckings" />
-          </AssociationSet>
-          <EntitySet Name="EventActions" EntityType="STrackerModel.EventAction" />
-          <AssociationSet Name="FK_ActionsToEventActions" Association="STrackerModel.FK_ActionsToEventActions">
-            <End Role="EventAction" EntitySet="EventActions" />
-            <End Role="EventDetail" EntitySet="EventDetails" />
-          </AssociationSet>
-        </EntityContainer>
+        <EntityType Name="Fucking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PoistionID" Type="Int32" Nullable="false" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="TopPerson" Type="Int32" Nullable="false" />
+          <Property Name="BottomPerson" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Fucking" ToRole="Event" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Fucking" ToRole="Person" />
+          <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
+          <NavigationProperty Name="Position" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Fucking" ToRole="Position" />
+        </EntityType>
         <EntityType Name="Position">
           <Key>
             <PropertyRef Name="ID" />
@@ -333,21 +413,46 @@
           <Property Name="Removed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Position" ToRole="Fucking" />
         </EntityType>
-        <EntityType Name="Fucking">
+        <EntityType Name="SocalSite">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="SocalSite1" />
+            <PropertyRef Name="Link" />
+            <PropertyRef Name="Deleted" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PoistionID" Type="Int32" Nullable="false" />
-          <Property Name="EventID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Fucking" ToRole="Event" />
-          <NavigationProperty Name="Position" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Fucking" ToRole="Position" />
-          <Property Name="TopPerson" Type="Int32" Nullable="false" />
-          <Property Name="BottomPerson" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Fucking" ToRole="Person" />
-          <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
+          <Property Name="SocalSite1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonID" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_SocalSites_People" FromRole="SocalSite" ToRole="Person" />
         </EntityType>
+        <EntityType Name="STIREsult">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="STI" />
+            <PropertyRef Name="Result" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Result" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonID" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_STIREsults_People" FromRole="STIREsult" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_EventDetails_Event">
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventDetail">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Fucking_Event">
           <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
           <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
@@ -360,15 +465,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Fucking_Positions">
-          <End Type="STrackerModel.Position" Role="Position" Multiplicity="1" />
-          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
+        <Association Name="FK_ActionsToEventActions">
+          <End Type="STrackerModel.EventAction" Role="EventAction" Multiplicity="1" />
+          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Position">
+            <Principal Role="EventAction">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Fucking">
-              <PropertyRef Name="PoistionID" />
+            <Dependent Role="EventDetail">
+              <PropertyRef Name="ActionDone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeopleToWho">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventDetail">
+              <PropertyRef Name="ToWho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeopleWhoDid">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventDetail">
+              <PropertyRef Name="WhoDid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -384,6 +513,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SocalSites_People">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="STrackerModel.SocalSite" Role="SocalSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SocalSite">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STIREsults_People">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="STrackerModel.STIREsult" Role="STIREsult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="STIREsult">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TopPerson">
           <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
           <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
@@ -396,28 +549,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="EventAction">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventAction" ToRole="EventDetail" />
-        </EntityType>
-        <Association Name="FK_ActionsToEventActions">
-          <End Type="STrackerModel.EventAction" Role="EventAction" Multiplicity="1" />
-          <End Type="STrackerModel.EventDetail" Role="EventDetail" Multiplicity="*" />
+        <Association Name="FK_Fucking_Positions">
+          <End Type="STrackerModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EventAction">
+            <Principal Role="Position">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="EventDetail">
-              <PropertyRef Name="ActionDone" />
+            <Dependent Role="Fucking">
+              <PropertyRef Name="PoistionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -430,9 +574,18 @@
                 <ScalarProperty Name="OrgamNumber" ColumnName="OrgamNumber" />
                 <ScalarProperty Name="Remove" ColumnName="Remove" />
                 <ScalarProperty Name="OverAllRating" ColumnName="OverAllRating" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventActions">
+            <EntityTypeMapping TypeName="STrackerModel.EventAction">
+              <MappingFragment StoreEntitySet="EventActions">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -440,11 +593,11 @@
             <EntityTypeMapping TypeName="STrackerModel.EventDetail">
               <MappingFragment StoreEntitySet="EventDetails">
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="WhoDid" ColumnName="WhoDid" />
-                <ScalarProperty Name="ActionDone" ColumnName="ActionDone" />
                 <ScalarProperty Name="ToWho" ColumnName="ToWho" />
+                <ScalarProperty Name="ActionDone" ColumnName="ActionDone" />
+                <ScalarProperty Name="WhoDid" ColumnName="WhoDid" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -454,16 +607,7 @@
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Hide" ColumnName="Hide" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Positions">
-            <EntityTypeMapping TypeName="STrackerModel.Position">
-              <MappingFragment StoreEntitySet="Positions">
-                <ScalarProperty Name="Removed" ColumnName="Removed" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -480,11 +624,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EventActions">
-            <EntityTypeMapping TypeName="STrackerModel.EventAction">
-              <MappingFragment StoreEntitySet="EventActions">
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="STrackerModel.Position">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="Removed" ColumnName="Removed" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SocalSites">
+            <EntityTypeMapping TypeName="STrackerModel.SocalSite">
+              <MappingFragment StoreEntitySet="SocalSites">
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="SocalSite1" ColumnName="SocalSite" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STIREsults">
+            <EntityTypeMapping TypeName="STrackerModel.STIREsult">
+              <MappingFragment StoreEntitySet="STIREsults">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="STI" ColumnName="STI" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
