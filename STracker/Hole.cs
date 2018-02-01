@@ -12,14 +12,19 @@ namespace STracker
     using System;
     using System.Collections.Generic;
     
-    public partial class SocalSite
+    public partial class Hole
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Hole()
+        {
+            this.HoleUseds = new HashSet<HoleUsed>();
+        }
+    
         public int ID { get; set; }
-        public string SiteName { get; set; }
-        public string Link { get; set; }
-        public Nullable<int> PersonID { get; set; }
+        public string Area { get; set; }
         public bool Deleted { get; set; }
     
-        public virtual Person Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HoleUsed> HoleUseds { get; set; }
     }
 }

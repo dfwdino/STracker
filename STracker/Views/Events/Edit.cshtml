@@ -1,0 +1,69 @@
+﻿@model STracker.Models.CreateEvent
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="row">
+            <div class="col">Date: @Html.EditorFor(m => m.Date, Model.Date)</div>
+        </div>
+        <br />
+
+        <div class="actsposition">
+            <div name="form" id="form">
+
+            </div>
+            <div class="row">
+                <div class="col-sm-1" style="margin-left:5px;margin-bottom:5px;">
+                    <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+                </div>
+
+            </div>
+
+        </div>
+
+        <br />
+
+        <div class="actsposition">
+            <div name="formpositions" id="formpositions">
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="margin-left:5px;margin-bottom:5px;">
+                    <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <div style="margin-left:15px">
+            <div class="row">
+                <div class="col">Over Rating: @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col">Number of Orgasms: @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
+            </div>
+
+            <br />
+
+            <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
+
+            <div class="row"><div class="col">@Html.TextAreaFor(m => m.Notes, 10, 45, null)</div></div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }

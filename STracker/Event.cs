@@ -19,6 +19,7 @@ namespace STracker
         {
             this.EventDetails = new HashSet<EventDetail>();
             this.Fuckings = new HashSet<Fucking>();
+            this.HoleUseds = new HashSet<HoleUsed>();
         }
     
         public int ID { get; set; }
@@ -33,5 +34,7 @@ namespace STracker
         public virtual ICollection<EventDetail> EventDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fucking> Fuckings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HoleUsed> HoleUseds { get; set; }
     }
 }

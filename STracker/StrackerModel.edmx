@@ -56,14 +56,9 @@
           <Property Name="PersonID" Type="int" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'STracker.People.STIREsults' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="STIREsults">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="STI" />
-            <PropertyRef Name="Result" />
-            <PropertyRef Name="Deleted" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="STI" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -82,13 +77,30 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <Property Name="BottomPerson" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Holes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Area" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HoleUsed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="HoleID" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="EventID" Type="int" />
+        </EntityType>
         <EntityType Name="Positions">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Removed" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_ActionsToEventActions">
           <End Role="EventActions" Type="Self.EventActions" Multiplicity="1" />
@@ -147,6 +159,30 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
             </Principal>
             <Dependent Role="Fucking">
               <PropertyRef Name="PoistionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoleUsed_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="HoleUsed" Type="Self.HoleUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HoleUsed">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoleUsed_Holes">
+          <End Role="Holes" Type="Self.Holes" Multiplicity="1" />
+          <End Role="HoleUsed" Type="Self.HoleUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Holes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HoleUsed">
+              <PropertyRef Name="HoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -216,17 +252,11 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="Events" store:Type="Tables" />
           <EntitySet Name="People" EntityType="Self.People" Schema="People" store:Type="Tables" />
           <EntitySet Name="SocalSites" EntityType="Self.SocalSites" Schema="People" store:Type="Tables" />
+          <EntitySet Name="STIREsults" EntityType="Self.STIREsults" Schema="People" store:Type="Tables" />
           <EntitySet Name="Fucking" EntityType="Self.Fucking" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="Holes" EntityType="Self.Holes" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="HoleUsed" EntityType="Self.HoleUsed" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="Sexual" store:Type="Tables" />
-          <EntitySet Name="STIREsults" EntityType="Self.STIREsults" store:Type="Tables" store:Schema="People">
-            <DefiningQuery>SELECT 
-    [STIREsults].[ID] AS [ID], 
-    [STIREsults].[STI] AS [STI], 
-    [STIREsults].[Result] AS [Result], 
-    [STIREsults].[PersonID] AS [PersonID], 
-    [STIREsults].[Deleted] AS [Deleted]
-    FROM [People].[STIREsults] AS [STIREsults]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_ActionsToEventActions" Association="Self.FK_ActionsToEventActions">
             <End Role="EventActions" EntitySet="EventActions" />
             <End Role="EventDetails" EntitySet="EventDetails" />
@@ -246,6 +276,14 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <AssociationSet Name="FK_Fucking_Positions" Association="Self.FK_Fucking_Positions">
             <End Role="Positions" EntitySet="Positions" />
             <End Role="Fucking" EntitySet="Fucking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoleUsed_Event" Association="Self.FK_HoleUsed_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="HoleUsed" EntitySet="HoleUsed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoleUsed_Holes" Association="Self.FK_HoleUsed_Holes">
+            <End Role="Holes" EntitySet="Holes" />
+            <End Role="HoleUsed" EntitySet="HoleUsed" />
           </AssociationSet>
           <AssociationSet Name="FK_PeopleToWho" Association="Self.FK_PeopleToWho">
             <End Role="People" EntitySet="People" />
@@ -277,10 +315,12 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <EntitySet Name="EventActions" EntityType="STrackerModel.EventAction" />
           <EntitySet Name="EventDetails" EntityType="STrackerModel.EventDetail" />
           <EntitySet Name="People" EntityType="STrackerModel.Person" />
-          <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
-          <EntitySet Name="Positions" EntityType="STrackerModel.Position" />
           <EntitySet Name="SocalSites" EntityType="STrackerModel.SocalSite" />
           <EntitySet Name="STIREsults" EntityType="STrackerModel.STIREsult" />
+          <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
+          <EntitySet Name="Holes" EntityType="STrackerModel.Hole" />
+          <EntitySet Name="HoleUseds" EntityType="STrackerModel.HoleUsed" />
+          <EntitySet Name="Positions" EntityType="STrackerModel.Position" />
           <AssociationSet Name="FK_EventDetails_Event" Association="STrackerModel.FK_EventDetails_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="EventDetail" EntitySet="EventDetails" />
@@ -288,6 +328,10 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <AssociationSet Name="FK_Fucking_Event" Association="STrackerModel.FK_Fucking_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoleUsed_Event" Association="STrackerModel.FK_HoleUsed_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="HoleUsed" EntitySet="HoleUseds" />
           </AssociationSet>
           <AssociationSet Name="FK_ActionsToEventActions" Association="STrackerModel.FK_ActionsToEventActions">
             <End Role="EventAction" EntitySet="EventActions" />
@@ -321,6 +365,10 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
             <End Role="Position" EntitySet="Positions" />
             <End Role="Fucking" EntitySet="Fuckings" />
           </AssociationSet>
+          <AssociationSet Name="FK_HoleUsed_Holes" Association="STrackerModel.FK_HoleUsed_Holes">
+            <End Role="Hole" EntitySet="Holes" />
+            <End Role="HoleUsed" EntitySet="HoleUseds" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -335,6 +383,7 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_EventDetails_Event" FromRole="Event" ToRole="EventDetail" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
+          <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="Event" ToRole="HoleUsed" />
         </EntityType>
         <EntityType Name="EventAction">
           <Key>
@@ -376,6 +425,28 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <NavigationProperty Name="STIREsults" Relationship="STrackerModel.FK_STIREsults_People" FromRole="Person" ToRole="STIREsult" />
           <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
         </EntityType>
+        <EntityType Name="SocalSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonID" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_SocalSites_People" FromRole="SocalSite" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="STIREsult">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Result" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonID" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_STIREsults_People" FromRole="STIREsult" ToRole="Person" />
+        </EntityType>
         <EntityType Name="Fucking">
           <Key>
             <PropertyRef Name="ID" />
@@ -391,41 +462,34 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
           <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
           <NavigationProperty Name="Position" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Fucking" ToRole="Position" />
         </EntityType>
+        <EntityType Name="Hole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Holes" FromRole="Hole" ToRole="HoleUsed" />
+        </EntityType>
+        <EntityType Name="HoleUsed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="HoleID" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="EventID" Type="Int32" />
+          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="HoleUsed" ToRole="Event" />
+          <NavigationProperty Name="Hole" Relationship="STrackerModel.FK_HoleUsed_Holes" FromRole="HoleUsed" ToRole="Hole" />
+        </EntityType>
         <EntityType Name="Position">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Removed" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Position" ToRole="Fucking" />
-        </EntityType>
-        <EntityType Name="SocalSite">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Link" />
-            <PropertyRef Name="Deleted" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Link" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PersonID" Type="Int32" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_SocalSites_People" FromRole="SocalSite" ToRole="Person" />
-          <Property Name="SiteName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="STIREsult">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="STI" />
-            <PropertyRef Name="Result" />
-            <PropertyRef Name="Deleted" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="STI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Result" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PersonID" Type="Int32" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_STIREsults_People" FromRole="STIREsult" ToRole="Person" />
         </EntityType>
         <Association Name="FK_EventDetails_Event">
           <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
@@ -447,6 +511,18 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Fucking">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoleUsed_Event">
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="STrackerModel.HoleUsed" Role="HoleUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HoleUsed">
               <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
@@ -547,6 +623,18 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HoleUsed_Holes">
+          <End Type="STrackerModel.Hole" Role="Hole" Multiplicity="1" />
+          <End Type="STrackerModel.HoleUsed" Role="HoleUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HoleUsed">
+              <PropertyRef Name="HoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -598,6 +686,28 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SocalSites">
+            <EntityTypeMapping TypeName="STrackerModel.SocalSite">
+              <MappingFragment StoreEntitySet="SocalSites">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STIREsults">
+            <EntityTypeMapping TypeName="STrackerModel.STIREsult">
+              <MappingFragment StoreEntitySet="STIREsults">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="STI" ColumnName="STI" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Fuckings">
             <EntityTypeMapping TypeName="STrackerModel.Fucking">
               <MappingFragment StoreEntitySet="Fucking">
@@ -610,33 +720,30 @@ warning 6002: The table/view 'STracker.People.STIREsults' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Holes">
+            <EntityTypeMapping TypeName="STrackerModel.Hole">
+              <MappingFragment StoreEntitySet="Holes">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoleUseds">
+            <EntityTypeMapping TypeName="STrackerModel.HoleUsed">
+              <MappingFragment StoreEntitySet="HoleUsed">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="HoleID" ColumnName="HoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Positions">
             <EntityTypeMapping TypeName="STrackerModel.Position">
               <MappingFragment StoreEntitySet="Positions">
-                <ScalarProperty Name="Removed" ColumnName="Removed" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SocalSites">
-            <EntityTypeMapping TypeName="STrackerModel.SocalSite">
-              <MappingFragment StoreEntitySet="SocalSites">
-                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="STIREsults">
-            <EntityTypeMapping TypeName="STrackerModel.STIREsult">
-              <MappingFragment StoreEntitySet="STIREsults">
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
-                <ScalarProperty Name="STI" ColumnName="STI" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -12,14 +12,14 @@ namespace STracker
     using System;
     using System.Collections.Generic;
     
-    public partial class SocalSite
+    public partial class HoleUsed
     {
         public int ID { get; set; }
-        public string SiteName { get; set; }
-        public string Link { get; set; }
-        public Nullable<int> PersonID { get; set; }
+        public int HoleID { get; set; }
         public bool Deleted { get; set; }
+        public Nullable<int> EventID { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual Hole Hole { get; set; }
     }
 }

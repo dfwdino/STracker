@@ -7,6 +7,7 @@ namespace STracker.Models
 {
     public class CreateFuckingList
     {
+        public int ID { get; set; }
         public int TopPerson { get; set; }
         public string Poistion { get; set; }
         public int BottonPerson { get; set; }

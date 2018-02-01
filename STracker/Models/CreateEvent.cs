@@ -9,14 +9,18 @@ namespace STracker.Models
 {
     public class CreateEvent
     {
-        [DataType(DataType.Date)]
+        
+        public int ID { get; set; }
+
+        [DataType(DataType.DateTime), Required]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
         
-        public int OverAllRating { get; set; }
+        public int? OverAllRating { get; set; }
 
         public int OrgamNumber { get; set; }
 

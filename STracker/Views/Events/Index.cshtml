@@ -3,16 +3,25 @@
 
 }
 <div class="index">
+
+    <div>
+        <div class="col" style="padding-left:15px;">
+            Showing events starting at @DateTime.Now.AddMonths(-1).ToShortDateString() and number of entries @Model.Count()
+        </div>
+    </div>
+    <br />
+
     @foreach (var item in Model)
     {
-
         <div class="entry">
+
             <div class="row">
-                <div class="col-md-3">@Html.Label("Date:") @item.EventDate.ToShortDateString()</div>
+                <div class="col-md-2">@Html.Label("Date:") @item.EventDate.ToShortDateString()</div>
+                <div class="col-md-2">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
             </div>
 
             <div class="row">
-                <div class="col-md-3">@Html.Label("Orgams had:") @item.OrgamNumber</div>
+                <div class="col-md-2">@Html.Label("Orgams had:") @item.OrgamNumber</div>
                 <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
             </div>
 
@@ -55,7 +64,7 @@
             <div class="row">
                 <div class="col-md-1">@Html.Label("Notes:")</div>
             </div>
-            <div class="col-12" style="padding-bottom:15px;">@item.Notes</div>
+            <div class="col-12" style="padding-bottom:15px;margin-left:10px">@item.Notes</div>
         </div>
     }
 </div>

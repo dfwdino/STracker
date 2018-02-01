@@ -7,6 +7,7 @@ namespace STracker.Models
 {
     public class CreateEventDetail
     {
+        public int ID { get; set; }
         public int EventID { get; set; }
         public int WhoDid { get; set; }
         public int ActionDone { get; set; }

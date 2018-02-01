@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a href="~/" class="navbar-brand">Home</a>
+                    @Html.ActionLink("Home", "Index", "Events", null, new { @class = "navbar-brand" })
                     @Html.ActionLink("New Event", "Create", "Events", null, new { @class = "navbar-brand" })
                 </div>
             </div>
@@ -34,10 +34,18 @@
                     </li>
 
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Peoples<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">People<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Add", "Create", "People", null, null)</li>
                             <li>@Html.ActionLink("List", "Index", "People", null, null)</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Position<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Add", "Create", "Positions", null, null)</li>
+                            <li>@Html.ActionLink("List", "Index", "Positions", null, null)</li>
                         </ul>
                     </li>
 

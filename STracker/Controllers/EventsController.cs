@@ -14,8 +14,10 @@ namespace STracker.Controllers
         public ActionResult Index()
         {
             List<Models.EventList> listEL = new List<Models.EventList>();
-            
-            foreach (var stevent in db.Events.OrderBy(m => m.ID))
+
+            DateTime dt = DateTime.Now.AddMonths(-1);
+
+            foreach (var stevent in db.Events.Where(m => m.Date >= dt && m.Deleted == false).OrderByDescending(m => m.ID))
             {
                 Models.EventList el = new Models.EventList();
                 el.EventActs = new List<Models.EventListDetails>();
@@ -27,8 +29,11 @@ namespace STracker.Controllers
                 Models.EventListDetails eld = new Models.EventListDetails();
                 Models.FuckingList fl = new Models.FuckingList();
 
+                el.ID = stevent.ID;
                 el.EventDate = stevent.Date;
                 el.Notes = stevent.Notes;
+                el.OrgamNumber = stevent.OrgamNumber;
+                el.OverAllRating = stevent.OverAllRating;
 
                 foreach (var item in stevent.EventDetails)
                 {
@@ -81,9 +86,6 @@ namespace STracker.Controllers
 
         public ActionResult Create()
         {
-
-            Models.CreateEvent ce = new Models.CreateEvent();
-
             List<Person> people = db.People.ToList();
             people.Add(new Person() { ID = 0, Name = "--Select---" });
             
@@ -92,7 +94,7 @@ namespace STracker.Controllers
             ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
 
-            return View(ce);
+            return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1) });
         }
 
         [HttpPost]
@@ -162,5 +164,51 @@ namespace STracker.Controllers
 
             return View(ce);
         }
+
+        public ActionResult Edit(int id) {
+
+            Models.CreateEvent ce = new Models.CreateEvent();
+            STracker.Event sexevent = db.Events.Where(m => m.ID == id).Single();
+
+            ce.ID = sexevent.ID;
+            ce.Date = sexevent.Date;
+            ce.Notes = sexevent.Notes;
+            ce.OrgamNumber = sexevent.OrgamNumber;
+            ce.OverAllRating = sexevent.OverAllRating;
+
+            List<Person> people = db.People.ToList();
+            
+
+            ViewBag.People = people.OrderBy(m => m.ID).ToList();
+            ViewBag.EventAction = db.EventActions.ToList().OrderBy(m => m.Name);
+            ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
+            ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+
+            return View(ce);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Models.CreateEvent ce)
+        {
+
+            if (ModelState.IsValid)
+            {
+                STracker.Event sexevent = db.Events.Where(m => m.ID == ce.ID).Single();
+
+                sexevent.ID = ce.ID;
+                sexevent.Date = ce.Date;
+                sexevent.Notes = ce.Notes;
+                sexevent.OrgamNumber = ce.OrgamNumber;
+                sexevent.OverAllRating = ce.OverAllRating;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+
+
     }
 }

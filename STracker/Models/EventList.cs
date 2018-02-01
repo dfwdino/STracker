@@ -6,7 +6,9 @@ using System.Web;
 namespace STracker.Models
 {
     public class EventList
-    {   
+    {
+        public int ID { get; set; }
+
         public DateTime EventDate { get; set; }
 
         public string Notes { get; set; }

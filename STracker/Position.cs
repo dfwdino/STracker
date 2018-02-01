@@ -22,7 +22,7 @@ namespace STracker
     
         public int ID { get; set; }
         public string Type { get; set; }
-        public bool Removed { get; set; }
+        public bool Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fucking> Fuckings { get; set; }

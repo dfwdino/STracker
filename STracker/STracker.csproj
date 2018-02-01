@@ -168,6 +168,7 @@
     <Compile Include="Controllers\EventActionsController.cs" />
     <Compile Include="Controllers\EventDetailsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="Controllers\PositionsController.cs" />
     <Compile Include="Event.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
@@ -178,6 +179,12 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Fucking.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Hole.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoleUsed.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventList.cs" />
@@ -254,6 +261,12 @@
     <Content Include="Views\EventActions\Details.cshtml" />
     <Content Include="Views\EventActions\Edit.cshtml" />
     <Content Include="Views\EventActions\Index.cshtml" />
+    <Content Include="Views\Positions\Create.cshtml" />
+    <Content Include="Views\Positions\Delete.cshtml" />
+    <Content Include="Views\Positions\Details.cshtml" />
+    <Content Include="Views\Positions\Edit.cshtml" />
+    <Content Include="Views\Positions\Index.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
