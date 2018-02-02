@@ -84,6 +84,8 @@
     <Build Include="Security\Sexual.sql" />
     <Build Include="Security\People.sql" />
     <Build Include="Security\Events.sql" />
+    <Build Include="Sexual\Tables\HoleUsed.sql" />
+    <Build Include="Sexual\Tables\Holes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
