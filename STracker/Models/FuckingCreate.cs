@@ -10,7 +10,7 @@ namespace STracker.Models
         public int ID { get; set; }
         public int TopPerson { get; set; }
         public string Poistion { get; set; }
-        public int BottonPerson { get; set; }
+        public int BottomPerson { get; set; }
         public List<int> SelectedPosition { get; set; }
     }
 }

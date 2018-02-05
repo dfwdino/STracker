@@ -78,15 +78,15 @@ namespace STracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name")] EventAction action)
+        public ActionResult Edit([Bind(Include = "ID,Name")] EventAction eventaction)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(action).State = EntityState.Modified;
+                db.Entry(eventaction).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(action);
+            return View(eventaction);
         }
 
         // GET: EventActions/Delete/5

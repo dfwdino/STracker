@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int NumberOfEntries = 0;
+    int NumberOfPositions = 0;
 }
 
 <h2>Edit</h2>
@@ -13,36 +15,94 @@
             <div class="col">Date: @Html.EditorFor(m => m.Date, Model.Date)</div>
         </div>
         <br />
-
         <div class="actsposition">
             <div name="form" id="form">
+                @Html.HiddenFor(m => m.ID)
+                <div class="row">
+                    <div class="col-lg-12">
+                        @foreach (var eventdetails in Model.EventDetails.GroupBy(x => new { x.WhoDid, x.ToWho }).ToList())
+            {
+                //@Html.HiddenFor(m => m.EventDetails[NumberOfEntries].ID)
 
-            </div>
+                <div class="row">
+                    <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => x.EventDetails[NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name", eventdetails.Key.WhoDid)) did these things</div>
+                </div>
+                <br />
+    foreach (var eventaction in ViewBag.EventAction)
+    {
+        bool IsChecked = eventdetails.Where(m => m.ActionDone == eventaction.ID).Count().Equals(0) ? false : true;
+
+            <label for="Acts[@eventaction.ID][@NumberOfEntries]">
+                <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction" id="Acts[@eventaction.ID][@NumberOfEntries]" value="@eventaction.ID" @(IsChecked == true ? "checked=checked" : "") />
+                @System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(eventaction.Name)
+            </label>
+}
+
             <div class="row">
-                <div class="col-sm-1" style="margin-left:5px;margin-bottom:5px;">
-                    <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+                <div class="col" style="margin-left:15px">to @Html.DropDownListFor(x => x.EventDetails[NumberOfEntries].ToWho, new SelectList(ViewBag.People, "ID", "Name", eventdetails.Key.ToWho))</div>
+            </div>
+            <br />
+NumberOfEntries += 1;
+}
+
+
+                    </div>
                 </div>
 
+                <br />
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:5px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+                    </div>
+
+                </div>
             </div>
+
+            <br />
 
         </div>
 
-        <br />
 
         <div class="actsposition">
             <div name="formpositions" id="formpositions">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @foreach (var fuckingposition in Model.Fucks.GroupBy(x => new { x.TopPerson, x.BottomPerson }).ToList())
+                        {
+                            <div class="row">
+                                <div class="col-12" style="margin-left:15px">@Html.DropDownListFor(x => x.Fucks[NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name", fuckingposition.Key.TopPerson)) put 
+                                @Html.DropDownListFor(x => x.Fucks[NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name", fuckingposition.Key.BottomPerson)) in these positions</div>
+                            </div>
+                            <br />
+                            foreach (var eventaction in ViewBag.Positions)
+                            {
+                                bool IsChecked = fuckingposition.Where(m => m.Poistion == eventaction.Type).Count().Equals(0) ? false : true;
 
+                            <label for="Acts[@eventaction.ID][@NumberOfPositions]">
+                                <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition" id="Positions[@eventaction.ID][@NumberOfPositions]" value="@eventaction.ID" @(IsChecked == true ? "checked=checked" : "") />
+                                @System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(eventaction.Type)
+
+                            </label>
+                            }
+
+                            NumberOfPositions += 1;
+                        }
+
+
+                    </div>
+                </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-1" style="margin-left:5px;margin-bottom:5px;">
                     <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
                 </div>
 
             </div>
+
         </div>
 
         <br />
+
         <div style="margin-left:15px">
             <div class="row">
                 <div class="col">Over Rating: @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))</div>
@@ -66,4 +126,4 @@
             </div>
         </div>
     </div>
-    }
+}
