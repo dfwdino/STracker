@@ -122,6 +122,7 @@ namespace STracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Person person = db.People.Find(id);
+            person.Deleted = false;
             db.People.Remove(person);
             db.SaveChanges();
             return RedirectToAction("Index");

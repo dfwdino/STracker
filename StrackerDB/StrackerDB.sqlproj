@@ -86,11 +86,9 @@
     <Build Include="Security\Events.sql" />
     <Build Include="Sexual\Tables\HoleUsed.sql" />
     <Build Include="Sexual\Tables\Holes.sql" />
+    <Build Include="TempData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Script.PostDeployment1.sql" />
   </ItemGroup>
 </Project>

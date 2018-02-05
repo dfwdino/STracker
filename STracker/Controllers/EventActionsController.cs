@@ -110,6 +110,7 @@ namespace STracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             EventAction action = db.EventActions.Find(id);
+            action.Deleted = false;
             db.EventActions.Remove(action);
             db.SaveChanges();
             return RedirectToAction("Index");
