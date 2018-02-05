@@ -90,4 +90,7 @@
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+  </ItemGroup>
 </Project>
