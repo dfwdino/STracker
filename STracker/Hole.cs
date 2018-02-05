@@ -23,7 +23,8 @@ namespace STracker
         public int ID { get; set; }
         public string Area { get; set; }
         public bool Deleted { get; set; }
-    
+        public List<int> SelectedHoles { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoleUsed> HoleUseds { get; set; }
     }

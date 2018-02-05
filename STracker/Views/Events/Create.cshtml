@@ -17,8 +17,8 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false)
-    <div class="container" >
-        
+    <div class="container">
+
         <div class="row" style="margin-left:10px !important">
             <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date)</div>
         </div>
@@ -27,18 +27,18 @@
         <div style="margin-left:10px">
             <div class="row">
                 <div class="col-md-2" style="padding-bottom:5px;">
-                    @Html.Label("Over Rating:") 
+                    @Html.Label("Over Rating:")
                     @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
                 </div>
                 <div class="col-md-3" style="padding-bottom:5px;">
-                    @Html.Label("Number of Orgasms:") 
+                    @Html.Label("Number of Orgasms:")
                     @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
-                    </div>
-             </div>
+                </div>
+            </div>
         </div>
-      
+
         <br />
-        
+
         <div class="actsposition">
             <div name="form" id="form">
 
@@ -68,6 +68,22 @@
             </div>
         </div>
         <br />
+
+        @*<div class="areasoutline">
+            <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                <div class="col" style="margin-left:15px !important">
+                    @foreach (var item in ViewBag.Holes)
+            {
+                <label for="Holes[@item.ID]">
+                    <input style="margin-left:5px" type="checkbox" name="Holes[0].SelectedHoles" id="Holes[@item.ID]" value="@item.ID" />
+                    @item.Area
+                </label>
+    }
+                </div>
+            </div>
+        </div>*@
+
+
         <div style="margin-left:25px">
             <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
 
@@ -221,6 +237,7 @@
     .acts {
         border-style: solid;
         border-color: #0094ff;
+        
         margin: 10px 10px 10px 10px;
         padding-left: 10px;
     }
@@ -228,6 +245,15 @@
     .sexp {
         border-style: solid;
         border-color: red;
+        margin: 10px 10px 10px 10px;
+        
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .areasoutline {
+        border-style: solid;
+        border-color: black;
         margin: 10px 10px 10px 10px;
         padding-left: 10px;
         margin-bottom: 10px;

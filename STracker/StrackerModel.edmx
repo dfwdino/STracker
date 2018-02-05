@@ -81,7 +81,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Area" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -89,10 +89,10 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HoleID" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
-          <Property Name="EventID" Type="int" />
+          <Property Name="EventID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -163,7 +163,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HoleUsed_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="HoleUsed" Type="Self.HoleUsed" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Event">
@@ -466,7 +466,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Holes" FromRole="Hole" ToRole="HoleUsed" />
@@ -475,10 +475,10 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HoleID" Type="Int32" Nullable="false" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <Property Name="EventID" Type="Int32" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="HoleUsed" ToRole="Event" />
           <NavigationProperty Name="Hole" Relationship="STrackerModel.FK_HoleUsed_Holes" FromRole="HoleUsed" ToRole="Hole" />
         </EntityType>
@@ -516,7 +516,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HoleUsed_Event">
-          <End Type="STrackerModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
           <End Type="STrackerModel.HoleUsed" Role="HoleUsed" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Event">

@@ -60,6 +60,28 @@
                 }
             </div>
 
+            @*<h3>Area's Fucked</h3>
+            <div class="sexp" style="">
+                @if (item.HolesUsed != null)
+                {
+                    <div style="margin-top:10px;margin-left:5px;">
+                        @foreach (var holeused in item.HolesUsed.Where(m => m.Hole != null))
+                        {
+                            <div class="row" style="margin-left:5px;">
+                                <div class="col-12">@holeused.Hole.Area</div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {<div class="row" style="margin-left:5px;margin-top:10px">
+                        <div class="col-12">NONE.</div>
+                    </div>
+                    <span></span>
+                }
+            </div>*@
+
+
             <br />
             <div class="row">
                 <div class="col-md-1">@Html.Label("Notes:")</div>

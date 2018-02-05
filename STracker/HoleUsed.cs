@@ -17,7 +17,7 @@ namespace STracker
         public int ID { get; set; }
         public int HoleID { get; set; }
         public bool Deleted { get; set; }
-        public Nullable<int> EventID { get; set; }
+        public int EventID { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual Hole Hole { get; set; }

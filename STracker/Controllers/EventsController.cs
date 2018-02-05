@@ -73,7 +73,7 @@ namespace STracker.Controllers
                     }
                     
                 }
-
+                
                 el.EventActs.Add(eld);
                 el.Fucks.Add(fl); 
                 listEL.Add(el);
@@ -91,6 +91,7 @@ namespace STracker.Controllers
             ViewBag.EventAction = db.EventActions.ToList().OrderBy(m => m.Name);
             ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            ViewBag.Holes = db.Holes.OrderBy(m => m.Area).ToList();
 
             return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1) });
         }
@@ -99,8 +100,7 @@ namespace STracker.Controllers
         public ActionResult Create(Models.CreateEvent ce)
         {
             //ModelState.AddModelError("ce.Date", "some error message");
-
-
+            
             foreach (var item in ce.EventDetails)
             {
               
@@ -155,7 +155,21 @@ namespace STracker.Controllers
                         }
                     }
                 }
-                
+
+                foreach (var hole in ce.Holes)
+                {
+                    foreach (var item in hole.SelectedHoles)
+                    {
+                        HoleUsed h = new HoleUsed();
+
+                        h.HoleID = item;
+                        h.EventID = ce.ID;
+
+                        stEvent.HoleUseds.Add(h);
+                    }
+                }
+
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
