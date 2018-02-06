@@ -141,6 +141,10 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\t4\Models.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Models.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -164,7 +168,15 @@
     <Content Include="Views\Events\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnsweredQuestion.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AskedQuestion.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AnswersController.cs" />
+    <Compile Include="Controllers\AskedQuestionsController.cs" />
     <Compile Include="Controllers\EventActionsController.cs" />
     <Compile Include="Controllers\EventDetailsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
@@ -187,6 +199,7 @@
     <Compile Include="HoleUsed.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswersCreateModel.cs" />
     <Compile Include="Models\EventList.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -196,6 +209,7 @@
     <Compile Include="Models\FuckingCreate.cs" />
     <Compile Include="Models\FuckingList.cs" />
     <Compile Include="Models\EventListDetails.cs" />
+    <Compile Include="Models\HoleModel.cs" />
     <Compile Include="Models\PeopleCreateModel.cs" />
     <Compile Include="Person.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
@@ -204,6 +218,11 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\t4\Models.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="SocalSite.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
@@ -267,6 +286,17 @@
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Views\AskedQuestions\Create.cshtml" />
+    <Content Include="Views\AskedQuestions\Delete.cshtml" />
+    <Content Include="Views\AskedQuestions\Details.cshtml" />
+    <Content Include="Views\AskedQuestions\Edit.cshtml" />
+    <Content Include="Views\AskedQuestions\Index.cshtml" />
+    <Content Include="Views\Answers\Create.cshtml" />
+    <Content Include="Views\Answers\Delete.cshtml" />
+    <Content Include="Views\Answers\Details.cshtml" />
+    <Content Include="Views\Answers\Edit.cshtml" />
+    <Content Include="Views\Answers\Index.cshtml" />
+    <Content Include="Views\Answers\GoodJob.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -276,7 +306,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\t4\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

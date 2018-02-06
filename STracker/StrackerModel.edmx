@@ -5,6 +5,28 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="STrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AnsweredQuestions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Hide" Type="bit" Nullable="false" />
+          <Property Name="Answered" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="EventDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AskedQuestions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Hide" Type="bit" Nullable="false" />
+          <Property Name="Question" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="ID" />
@@ -111,6 +133,30 @@
             </Principal>
             <Dependent Role="EventDetails">
               <PropertyRef Name="ActionDone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnsweredQuestions_AskedQuestions">
+          <End Role="AskedQuestions" Type="Self.AskedQuestions" Multiplicity="1" />
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AskedQuestions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnsweredQuestions">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnsweredQuestions_People">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnsweredQuestions">
+              <PropertyRef Name="PersonID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -247,6 +293,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="STrackerModelStoreContainer">
+          <EntitySet Name="AnsweredQuestions" EntityType="Self.AnsweredQuestions" Schema="Events" store:Type="Tables" />
+          <EntitySet Name="AskedQuestions" EntityType="Self.AskedQuestions" Schema="Events" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="Events" store:Type="Tables" />
           <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="Events" store:Type="Tables" />
           <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="Events" store:Type="Tables" />
@@ -260,6 +308,14 @@
           <AssociationSet Name="FK_ActionsToEventActions" Association="Self.FK_ActionsToEventActions">
             <End Role="EventActions" EntitySet="EventActions" />
             <End Role="EventDetails" EntitySet="EventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnsweredQuestions_AskedQuestions" Association="Self.FK_AnsweredQuestions_AskedQuestions">
+            <End Role="AskedQuestions" EntitySet="AskedQuestions" />
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnsweredQuestions_People" Association="Self.FK_AnsweredQuestions_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
           </AssociationSet>
           <AssociationSet Name="FK_EventDetails_Event" Association="Self.FK_EventDetails_Event">
             <End Role="Event" EntitySet="Event" />
@@ -369,6 +425,16 @@
             <End Role="Hole" EntitySet="Holes" />
             <End Role="HoleUsed" EntitySet="HoleUseds" />
           </AssociationSet>
+          <EntitySet Name="AnsweredQuestions" EntityType="STrackerModel.AnsweredQuestion" />
+          <EntitySet Name="AskedQuestions" EntityType="STrackerModel.AskedQuestion" />
+          <AssociationSet Name="FK_AnsweredQuestions_AskedQuestions" Association="STrackerModel.FK_AnsweredQuestions_AskedQuestions">
+            <End Role="AskedQuestion" EntitySet="AskedQuestions" />
+            <End Role="AnsweredQuestion" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnsweredQuestions_People" Association="STrackerModel.FK_AnsweredQuestions_People">
+            <End Role="Person" EntitySet="People" />
+            <End Role="AnsweredQuestion" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -424,6 +490,7 @@
           <NavigationProperty Name="SocalSites" Relationship="STrackerModel.FK_SocalSites_People" FromRole="Person" ToRole="SocalSite" />
           <NavigationProperty Name="STIREsults" Relationship="STrackerModel.FK_STIREsults_People" FromRole="Person" ToRole="STIREsult" />
           <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
+          <NavigationProperty Name="AnsweredQuestions" Relationship="STrackerModel.FK_AnsweredQuestions_People" FromRole="Person" ToRole="AnsweredQuestion" />
         </EntityType>
         <EntityType Name="SocalSite">
           <Key>
@@ -635,6 +702,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AnsweredQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Hide" Type="Boolean" Nullable="false" />
+          <Property Name="Answered" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AskedQuestion" Relationship="STrackerModel.FK_AnsweredQuestions_AskedQuestions" FromRole="AnsweredQuestion" ToRole="AskedQuestion" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_AnsweredQuestions_People" FromRole="AnsweredQuestion" ToRole="Person" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EventDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="AskedQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Hide" Type="Boolean" Nullable="false" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AnsweredQuestions" Relationship="STrackerModel.FK_AnsweredQuestions_AskedQuestions" FromRole="AskedQuestion" ToRole="AnsweredQuestion" />
+        </EntityType>
+        <Association Name="FK_AnsweredQuestions_AskedQuestions">
+          <End Type="STrackerModel.AskedQuestion" Role="AskedQuestion" Multiplicity="1" />
+          <End Type="STrackerModel.AnsweredQuestion" Role="AnsweredQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AskedQuestion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnsweredQuestion">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnsweredQuestions_People">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="STrackerModel.AnsweredQuestion" Role="AnsweredQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnsweredQuestion">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -744,6 +860,30 @@
               <MappingFragment StoreEntitySet="Positions">
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnsweredQuestions">
+            <EntityTypeMapping TypeName="STrackerModel.AnsweredQuestion">
+              <MappingFragment StoreEntitySet="AnsweredQuestions">
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="Answered" ColumnName="Answered" />
+                <ScalarProperty Name="Hide" ColumnName="Hide" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AskedQuestions">
+            <EntityTypeMapping TypeName="STrackerModel.AskedQuestion">
+              <MappingFragment StoreEntitySet="AskedQuestions">
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Hide" ColumnName="Hide" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

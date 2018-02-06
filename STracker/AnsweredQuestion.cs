@@ -12,19 +12,18 @@ namespace STracker
     using System;
     using System.Collections.Generic;
     
-    public partial class Hole
+    public partial class AnsweredQuestion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Hole()
-        {
-            this.HoleUseds = new HashSet<HoleUsed>();
-        }
-    
         public int ID { get; set; }
-        public string Area { get; set; }
         public bool Deleted { get; set; }
+        public bool Hide { get; set; }
+        public string Answered { get; set; }
+        public int QuestionID { get; set; }
+        public int PersonID { get; set; }
+        public System.DateTime EntryDate { get; set; }
+        public System.DateTime EventDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoleUsed> HoleUseds { get; set; }
+        public virtual AskedQuestion AskedQuestion { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

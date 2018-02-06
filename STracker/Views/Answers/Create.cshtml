@@ -1,0 +1,50 @@
+﻿@model STracker.Models.AnswersCreateModel
+
+@{
+    ViewBag.Title = "Play Question";
+    Layout = "";
+    int numberOfAnswers = 0;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.PersonID)
+
+    <div style="margin:30px 0 0 20px">
+
+        <div class="row" style="margin-left:10px !important">
+            <div class="col">@Html.Label("Date:") @Html.EditorFor(m => Model.EventDate)</div>
+        </div>
+
+        @foreach (var item in Model.Questions)
+    {
+        <div class="Questions">
+            <label for="Answer[@numberOfAnswers]">@item.Question</label>
+            <br />
+            <textarea style="margin-left:5px" type="text" cols="40" rows="5" name="Answer[@numberOfAnswers]" id="Answer[@numberOfAnswers]"></textarea>
+            <input style="margin-left:5px" type="hidden" name="Questions[@numberOfAnswers].ID" id="Questions[@numberOfAnswers].ID" value="@item.ID" />
+
+            <br />
+        </div>
+    numberOfAnswers++;
+
+}
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<style>
+    .Questions{
+        margin: 30px 0 5px 0;
+    }
+</style>

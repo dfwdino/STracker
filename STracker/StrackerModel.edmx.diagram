@@ -27,6 +27,10 @@
         <AssociationConnector Association="STrackerModel.FK_TopPerson" />
         <AssociationConnector Association="STrackerModel.FK_Fucking_Positions" />
         <AssociationConnector Association="STrackerModel.FK_HoleUsed_Holes" />
+        <EntityTypeShape EntityType="STrackerModel.AnsweredQuestion" Width="1.5" PointX="5.625" PointY="0.875" />
+        <EntityTypeShape EntityType="STrackerModel.AskedQuestion" Width="1.5" PointX="3.375" PointY="1" />
+        <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_AskedQuestions" />
+        <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_People" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

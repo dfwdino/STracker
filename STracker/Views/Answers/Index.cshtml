@@ -1,0 +1,28 @@
+﻿@model IList<IGrouping<DateTime, AnsweredQuestion>>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int answercount = 0;
+}
+
+<div class="container">
+
+    @foreach (var item in Model)
+    {
+        <h3>@item.ToList()[answercount].Person.Name - @item.Key.ToShortDateString()</h3>
+        <hr />
+        foreach (var groups in item.ToList())
+        {
+            <div style="margin-bottom:15px">
+                <div class="row">
+                    <label>@groups.AskedQuestion.Question</label>
+                </div>
+                <div class="row">@groups.Answered</div>
+            </div>
+        }
+        <hr />
+        answercount++;
+    }
+</div>
+

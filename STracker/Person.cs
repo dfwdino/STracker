@@ -23,6 +23,7 @@ namespace STracker
             this.SocalSites = new HashSet<SocalSite>();
             this.STIREsults = new HashSet<STIREsult>();
             this.Fuckings1 = new HashSet<Fucking>();
+            this.AnsweredQuestions = new HashSet<AnsweredQuestion>();
         }
     
         public int ID { get; set; }
@@ -43,5 +44,7 @@ namespace STracker
         public virtual ICollection<STIREsult> STIREsults { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fucking> Fuckings1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AnsweredQuestion> AnsweredQuestions { get; set; }
     }
 }

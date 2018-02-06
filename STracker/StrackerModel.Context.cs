@@ -35,5 +35,7 @@ namespace STracker
         public virtual DbSet<Hole> Holes { get; set; }
         public virtual DbSet<HoleUsed> HoleUseds { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<AnsweredQuestion> AnsweredQuestions { get; set; }
+        public virtual DbSet<AskedQuestion> AskedQuestions { get; set; }
     }
 }
