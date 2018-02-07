@@ -22,6 +22,7 @@
                     @Html.ActionLink("New Event", "Create", "Events", null, new { @class = "navbar-brand" })
                 </div>
             </div>
+           
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
 
@@ -48,9 +49,10 @@
                             <li>@Html.ActionLink("List", "Index", "Positions", null, null)</li>
                         </ul>
                     </li>
-
+                    <li>@Html.ActionLink("List", "Index", "Answers", null, new { @class = "navbar-brand" })</li>
                 </ul>
             </div>
+
         </div>
     </nav>
 

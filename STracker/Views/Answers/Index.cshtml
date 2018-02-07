@@ -10,7 +10,7 @@
 
     @foreach (var item in Model)
     {
-        <h3>@item.ToList()[answercount].Person.Name - @item.Key.ToShortDateString()</h3>
+    <h3>@item.ToList()[answercount].Person.Name - @item.ToList()[answercount].EventDate.ToShortDateString()</h3>
         <hr />
         foreach (var groups in item.ToList())
         {
