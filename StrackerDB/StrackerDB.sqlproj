@@ -66,11 +66,12 @@
     <Folder Include="People\Tables\" />
     <Folder Include="Events\" />
     <Folder Include="Events\Tables\" />
+    <Folder Include="Stracker\" />
+    <Folder Include="Stracker\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\NT AUTHORITY_SYSTEM.sql" />
     <Build Include="Security\NT AUTHORITY_NETWORK SERVICE.sql" />
-    <Build Include="Security\NT AUTHORITY_IUSR.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Sexual\Tables\Fucking.sql" />
     <Build Include="Sexual\Tables\Positions.sql" />
@@ -86,6 +87,10 @@
     <Build Include="Security\Events.sql" />
     <Build Include="Sexual\Tables\HoleUsed.sql" />
     <Build Include="Sexual\Tables\Holes.sql" />
+    <Build Include="Events\Tables\AskedQuestions.sql" />
+    <Build Include="Events\Tables\AnsweredQuestions.sql" />
+    <Build Include="Stracker\Tables\Login.sql" />
+    <Build Include="Security\Stracker.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
