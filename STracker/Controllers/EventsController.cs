@@ -155,20 +155,21 @@ namespace STracker.Controllers
                         }
                     }
                 }
-
-                foreach (var hole in ce.Holes)
+                if (ce.Holes != null)
                 {
-                    foreach (var item in hole.SelectedHoles)
+                    foreach (var hole in ce.Holes)
                     {
-                        HoleUsed h = new HoleUsed();
+                        foreach (var item in hole.SelectedHoles)
+                        {
+                            HoleUsed h = new HoleUsed();
 
-                        h.HoleID = item;
-                        h.EventID = ce.ID;
+                            h.HoleID = item;
+                            h.EventID = ce.ID;
 
-                        stEvent.HoleUseds.Add(h);
+                            stEvent.HoleUseds.Add(h);
+                        }
                     }
                 }
-
 
                 db.SaveChanges();
 
