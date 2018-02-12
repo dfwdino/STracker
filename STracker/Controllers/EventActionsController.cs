@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using STracker;
+using STracker.Infrastructure;
 
 namespace STracker.Controllers
 {
+    [StrackerAccess]
     public class EventActionsController : Controller
     {
         private STrackerEntities db = new STrackerEntities();
@@ -50,6 +52,7 @@ namespace STracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                eventaction.OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
                 db.EventActions.Add(eventaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -31,6 +31,9 @@
         <EntityTypeShape EntityType="STrackerModel.AskedQuestion" Width="1.5" PointX="3.375" PointY="1" />
         <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_AskedQuestions" />
         <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_People" />
+        <EntityTypeShape EntityType="STrackerModel.Login" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="STrackerModel.FK_Event_Login" />
+        <AssociationConnector Association="STrackerModel.FK_People_Login" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

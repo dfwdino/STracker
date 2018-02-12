@@ -38,6 +38,7 @@
           <Property Name="Remove" Type="bit" Nullable="false" />
           <Property Name="OrgamNumber" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="OwnerID" Type="int" />
         </EntityType>
         <EntityType Name="EventActions">
           <Key>
@@ -46,6 +47,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="OwnerID" Type="int" />
         </EntityType>
         <EntityType Name="EventDetails">
           <Key>
@@ -67,6 +69,7 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="Hide" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="OwnerID" Type="int" />
         </EntityType>
         <EntityType Name="SocalSites">
           <Key>
@@ -98,6 +101,7 @@
           <Property Name="TopPerson" Type="int" Nullable="false" />
           <Property Name="BottomPerson" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="OwnerID" Type="int" />
         </EntityType>
         <EntityType Name="Holes">
           <Key>
@@ -123,6 +127,17 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="OwnerID" Type="int" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_ActionsToEventActions">
           <End Role="EventActions" Type="Self.EventActions" Multiplicity="1" />
@@ -157,6 +172,18 @@
             </Principal>
             <Dependent Role="AnsweredQuestions">
               <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Login">
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -229,6 +256,18 @@
             </Principal>
             <Dependent Role="HoleUsed">
               <PropertyRef Name="HoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Login">
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -305,6 +344,7 @@
           <EntitySet Name="Holes" EntityType="Self.Holes" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="HoleUsed" EntityType="Self.HoleUsed" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="Stracker" store:Type="Tables" />
           <AssociationSet Name="FK_ActionsToEventActions" Association="Self.FK_ActionsToEventActions">
             <End Role="EventActions" EntitySet="EventActions" />
             <End Role="EventDetails" EntitySet="EventDetails" />
@@ -316,6 +356,10 @@
           <AssociationSet Name="FK_AnsweredQuestions_People" Association="Self.FK_AnsweredQuestions_People">
             <End Role="People" EntitySet="People" />
             <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Login" Association="Self.FK_Event_Login">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="Event" EntitySet="Event" />
           </AssociationSet>
           <AssociationSet Name="FK_EventDetails_Event" Association="Self.FK_EventDetails_Event">
             <End Role="Event" EntitySet="Event" />
@@ -340,6 +384,10 @@
           <AssociationSet Name="FK_HoleUsed_Holes" Association="Self.FK_HoleUsed_Holes">
             <End Role="Holes" EntitySet="Holes" />
             <End Role="HoleUsed" EntitySet="HoleUsed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Login" Association="Self.FK_People_Login">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="People" EntitySet="People" />
           </AssociationSet>
           <AssociationSet Name="FK_PeopleToWho" Association="Self.FK_PeopleToWho">
             <End Role="People" EntitySet="People" />
@@ -435,6 +483,15 @@
             <End Role="Person" EntitySet="People" />
             <End Role="AnsweredQuestion" EntitySet="AnsweredQuestions" />
           </AssociationSet>
+          <EntitySet Name="Logins" EntityType="STrackerModel.Login" />
+          <AssociationSet Name="FK_Event_Login" Association="STrackerModel.FK_Event_Login">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Login" Association="STrackerModel.FK_People_Login">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -450,6 +507,8 @@
           <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_EventDetails_Event" FromRole="Event" ToRole="EventDetail" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
           <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="Event" ToRole="HoleUsed" />
+          <Property Name="OwnerID" Type="Int32" />
+          <NavigationProperty Name="Login" Relationship="STrackerModel.FK_Event_Login" FromRole="Event" ToRole="Login" />
         </EntityType>
         <EntityType Name="EventAction">
           <Key>
@@ -459,6 +518,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_ActionsToEventActions" FromRole="EventAction" ToRole="EventDetail" />
+          <Property Name="OwnerID" Type="Int32" />
         </EntityType>
         <EntityType Name="EventDetail">
           <Key>
@@ -491,6 +551,8 @@
           <NavigationProperty Name="STIREsults" Relationship="STrackerModel.FK_STIREsults_People" FromRole="Person" ToRole="STIREsult" />
           <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
           <NavigationProperty Name="AnsweredQuestions" Relationship="STrackerModel.FK_AnsweredQuestions_People" FromRole="Person" ToRole="AnsweredQuestion" />
+          <Property Name="OwnerID" Type="Int32" />
+          <NavigationProperty Name="Login" Relationship="STrackerModel.FK_People_Login" FromRole="Person" ToRole="Login" />
         </EntityType>
         <EntityType Name="SocalSite">
           <Key>
@@ -528,6 +590,7 @@
           <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Fucking" ToRole="Person" />
           <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
           <NavigationProperty Name="Position" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Fucking" ToRole="Position" />
+          <Property Name="OwnerID" Type="Int32" />
         </EntityType>
         <EntityType Name="Hole">
           <Key>
@@ -557,6 +620,7 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Position" ToRole="Fucking" />
+          <Property Name="OwnerID" Type="Int32" />
         </EntityType>
         <Association Name="FK_EventDetails_Event">
           <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
@@ -751,6 +815,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Events" Relationship="STrackerModel.FK_Event_Login" FromRole="Login" ToRole="Event" />
+          <NavigationProperty Name="People" Relationship="STrackerModel.FK_People_Login" FromRole="Login" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_Event_Login">
+          <End Type="STrackerModel.Login" Role="Login" Multiplicity="0..1" />
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Login">
+          <End Type="STrackerModel.Login" Role="Login" Multiplicity="0..1" />
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -760,6 +860,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="STrackerModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="OrgamNumber" ColumnName="OrgamNumber" />
                 <ScalarProperty Name="Remove" ColumnName="Remove" />
@@ -773,6 +874,7 @@
           <EntitySetMapping Name="EventActions">
             <EntityTypeMapping TypeName="STrackerModel.EventAction">
               <MappingFragment StoreEntitySet="EventActions">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -794,6 +896,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="STrackerModel.Person">
               <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Hide" ColumnName="Hide" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -827,6 +930,7 @@
           <EntitySetMapping Name="Fuckings">
             <EntityTypeMapping TypeName="STrackerModel.Fucking">
               <MappingFragment StoreEntitySet="Fucking">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="BottomPerson" ColumnName="BottomPerson" />
                 <ScalarProperty Name="TopPerson" ColumnName="TopPerson" />
@@ -858,6 +962,7 @@
           <EntitySetMapping Name="Positions">
             <EntityTypeMapping TypeName="STrackerModel.Position">
               <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -883,6 +988,17 @@
               <MappingFragment StoreEntitySet="AskedQuestions">
                 <ScalarProperty Name="Question" ColumnName="Question" />
                 <ScalarProperty Name="Hide" ColumnName="Hide" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="STrackerModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

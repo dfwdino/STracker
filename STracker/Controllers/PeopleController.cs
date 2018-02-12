@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using STracker;
+using STracker.Infrastructure;
 
 namespace STracker.Controllers
 {
+    [StrackerAccess]
     public class PeopleController : Controller
     {
         private STrackerEntities db = new STrackerEntities();
@@ -53,7 +55,8 @@ namespace STracker.Controllers
                 Person tempperson = new Person();
                 tempperson.Name = person.Name;
                 tempperson.Notes = person.Notes;
-                
+                tempperson.OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
+
                 db.People.Add(tempperson);
 
                 foreach (SocalSite item in person.SocalSites)

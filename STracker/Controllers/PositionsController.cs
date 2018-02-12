@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using STracker;
+using STracker.Infrastructure;
 
 namespace STracker.Controllers
 {
+    [StrackerAccess]
     public class PositionsController : Controller
     {
         private STrackerEntities db = new STrackerEntities();
@@ -46,10 +48,12 @@ namespace STracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Type,Removed")] Position position)
+        public ActionResult Create(Position position)
         {
             if (ModelState.IsValid)
             {
+
+                position.OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
                 db.Positions.Add(position);
                 db.SaveChanges();
                 return RedirectToAction("Index");

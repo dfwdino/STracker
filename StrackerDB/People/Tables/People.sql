@@ -4,6 +4,10 @@
     [Notes]   NVARCHAR (MAX) NULL,
     [Hide]    BIT            CONSTRAINT [DF_People_Hide] DEFAULT ((0)) NOT NULL,
     [Deleted] BIT            CONSTRAINT [DF_People_Deleted] DEFAULT ((0)) NOT NULL,
-    CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED ([ID] ASC)
+    [OwnerID] INT            NULL,
+    CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_People_Login] FOREIGN KEY ([OwnerID]) REFERENCES [Stracker].[Login] ([ID])
 );
+
+
 

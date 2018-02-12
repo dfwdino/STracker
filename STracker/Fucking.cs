@@ -20,6 +20,7 @@ namespace STracker
         public int TopPerson { get; set; }
         public int BottomPerson { get; set; }
         public bool Deleted { get; set; }
+        public Nullable<int> OwnerID { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual Person Person { get; set; }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using STracker;
+using STracker.Infrastructure;
 using STracker.Models;
 
 namespace STracker.Controllers
@@ -15,7 +16,7 @@ namespace STracker.Controllers
     {
         private STrackerEntities db = new STrackerEntities();
 
-        // GET: Answers
+        [StrackerAccess]
         public ActionResult Index()
         {
             IList<IGrouping<DateTime,AnsweredQuestion>> test = db.AnsweredQuestions.OrderByDescending(m => m.EventDate).Where(m => m.Deleted == false && m.Hide == false)

@@ -31,6 +31,7 @@ namespace STracker
         public string Notes { get; set; }
         public bool Hide { get; set; }
         public bool Deleted { get; set; }
+        public Nullable<int> OwnerID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventDetail> EventDetails { get; set; }
@@ -46,5 +47,6 @@ namespace STracker
         public virtual ICollection<Fucking> Fuckings1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnsweredQuestion> AnsweredQuestions { get; set; }
+        public virtual Login Login { get; set; }
     }
 }

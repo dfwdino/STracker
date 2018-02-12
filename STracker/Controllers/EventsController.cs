@@ -1,4 +1,5 @@
-﻿using System;
+﻿using STracker.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace STracker.Controllers
 {
+    [StrackerAccess]
     public class EventsController : Controller
     {
         private STrackerEntities db = new STrackerEntities();
@@ -99,8 +101,8 @@ namespace STracker.Controllers
         [HttpPost]
         public ActionResult Create(Models.CreateEvent ce)
         {
-            //ModelState.AddModelError("ce.Date", "some error message");
-            
+            int OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
+
             foreach (var item in ce.EventDetails)
             {
               
@@ -121,6 +123,7 @@ namespace STracker.Controllers
                 stEvent.Notes = ce.Notes;
                 stEvent.OrgamNumber = ce.OrgamNumber;
                 stEvent.OverAllRating = ce.OverAllRating;
+                stEvent.OwnerID = OwnerID;
 
                 db.Events.Add(stEvent);
 

@@ -245,6 +245,7 @@
     <Compile Include="Controllers\AskedQuestionsController.cs" />
     <Compile Include="Controllers\EventActionsController.cs" />
     <Compile Include="Controllers\EventDetailsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PositionsController.cs" />
     <Compile Include="Event.cs">
@@ -263,6 +264,10 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HoleUsed.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Access.cs" />
+    <Compile Include="Login.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AnswersCreateModel.cs" />
@@ -363,6 +368,7 @@
     <Content Include="Views\Answers\Edit.cshtml" />
     <Content Include="Views\Answers\Index.cshtml" />
     <Content Include="Views\Answers\GoodJob.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
