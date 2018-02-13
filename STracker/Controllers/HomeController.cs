@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Collections.Specialized;
+using System.Web.Routing;
 
 namespace STracker.Controllers
 {
@@ -15,8 +16,14 @@ namespace STracker.Controllers
         public ActionResult Index()
         {
 
+            HttpCookie cookie = GetHttpRequest().Cookies["Stacking"];
 
-            return View();
+            if (cookie != null || cookie.HasKeys)
+            {
+                return RedirectToAction("Index","Events",null);
+            }
+
+                return View();
         }
 
         [HttpPost]
@@ -45,6 +52,6 @@ namespace STracker.Controllers
         {
             return System.Web.HttpContext.Current.Request;
         }
-
+        
     }
 }
