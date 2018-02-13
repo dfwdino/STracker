@@ -246,6 +246,7 @@
     <Compile Include="Controllers\EventActionsController.cs" />
     <Compile Include="Controllers\EventDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PositionsController.cs" />
     <Compile Include="Event.cs">
@@ -255,6 +256,9 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EventDetail.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventLocation.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Fucking.cs">
@@ -267,6 +271,9 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Access.cs" />
+    <Compile Include="Location.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
@@ -369,6 +376,11 @@
     <Content Include="Views\Answers\Index.cshtml" />
     <Content Include="Views\Answers\GoodJob.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Locations\Create.cshtml" />
+    <Content Include="Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Locations\Details.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

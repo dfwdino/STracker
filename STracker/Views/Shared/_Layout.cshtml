@@ -45,6 +45,14 @@
                     </li>
 
                     <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Location<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Add", "Create", "Locations", null, null)</li>
+                            <li>@Html.ActionLink("List", "Index", "Locations", null, null)</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Position<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Add", "Create", "Positions", null, null)</li>

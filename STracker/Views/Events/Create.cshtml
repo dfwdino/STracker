@@ -4,6 +4,7 @@
     STrackerEntities db = new STrackerEntities();
     int NumberOfEntries = 0;
     int NumberOfPositions = 0;
+    int NumberOfLocations = 0;
 }
 <!DOCTYPE html>
 
@@ -17,145 +18,166 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false)
-    <div class="container">
+        <div class="container">
 
-        <div class="row" style="margin-left:10px !important">
-            <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date)</div>
-        </div>
-        <br />
+            <div class="row" style="margin-left:10px !important">
+                <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date)</div>
+            </div>
+            <br />
 
-        <div style="margin-left:10px">
-            <div class="row">
-                <div class="col-md-2" style="padding-bottom:5px;">
-                    @Html.Label("Over Rating:")
-                    @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+            <div style="margin-left:10px">
+                <div class="row">
+                    <div class="col-md-2" style="padding-bottom:5px;">
+                        @Html.Label("Over Rating:")
+                        @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                    </div>
+                    <div class="col-md-3" style="padding-bottom:5px;">
+                        @Html.Label("Number of Orgasms:")
+                        @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                    </div>
                 </div>
-                <div class="col-md-3" style="padding-bottom:5px;">
-                    @Html.Label("Number of Orgasms:")
-                    @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+            </div>
+
+            <br />
+
+            <div class="actsposition">
+                <div name="form" id="form">
+
                 </div>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+                    </div>
 
-        <br />
-
-        <div class="actsposition">
-            <div name="form" id="form">
-
-            </div>
-            <div class="row">
-                <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
-                    <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <br />
-
-        <div class="actsposition">
-            <div name="formpositions" id="formpositions">
-
-            </div>
-
-            <div class="row">
-                <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
-                    <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
                 </div>
 
             </div>
-        </div>
-        <br />
 
-        @*<div class="areasoutline">
-            <div class="row" style="margin-top:10px;margin-bottom:10px;">
-                <div class="col" style="margin-left:15px !important">
-                    @foreach (var item in ViewBag.Holes)
-            {
-                <label for="Holes[@item.ID]">
-                    <input style="margin-left:5px" type="checkbox" name="Holes[0].SelectedHoles" id="Holes[@item.ID]" value="@item.ID" />
-                    @item.Area
-                </label>
+
+            <br />
+
+            <div class="actsposition">
+                <div name="formpositions" id="formpositions">
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
+                    </div>
+
+                </div>
+            </div>
+            <br />
+
+            <div class="actsposition">
+                <div name="formlocation" id="formlocation">
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewlocation" name="addnewlocation" value="New Location" />
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div style="margin-left:25px">
+                <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
+
+                <div class="row"><div class="col">@Html.TextAreaFor(m => m.Notes, 10, 45, null)</div></div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
     }
-                </div>
+
+    <div name="formoutline" id="formoutline" style="display:none">
+        <div name="entryform" id="entryform" class="acts">
+            <br />
+            <div class="row">
+                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
             </div>
-        </div>*@
-
-
-        <div style="margin-left:25px">
-            <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
-
-            <div class="row"><div class="col">@Html.TextAreaFor(m => m.Notes, 10, 45, null)</div></div>
-        </div>
-        <br />
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-        }
-
-        <div name="formoutline" id="formoutline" style="display:none">
-            <div name="entryform" id="entryform" class="acts">
-                <br />
-                <div class="row">
-                    <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-12">
-                        @foreach (var item in ViewBag.EventAction)
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.EventAction)
                     {
                         <label for="Acts[@item.ID][@NumberOfEntries]">
                             <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction" id="Acts[@item.ID][@NumberOfEntries]" value="@item.ID" />
                             @item.Name
                         </label>
-                }
-                    </div>
+                    }
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-2">to @Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].ToWho, new SelectList(ViewBag.People, "ID", "Name"))</div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-2 deleteme" id="remove">remove entry</div>
-                </div>
-
             </div>
-        </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">to @Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].ToWho, new SelectList(ViewBag.People, "ID", "Name"))</div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 deleteme" id="remove">remove entry</div>
+            </div>
 
-        <div name="sexoutline" id="sexoutline" style="display:none;">
-            <div name="sexpositions" id="sexpositions" class="sexp">
-                <br />
-                <div class="row">
-                    <div class="col" style="margin-left:15px">
-                        @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
-                        @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
-                    </div>
+        </div>
+    </div>
+
+    <div name="sexoutline" id="sexoutline" style="display:none;">
+        <div name="sexpositions" id="sexpositions" class="sexp">
+            <br />
+            <div class="row">
+                <div class="col" style="margin-left:15px">
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-12">
-                        @foreach (var item in ViewBag.Positions)
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.Positions)
                     {
                         <label for="Positions[@item.ID][@NumberOfPositions]">
                             <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition" id="Positions[@item.ID][@NumberOfPositions]" value="@item.ID" />
                             @item.Type
                         </label>
-                }
-                    </div>
+                    }
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-2 Fdeleteme" id="remove">remove positions</div>
-                </div>
-                <br />
             </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 Fdeleteme" id="remove">remove positions</div>
+            </div>
+            <br />
         </div>
+    </div>
+
+    <div name="locationline" id="locationline" style="display:none;">
+        <div name="eventlocations" id="eventlocations" class="elocation">
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.Locations)
+                    {
+                        <label for="Locations[@item.ID][@NumberOfLocations]">
+                            <input style="margin-left:5px" type="checkbox" name="Locations[@NumberOfLocations].SelectedLocations" id="Locations[@item.ID][@NumberOfLocations]" value="@item.ID" />
+                            @item.Name
+                        </label>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 Ldeleteme" id="remove">remove location</div>
+            </div>
+            <br />
+        </div>
+    </div>
 
 </body>
 </html>
@@ -163,6 +185,7 @@
 <script>
     var NumberOfEntries = 0;
     var NumberOfPositions = 0;
+    var NumberOfLocations = 0;
 
     $("#addnewentry").click(function () {
         addActions();
@@ -172,9 +195,14 @@
         addPosition();
     });
 
+    $("#addnewlocation").click(function () {
+        addLocation();
+    });
+
     $(function () {
         addActions();
         addPosition()
+        addLocation()
     });
 
     $('form').on('click', '.deleteme', function () {
@@ -183,6 +211,11 @@
 
     $('form').on('click', '.Fdeleteme', function () {
         document.getElementById('formpositions').removeChild(document.getElementById("sexpositions_" + this.id.split('_')[1]));
+    });
+
+    $('form').on('click', '.Ldeleteme', function () {
+        document.getElementById('formlocation').removeChild(document.getElementById("eventlocations_" + this.id.split('_')[1]));
+     
     });
 
 
@@ -221,6 +254,24 @@
 
     }
 
+    function addLocation() {
+        
+        var locationline = "";
+        if (NumberOfLocations > 0) {
+            locationline = "<hr>"
+        }
+        locationline += $('#locationline').html();
+        locationline = locationline.replace(/\[0]/g, "[" + NumberOfLocations + "]")
+            .replace(/\"eventlocations"/g, "eventlocations_" + NumberOfLocations)
+            .replace("remove", "remove_" + NumberOfLocations);
+
+        $("<hr>").appendTo(locationline);
+        $(locationline).appendTo("#formlocation");
+
+        NumberOfLocations++;
+        
+    }
+
 </script>
 
 <style>
@@ -251,6 +302,14 @@
         margin-bottom: 10px;
     }
 
+    .elocation {
+        border-style: solid;
+        border-color: brown;
+        margin: 10px 10px 10px 10px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
     .areasoutline {
         border-style: solid;
         border-color: black;
@@ -259,7 +318,7 @@
         margin-bottom: 10px;
     }
 
-    .Fdeleteme, .deleteme {
+    .Fdeleteme, .deleteme, .Ldeleteme {
         text-transform: uppercase;
         color: red;
     }

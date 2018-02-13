@@ -60,26 +60,23 @@
                 }
             </div>
 
-            @*<h3>Area's Fucked</h3>
-            <div class="sexp" style="">
-                @if (item.HolesUsed != null)
-                {
-                    <div style="margin-top:10px;margin-left:5px;">
-                        @foreach (var holeused in item.HolesUsed.Where(m => m.Hole != null))
-                        {
-                            <div class="row" style="margin-left:5px;">
-                                <div class="col-12">@holeused.Hole.Area</div>
-                            </div>
-                        }
-                    </div>
-                }
+            <h3>Location</h3>
+            <div class="location" style="">
+                @if (item.Locations != null)
+    {<div style="margin-top:10px;margin-left:5px;">
+
+                <div class="row" style="margin-left:5px;">
+                    <div class="col-12">@item.Locations</div>
+                </div>
+               
+            </div> }
                 else
                 {<div class="row" style="margin-left:5px;margin-top:10px">
                         <div class="col-12">NONE.</div>
                     </div>
                     <span></span>
                 }
-            </div>*@
+            </div>
 
 
             <br />
@@ -109,15 +106,18 @@
     label {
         font-weight: bold;
     }
+
     .sexp {
         padding-bottom: 20px;
         /*border: 1px solid red;*/
     }
+
     .acts {
         padding-bottom: 20px;
         /*border: 1px solid black*/
     }
-    h3{
+
+    h3 {
         border-bottom: 1px solid black;
     }
 </style>

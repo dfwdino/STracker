@@ -1,117 +1,119 @@
-﻿using STracker.Infrastructure;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using STracker;
+using STracker.Infrastructure;
 
 namespace STracker.Controllers
 {
     [StrackerAccess]
-    public class PositionsController : Controller
+    public class LocationsController : Controller
     {
         private STrackerEntities db = new STrackerEntities();
 
-        // GET: Positions
+        // GET: Locations
         public ActionResult Index()
         {
-            return View(db.Positions.OrderBy(m => m.Type).ToList());
+            return View(db.Locations.OrderBy(m => m.Name).Where(m => m.Deleted == false).ToList());
         }
 
-        // GET: Positions/Details/5
+        // GET: Locations/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Position position = db.Positions.Find(id);
-            if (position == null)
+            Location location = db.Locations.Find(id);
+            if (location == null)
             {
                 return HttpNotFound();
             }
-            return View(position);
+            return View(location);
         }
 
-        // GET: Positions/Create
+        // GET: Locations/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Positions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // POST: Locations/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Position position)
+        public ActionResult Create([Bind(Include = "ID,Deleted,Name")] Location location)
         {
             if (ModelState.IsValid)
             {
-                position.OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
-                db.Positions.Add(position);
+                db.Locations.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(position);
+            return View(location);
         }
 
-        // GET: Positions/Edit/5
+        // GET: Locations/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Position position = db.Positions.Find(id);
-            if (position == null)
+            Location location = db.Locations.Find(id);
+            if (location == null)
             {
                 return HttpNotFound();
             }
-            return View(position);
+            return View(location);
         }
 
-        // POST: Positions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // POST: Locations/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Type,Removed")] Position position)
+        public ActionResult Edit([Bind(Include = "ID,Deleted,Name")] Location location)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(position).State = EntityState.Modified;
+                db.Entry(location).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(position);
+            return View(location);
         }
 
-        // GET: Positions/Delete/5
+        // GET: Locations/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Position position = db.Positions.Find(id);
-            if (position == null)
+            Location location = db.Locations.Find(id);
+            if (location == null)
             {
                 return HttpNotFound();
             }
-            return View(position);
+            return View(location);
         }
 
-        // POST: Positions/Delete/5
+        // POST: Locations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Position position = db.Positions.Find(id);
-            position.Deleted = false;
-            //db.Positions.Remove(position);
+            Location location = db.Locations.Find(id);
+            //db.Locations.Remove(location);
+            location.Deleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

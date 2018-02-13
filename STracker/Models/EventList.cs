@@ -18,7 +18,10 @@ namespace STracker.Models
         public int? OrgamNumber { get; set; }
 
         public List<EventListDetails> EventActs { get; set; }
+
         public List<FuckingList> Fucks { get; set; }
-        public List<HoleUsed> HolesUsed { get; set; }
+
+        public string Locations { get; set; }
+
     }
 }

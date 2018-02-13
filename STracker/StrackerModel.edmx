@@ -60,6 +60,23 @@
           <Property Name="ToWho" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="EventLocations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="People">
           <Key>
             <PropertyRef Name="ID" />
@@ -196,6 +213,30 @@
             </Principal>
             <Dependent Role="EventDetails">
               <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventLocations_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EventLocations" Type="Self.EventLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventLocations">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventLocations_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="EventLocations" Type="Self.EventLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventLocations">
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -337,6 +378,8 @@
           <EntitySet Name="Event" EntityType="Self.Event" Schema="Events" store:Type="Tables" />
           <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="Events" store:Type="Tables" />
           <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="Events" store:Type="Tables" />
+          <EntitySet Name="EventLocations" EntityType="Self.EventLocations" Schema="Events" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="Events" store:Type="Tables" />
           <EntitySet Name="People" EntityType="Self.People" Schema="People" store:Type="Tables" />
           <EntitySet Name="SocalSites" EntityType="Self.SocalSites" Schema="People" store:Type="Tables" />
           <EntitySet Name="STIREsults" EntityType="Self.STIREsults" Schema="People" store:Type="Tables" />
@@ -364,6 +407,14 @@
           <AssociationSet Name="FK_EventDetails_Event" Association="Self.FK_EventDetails_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventDetails" EntitySet="EventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventLocations_Event" Association="Self.FK_EventLocations_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="EventLocations" EntitySet="EventLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventLocations_Locations" Association="Self.FK_EventLocations_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="EventLocations" EntitySet="EventLocations" />
           </AssociationSet>
           <AssociationSet Name="FK_Fucking_BottomPerson" Association="Self.FK_Fucking_BottomPerson">
             <End Role="People" EntitySet="People" />
@@ -492,6 +543,16 @@
             <End Role="Login" EntitySet="Logins" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
+          <EntitySet Name="EventLocations" EntityType="STrackerModel.EventLocation" />
+          <EntitySet Name="Locations" EntityType="STrackerModel.Location" />
+          <AssociationSet Name="FK_EventLocations_Event" Association="STrackerModel.FK_EventLocations_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventLocation" EntitySet="EventLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventLocations_Locations" Association="STrackerModel.FK_EventLocations_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="EventLocation" EntitySet="EventLocations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -509,6 +570,7 @@
           <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="Event" ToRole="HoleUsed" />
           <Property Name="OwnerID" Type="Int32" />
           <NavigationProperty Name="Login" Relationship="STrackerModel.FK_Event_Login" FromRole="Event" ToRole="Login" />
+          <NavigationProperty Name="EventLocations" Relationship="STrackerModel.FK_EventLocations_Event" FromRole="Event" ToRole="EventLocation" />
         </EntityType>
         <EntityType Name="EventAction">
           <Key>
@@ -851,6 +913,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EventLocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_EventLocations_Event" FromRole="EventLocation" ToRole="Event" />
+          <NavigationProperty Name="Location" Relationship="STrackerModel.FK_EventLocations_Locations" FromRole="EventLocation" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EventLocations" Relationship="STrackerModel.FK_EventLocations_Locations" FromRole="Location" ToRole="EventLocation" />
+        </EntityType>
+        <Association Name="FK_EventLocations_Event">
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="STrackerModel.EventLocation" Role="EventLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventLocation">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventLocations_Locations">
+          <End Type="STrackerModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="STrackerModel.EventLocation" Role="EventLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EventLocation">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -999,6 +1105,25 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLocations">
+            <EntityTypeMapping TypeName="STrackerModel.EventLocation">
+              <MappingFragment StoreEntitySet="EventLocations">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="STrackerModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

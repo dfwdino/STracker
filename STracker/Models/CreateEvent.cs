@@ -29,9 +29,8 @@ namespace STracker.Models
         public IList<SelectListItem> ListToWho { get; set; }
 
         public IList<CreateFuckingList> Fucks { get; set; }
-
-        public IList<HoleModel> Holes { get; set; }
-
+        
+        public IList<Location> Locations { get; set; }
 
     }
 }

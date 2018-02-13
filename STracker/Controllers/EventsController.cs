@@ -75,7 +75,19 @@ namespace STracker.Controllers
                     }
                     
                 }
-                
+
+                foreach (var item in stevent.EventLocations.Where(m => m.Deleted == false))
+                {
+                    if(el.Locations == null)
+                    {
+                        el.Locations = item.Location.Name;
+                    }
+                    else
+                    {
+                        el.Locations += ", " + item.Location.Name;
+                    }
+                }
+
                 el.EventActs.Add(eld);
                 el.Fucks.Add(fl); 
                 listEL.Add(el);
@@ -89,13 +101,14 @@ namespace STracker.Controllers
             List<Person> people = db.People.ToList();
             people.Add(new Person() { ID = 0, Name = "--Select---" });
             
-            ViewBag.People = people.OrderBy(m => m.ID).ToList();
-            ViewBag.EventAction = db.EventActions.ToList().OrderBy(m => m.Name);
-            ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
+            ViewBag.People = people.OrderBy(m => m.ID).Where(m => m.Deleted == false).ToList();
+            ViewBag.EventAction = db.EventActions.OrderBy(m => m.Name).Where(m => m.Deleted == false).ToList();
+            ViewBag.Positions = db.Positions.OrderBy(m => m.Type).Where(m => m.Deleted == false).ToList();
+            ViewBag.Locations = db.Locations.OrderBy(m => m.Name).Where(m => m.Deleted == false).ToList();
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
-            ViewBag.Holes = db.Holes.OrderBy(m => m.Area).ToList();
+            //ViewBag.Holes = db.Holes.OrderBy(m => m.Area).ToList();
 
-            return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1) });
+            return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1), Locations = new List<Location>() });
         }
 
         [HttpPost]
@@ -158,22 +171,23 @@ namespace STracker.Controllers
                         }
                     }
                 }
-                if (ce.Holes != null)
+
+                foreach (var location in ce.Locations)
                 {
-                    foreach (var hole in ce.Holes)
+                    if (location.SelectedLocations != null)
                     {
-                        foreach (var item in hole.SelectedHoles)
+                        foreach (int eventlocation in location.SelectedLocations)
                         {
-                            HoleUsed h = new HoleUsed();
+                            EventLocation el = new EventLocation();
 
-                            h.HoleID = item;
-                            h.EventID = ce.ID;
-
-                            stEvent.HoleUseds.Add(h);
+                            el.EventID = ce.ID;
+                            el.LocationID = eventlocation;
+                          
+                            stEvent.EventLocations.Add(el);
                         }
                     }
                 }
-
+                
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
