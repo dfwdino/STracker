@@ -18,8 +18,8 @@ namespace STracker.Controllers
             List<Models.EventList> listEL = new List<Models.EventList>();
 
             DateTime dt = DateTime.Now.AddMonths(-1);
-
-            foreach (var stevent in db.Events.Where(m => m.Date >= dt && m.Deleted == false).OrderByDescending(m => m.ID))
+            int currentid = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
+            foreach (var stevent in db.Events.Where(m => m.Date >= dt && m.Deleted == false && m.OwnerID == currentid).OrderByDescending(m => m.ID))
             {
                 Models.EventList el = new Models.EventList();
                 el.EventActs = new List<Models.EventListDetails>();
@@ -100,11 +100,13 @@ namespace STracker.Controllers
         {
             List<Person> people = db.People.ToList();
             people.Add(new Person() { ID = 0, Name = "--Select---" });
-            
-            ViewBag.People = people.OrderBy(m => m.ID).Where(m => m.Deleted == false).ToList();
-            ViewBag.EventAction = db.EventActions.OrderBy(m => m.Name).Where(m => m.Deleted == false).ToList();
-            ViewBag.Positions = db.Positions.OrderBy(m => m.Type).Where(m => m.Deleted == false).ToList();
-            ViewBag.Locations = db.Locations.OrderBy(m => m.Name).Where(m => m.Deleted == false).ToList();
+
+            int currentuserid = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
+
+            ViewBag.People = people.OrderBy(m => m.ID).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.EventAction = db.EventActions.OrderBy(m => m.Name).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.Positions = db.Positions.OrderBy(m => m.Type).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.Locations = db.Locations.OrderBy(m => m.Name).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             //ViewBag.Holes = db.Holes.OrderBy(m => m.Area).ToList();
 

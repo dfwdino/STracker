@@ -76,6 +76,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnerID" Type="int" />
         </EntityType>
         <EntityType Name="People">
           <Key>
@@ -300,6 +301,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Locations_People">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="Locations" Type="Self.Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_People_Login">
           <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
           <End Role="People" Type="Self.People" Multiplicity="*" />
@@ -436,6 +449,10 @@
             <End Role="Holes" EntitySet="Holes" />
             <End Role="HoleUsed" EntitySet="HoleUsed" />
           </AssociationSet>
+          <AssociationSet Name="FK_Locations_People" Association="Self.FK_Locations_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
           <AssociationSet Name="FK_People_Login" Association="Self.FK_People_Login">
             <End Role="Login" EntitySet="Login" />
             <End Role="People" EntitySet="People" />
@@ -553,6 +570,10 @@
             <End Role="Location" EntitySet="Locations" />
             <End Role="EventLocation" EntitySet="EventLocations" />
           </AssociationSet>
+          <AssociationSet Name="FK_Locations_People" Association="STrackerModel.FK_Locations_People">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Location" EntitySet="Locations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -615,6 +636,7 @@
           <NavigationProperty Name="AnsweredQuestions" Relationship="STrackerModel.FK_AnsweredQuestions_People" FromRole="Person" ToRole="AnsweredQuestion" />
           <Property Name="OwnerID" Type="Int32" />
           <NavigationProperty Name="Login" Relationship="STrackerModel.FK_People_Login" FromRole="Person" ToRole="Login" />
+          <NavigationProperty Name="Locations" Relationship="STrackerModel.FK_Locations_People" FromRole="Person" ToRole="Location" />
         </EntityType>
         <EntityType Name="SocalSite">
           <Key>
@@ -932,6 +954,8 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EventLocations" Relationship="STrackerModel.FK_EventLocations_Locations" FromRole="Location" ToRole="EventLocation" />
+          <Property Name="OwnerID" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Locations_People" FromRole="Location" ToRole="Person" />
         </EntityType>
         <Association Name="FK_EventLocations_Event">
           <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
@@ -954,6 +978,18 @@
             </Principal>
             <Dependent Role="EventLocation">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locations_People">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="STrackerModel.Location" Role="Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1123,6 +1159,7 @@
           <EntitySetMapping Name="Locations">
             <EntityTypeMapping TypeName="STrackerModel.Location">
               <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

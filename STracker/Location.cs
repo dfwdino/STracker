@@ -23,8 +23,11 @@ namespace STracker
         public int ID { get; set; }
         public bool Deleted { get; set; }
         public string Name { get; set; }
-    
+        public Nullable<int> OwnerID { get; set; }
+        public List<int> SelectedLocations { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventLocation> EventLocations { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

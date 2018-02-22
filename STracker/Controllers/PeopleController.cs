@@ -56,16 +56,14 @@ namespace STracker.Controllers
                 tempperson.Name = person.Name;
                 tempperson.Notes = person.Notes;
                 tempperson.OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
-
+                
                 db.People.Add(tempperson);
 
                 foreach (SocalSite item in person.SocalSites)
                 {
                     tempperson.SocalSites.Add(item);
                 }
-
-
-
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

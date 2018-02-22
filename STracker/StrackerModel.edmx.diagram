@@ -39,6 +39,7 @@
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Event" />
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Locations" />
         <AssociationConnector Association="STrackerModel.FK_Locations_People" />
+        <AssociationConnector Association="STrackerModel.FK_Locations_People" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

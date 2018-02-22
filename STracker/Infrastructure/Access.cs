@@ -14,7 +14,7 @@ namespace STracker.Infrastructure
             base.OnActionExecuting(filterContext);
 
             HttpCookie cookie = HttpContext.Current.Request.Cookies["Stacking"];
-
+           
             if (cookie == null || !cookie.HasKeys)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
