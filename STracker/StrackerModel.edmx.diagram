@@ -38,6 +38,7 @@
         <EntityTypeShape EntityType="STrackerModel.Location" Width="1.5" PointX="11.75" PointY="14.625" />
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Event" />
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Locations" />
+        <AssociationConnector Association="STrackerModel.FK_Locations_People" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

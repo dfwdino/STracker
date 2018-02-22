@@ -18,7 +18,7 @@ namespace STracker.Controllers
 
             HttpCookie cookie = GetHttpRequest().Cookies["Stacking"];
 
-            if (cookie != null || cookie.HasKeys)
+            if (cookie != null || cookie?.HasKeys == true)
             {
                 return RedirectToAction("Index","Events",null);
             }

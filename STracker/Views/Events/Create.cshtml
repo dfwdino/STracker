@@ -110,7 +110,8 @@
                     @foreach (var item in ViewBag.EventAction)
                     {
                         <label for="Acts[@item.ID][@NumberOfEntries]">
-                            <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction" id="Acts[@item.ID][@NumberOfEntries]" value="@item.ID" />
+                            <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction" 
+                                   id="Acts[@item.ID][@NumberOfEntries]" value="@item.ID" />
                             @item.Name
                         </label>
                     }
@@ -143,7 +144,8 @@
                     @foreach (var item in ViewBag.Positions)
                     {
                         <label for="Positions[@item.ID][@NumberOfPositions]">
-                            <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition" id="Positions[@item.ID][@NumberOfPositions]" value="@item.ID" />
+                            <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition" 
+                                   id="Positions[@item.ID][@NumberOfPositions]" value="@item.ID" />
                             @item.Type
                         </label>
                     }
@@ -165,7 +167,8 @@
                     @foreach (var item in ViewBag.Locations)
                     {
                         <label for="Locations[@item.ID][@NumberOfLocations]">
-                            <input style="margin-left:5px" type="checkbox" name="Locations[@NumberOfLocations].SelectedLocations" id="Locations[@item.ID][@NumberOfLocations]" value="@item.ID" />
+                            <input style="margin-left:5px" type="checkbox" name="Locations[@NumberOfLocations].SelectedLocations" 
+                                    id="Locations[@item.ID][@NumberOfLocations]" value="@item.ID" />
                             @item.Name
                         </label>
                     }
