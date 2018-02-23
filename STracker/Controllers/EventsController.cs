@@ -110,7 +110,7 @@ namespace STracker.Controllers
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             //ViewBag.Holes = db.Holes.OrderBy(m => m.Area).ToList();
 
-            return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1), Locations = new List<Location>() });
+            return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1)});
         }
 
         [HttpPost]

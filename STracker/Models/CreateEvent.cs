@@ -30,7 +30,7 @@ namespace STracker.Models
 
         public IList<CreateFuckingList> Fucks { get; set; }
         
-        public IList<Location> Locations { get; set; }
+        public IList<LocationsCreate> Locations { get; set; }
 
     }
 }
