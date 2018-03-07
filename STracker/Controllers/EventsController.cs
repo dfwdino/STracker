@@ -174,22 +174,25 @@ namespace STracker.Controllers
                     }
                 }
 
-                foreach (var location in ce.Locations)
+                if (ce.Locations != null)
                 {
-                    if (location.SelectedLocations != null)
+                    foreach (var location in ce.Locations)
                     {
-                        foreach (int eventlocation in location.SelectedLocations)
+                        if (location.SelectedLocations != null)
                         {
-                            EventLocation el = new EventLocation();
+                            foreach (int eventlocation in location.SelectedLocations)
+                            {
+                                EventLocation el = new EventLocation();
 
-                            el.EventID = ce.ID;
-                            el.LocationID = eventlocation;
-                          
-                            stEvent.EventLocations.Add(el);
+                                el.EventID = ce.ID;
+                                el.LocationID = eventlocation;
+
+                                stEvent.EventLocations.Add(el);
+                            }
                         }
                     }
                 }
-                
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");

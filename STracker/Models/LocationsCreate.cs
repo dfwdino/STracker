@@ -8,13 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace STracker.Models
 {
 	public class LocationsCreate
-    {
-
-		public LocationsCreate()
-		{
-			
-		}
-        
+    {	
         
         [DisplayName("Deleted")]
         public bool Deleted { get; set; }
