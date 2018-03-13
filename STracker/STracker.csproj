@@ -207,6 +207,10 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\t4\Enums.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Enums.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\t4\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models.cs</LastGenOutput>
@@ -298,6 +302,11 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\t4\Enums.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Enums.tt</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\t4\Models.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
