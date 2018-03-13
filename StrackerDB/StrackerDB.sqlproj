@@ -93,6 +93,7 @@
     <Build Include="Security\Stracker.sql" />
     <Build Include="Events\Tables\Locations.sql" />
     <Build Include="Events\Tables\EventLocations.sql" />
+    <Build Include="Stracker\Tables\Logging.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />

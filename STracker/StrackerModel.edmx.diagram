@@ -28,7 +28,7 @@
         <AssociationConnector Association="STrackerModel.FK_Fucking_Positions" />
         <AssociationConnector Association="STrackerModel.FK_HoleUsed_Holes" />
         <EntityTypeShape EntityType="STrackerModel.AnsweredQuestion" Width="1.5" PointX="14.25" PointY="0.5" />
-        <EntityTypeShape EntityType="STrackerModel.AskedQuestion" Width="1.5" PointX="3.375" PointY="1" />
+        <EntityTypeShape EntityType="STrackerModel.AskedQuestion" Width="1.5" PointX="12.5" PointY="0.5" />
         <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_AskedQuestions" />
         <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_People" />
         <EntityTypeShape EntityType="STrackerModel.Login" Width="1.5" PointX="15.625" PointY="4.25" />
@@ -39,7 +39,7 @@
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Event" />
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Locations" />
         <AssociationConnector Association="STrackerModel.FK_Locations_People" />
-        <AssociationConnector Association="STrackerModel.FK_Locations_People" />
+        <EntityTypeShape EntityType="STrackerModel.Logging" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

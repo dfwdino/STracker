@@ -147,6 +147,19 @@
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="OwnerID" Type="int" />
         </EntityType>
+        <EntityType Name="Logging">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="20" />
+          <Property Name="ControllerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionParameters" Type="nvarchar(max)" />
+          <Property Name="AbsoluteUri" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="ID" />
@@ -400,6 +413,7 @@
           <EntitySet Name="Holes" EntityType="Self.Holes" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="HoleUsed" EntityType="Self.HoleUsed" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="Logging" EntityType="Self.Logging" Schema="Stracker" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="Stracker" store:Type="Tables" />
           <AssociationSet Name="FK_ActionsToEventActions" Association="Self.FK_ActionsToEventActions">
             <End Role="EventActions" EntitySet="EventActions" />
@@ -574,6 +588,7 @@
             <End Role="Person" EntitySet="People" />
             <End Role="Location" EntitySet="Locations" />
           </AssociationSet>
+          <EntitySet Name="Loggings" EntityType="STrackerModel.Logging" />
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -993,6 +1008,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Logging">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IPAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AbsoluteUri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1162,6 +1190,20 @@
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loggings">
+            <EntityTypeMapping TypeName="STrackerModel.Logging">
+              <MappingFragment StoreEntitySet="Logging">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="AbsoluteUri" ColumnName="AbsoluteUri" />
+                <ScalarProperty Name="ActionParameters" ColumnName="ActionParameters" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
