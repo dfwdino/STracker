@@ -13,9 +13,12 @@ namespace STracker.Infrastructure
         {
             base.OnActionExecuting(filterContext);
 
+            var url = HttpContext.Current.Request.Url.ToString();
+
             HttpCookie cookie = HttpContext.Current.Request.Cookies["Stacking"];
-           
-            if (cookie == null || !cookie.HasKeys)
+          
+ 
+            if ((cookie == null || !cookie.HasKeys) && url.ToLower().IndexOf("Answers/Create/".ToLower()) >= 0)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {

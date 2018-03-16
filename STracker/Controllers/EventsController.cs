@@ -1,6 +1,7 @@
 ﻿using STracker.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -132,69 +133,75 @@ namespace STracker.Controllers
 
             if (ModelState.IsValid)
             {
-                STracker.Event stEvent = new Event();
 
-                stEvent.Date = ce.Date;
-                stEvent.Notes = ce.Notes;
-                stEvent.OrgamNumber = ce.OrgamNumber;
-                stEvent.OverAllRating = ce.OverAllRating;
-                stEvent.OwnerID = OwnerID;
+                    db.Database.Log = Console.Write;
 
-                db.Events.Add(stEvent);
+                    STracker.Event stEvent = new Event();
 
-                foreach (var item in ce.EventDetails)
-                {
-                    foreach (int EventAction in item.SelectedAction)
+                    stEvent.Date = ce.Date;
+                    stEvent.Notes = ce.Notes;
+                    stEvent.OrgamNumber = ce.OrgamNumber;
+                    stEvent.OverAllRating = ce.OverAllRating;
+                    stEvent.OwnerID = OwnerID;
+
+
+                    db.Events.Add(stEvent);
+                    db.Entry(stEvent).State = EntityState.Added;
+
+                    foreach (var item in ce.EventDetails)
                     {
-                        EventDetail ed = new EventDetail();
-
-                        ed.WhoDid = item.WhoDid;
-                        ed.ToWho = item.ToWho;
-                        ed.ActionDone = EventAction;
-
-                        stEvent.EventDetails.Add(ed);
-                    }
-
-                }
-
-                foreach (var fuck in ce.Fucks)
-                {
-                    if (fuck.SelectedPosition != null)
-                    {
-                        foreach (int fuckposition in fuck.SelectedPosition)
+                        foreach (int EventAction in item.SelectedAction)
                         {
-                            Fucking f = new Fucking();
+                            EventDetail ed = new EventDetail();
 
-                            f.TopPerson = fuck.TopPerson;
-                            f.BottomPerson = fuck.BottomPerson;
-                            f.PoistionID = fuckposition;
+                            ed.WhoDid = item.WhoDid;
+                            ed.ToWho = item.ToWho;
+                            ed.ActionDone = EventAction;
 
-                            stEvent.Fuckings.Add(f);
+                            stEvent.EventDetails.Add(ed);
                         }
+
                     }
-                }
 
-                if (ce.Locations != null)
-                {
-                    foreach (var location in ce.Locations)
+                    foreach (var fuck in ce.Fucks)
                     {
-                        if (location.SelectedLocations != null)
+                        if (fuck.SelectedPosition != null)
                         {
-                            foreach (int eventlocation in location.SelectedLocations)
+                            foreach (int fuckposition in fuck.SelectedPosition)
                             {
-                                EventLocation el = new EventLocation();
+                                Fucking f = new Fucking();
 
-                                el.EventID = ce.ID;
-                                el.LocationID = eventlocation;
+                                f.TopPerson = fuck.TopPerson;
+                                f.BottomPerson = fuck.BottomPerson;
+                                f.PoistionID = fuckposition;
 
-                                stEvent.EventLocations.Add(el);
+                                stEvent.Fuckings.Add(f);
                             }
                         }
                     }
-                }
 
-                db.SaveChanges();
+                    if (ce.Locations != null)
+                    {
+                        foreach (var location in ce.Locations)
+                        {
+                            if (location.SelectedLocations != null)
+                            {
+                                foreach (int eventlocation in location.SelectedLocations)
+                                {
+                                    EventLocation el = new EventLocation();
 
+                                    el.EventID = ce.ID;
+                                    el.LocationID = eventlocation;
+
+                                    stEvent.EventLocations.Add(el);
+                                }
+                            }
+                        }
+                    }
+
+                    db.SaveChanges();
+                    ModelState.Clear();
+                
                 return RedirectToAction("Index");
             }
 
@@ -296,18 +303,21 @@ namespace STracker.Controllers
                     }
                 }
 
-                foreach (var item in ce.Fucks)
+                if (ce.Fucks != null)
                 {
-                    foreach (var selectedPosition in item.SelectedPosition)
+                    foreach (var item in ce.Fucks)
                     {
-                        Fucking eventDetail = new Fucking();
+                        foreach (var selectedPosition in item.SelectedPosition)
+                        {
+                            Fucking eventDetail = new Fucking();
 
-                        eventDetail.EventID = ce.ID;
-                        eventDetail.TopPerson = item.TopPerson;
-                        eventDetail.BottomPerson = item.BottomPerson;
-                        eventDetail.PoistionID = selectedPosition;
+                            eventDetail.EventID = ce.ID;
+                            eventDetail.TopPerson = item.TopPerson;
+                            eventDetail.BottomPerson = item.BottomPerson;
+                            eventDetail.PoistionID = selectedPosition;
 
-                        sevent.Fuckings.Add(eventDetail);
+                            sevent.Fuckings.Add(eventDetail);
+                        }
                     }
                 }
 

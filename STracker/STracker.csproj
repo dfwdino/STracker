@@ -291,6 +291,7 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Access.cs" />
+    <Compile Include="Infrastructure\MyEntitiesDbContext.cs" />
     <Compile Include="Infrastructure\PageLogging.cs" />
     <Compile Include="Location.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
