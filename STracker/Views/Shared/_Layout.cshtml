@@ -21,12 +21,15 @@
                 </button>
                 <div>
                     @Html.ActionLink("Home", "Index", "Events", null, new { @class = "navbar-brand" })
-                    @Html.ActionLink("New Event", "Create", "Events", null, new { @class = "navbar-brand" })
+                    @*@Html.ActionLink("New Event", "Create", "Events", null, new { @class = "dropdown" })*@
                 </div>
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
+                    <li class="dropdown-toggle">
+                        <a href=@Url.Action("Create", "Events")>New Events</a>
+                    </li>
 
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
@@ -59,8 +62,12 @@
                             <li>@Html.ActionLink("List", "Index", "Positions", null, null)</li>
                         </ul>
                     </li>
+            
+                    <li class="dropdown-toggle">
+                        <a href=@Url.Action("Index", "Answers")>Answers</a>
+                    </li>
+
                 </ul>
-                <div>@Html.ActionLink("List", "Index", "Answers", null, new { @class = "navbar-brand" })</div>
             </div>
             
         </div>

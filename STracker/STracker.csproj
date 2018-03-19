@@ -267,6 +267,7 @@
     <Compile Include="Controllers\EventDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\LoggingsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PositionsController.cs" />
     <Compile Include="Event.cs">
@@ -412,6 +413,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Loggings\Create.cshtml" />
+    <Content Include="Views\Loggings\Delete.cshtml" />
+    <Content Include="Views\Loggings\Details.cshtml" />
+    <Content Include="Views\Loggings\Edit.cshtml" />
+    <Content Include="Views\Loggings\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
