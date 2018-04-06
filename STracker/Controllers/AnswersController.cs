@@ -19,9 +19,8 @@ namespace STracker.Controllers
         [StrackerAccess]
         public ActionResult Index()
         {
-            IList<IGrouping<DateTime,AnsweredQuestion>> test = db.AnsweredQuestions.OrderByDescending(m => m.EventDate).Where(m => m.Deleted == false && m.Hide == false)
-                                        .GroupBy(m => m.EntryDate).ToList();
-
+            var test = db.AnsweredQuestions.Where(x => x.Deleted == false && x.Hide == false).OrderBy(m => m.EntryDate).GroupBy(x => x.EntryDate).ToList();
+                            
             return View(test);
         }
         

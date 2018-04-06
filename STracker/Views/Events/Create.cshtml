@@ -102,9 +102,8 @@
     }
 
     <div name="formoutline" id="formoutline" style="display:none">
-        <div name="entryform_0" id="entryform_0" class="acts" onclick="Show(this.id)">
-            <div id="entrytext_0" style="display:none">Show</div>
-            <div id="entryhide_0">
+        <div name="entryform__0" id="entryform__0" class="acts" onclick="Show(this.id)">
+            <div id="entrytext__0" style="display:none">Show</div>
                 <br />
                 <div class="row">
                     <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
@@ -114,9 +113,9 @@
                     <div class="col-lg-12">
                         @foreach (var item in ViewBag.EventAction)
             {
-                <label for="Acts[@item.ID][@NumberOfEntries]">
-                    <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction"
-                           id="Acts[@item.ID][@NumberOfEntries]" value="@item.ID" />
+                <label for="Acts[@item.ID][_0]">
+                    <input style="margin-left:5px" type="checkbox" name="EventDetails[_0]"
+                           id="Acts[@item.ID][_0]" value="@item.ID" />
                     @item.Name
                 </label>
 }
@@ -128,12 +127,12 @@
                 </div>
                 <br />
                 <div class="row">
-                    <div class="col-lg-2 deleteme" id="remove">remove entry</div>
+                    <div class="col-lg-2 deleteme" id="remove__0">remove entry</div>
                 </div>
                 <br/>
             </div>
         </div>
-    </div>
+
 
     <div name="sexoutline" id="sexoutline" style="display:none;">
         <div name="sexpositions_0" id="sexpositions_0" class="sexp" onclick="Show(this.id)">
@@ -220,6 +219,7 @@
     });
 
     $('form').on('click', '.deleteme', function () {
+        console.log(this.id);
         document.getElementById('form').removeChild(document.getElementById("entryform_" + this.id.split('_')[1]));
     });
 
@@ -252,9 +252,9 @@
         }
 
 
-        $(hideID).toggle();
-        $(textID).toggle();
-        console.log(textID);
+        //$(hideID).toggle();
+        //$(textID).toggle();
+        //console.log(textID);
 
     }
 
@@ -265,15 +265,18 @@
             formoutline = "<hr>"
         }
         formoutline += $('#formoutline').html();
-        formoutline = formoutline.replace(/\_0/g, "_" + NumberOfEntries);
-            
+        formoutline = formoutline.replace(/\_0/g, NumberOfEntries);
+
+       
 
         $(formoutline).appendTo("#form");
 
-        $("#entryhide_" + (NumberOfEntries - 1)).toggle();
-        $("#entrytext_" + (NumberOfEntries - 1)).toggle();
+        //$("#entryhide_" + (NumberOfEntries - 1)).toggle();
+        //$("#entrytext_" + (NumberOfEntries - 1)).toggle();
 
         NumberOfEntries++;
+
+       
 
     }
 
@@ -289,8 +292,8 @@
         $("<hr>").appendTo(sexoutline);
         $(sexoutline).appendTo("#formpositions");
 
-        $("#sexhide_" + (NumberOfPositions - 1)).toggle();
-        $("#sextext_" + (NumberOfPositions - 1)).toggle();
+        //$("#sexhide_" + (NumberOfPositions - 1)).toggle();
+        //$("#sextext_" + (NumberOfPositions - 1)).toggle();
 
         NumberOfPositions++;
 
@@ -308,8 +311,8 @@
         $("<hr>").appendTo(locationline);
         $(locationline).appendTo("#formlocation");
 
-        $("#eventhide_" + (NumberOfLocations - 1)).toggle();
-        $("#eventtext_" + (NumberOfLocations - 1)).toggle();
+        //$("#eventhide_" + (NumberOfLocations - 1)).toggle();
+        //$("#eventtext_" + (NumberOfLocations - 1)).toggle();
 
         NumberOfLocations++;
         
