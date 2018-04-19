@@ -18,177 +18,167 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false)
-    <div class="container">
+        <div class="container">
 
-        <div class="row" style="margin-left:10px !important">
-            <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date)</div>
-        </div>
-        <br />
-
-        <div class="actsposition">
-            <div name="form" id="form">
-
+            <div class="row" style="margin-left:10px !important">
+                <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date)</div>
             </div>
-            <div class="row">
-                <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
-                    <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+            <br />
+
+            <div style="margin-left:10px">
+                <div class="row">
+                    <div class="col-md-2" style="padding-bottom:5px;">
+                        @Html.Label("Over Rating:")
+                        @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                    </div>
+                    <div class="col-md-3" style="padding-bottom:5px;">
+                        @Html.Label("Number of Orgasms:")
+                        @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="actsposition">
+                <div name="form" id="form">
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewentry" name="addnewentry" value="New Action" />
+                    </div>
+
                 </div>
 
             </div>
 
-        </div>
 
+            <br />
 
-        <br />
+            <div class="actsposition">
+                <div name="formpositions" id="formpositions">
 
-        <div class="actsposition">
-            <div name="formpositions" id="formpositions">
-
-            </div>
-
-            <div class="row">
-                <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
-                    <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
                 </div>
 
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewposition" name="addnewposition" value="New Position" />
+                    </div>
+
+                </div>
             </div>
-        </div>
-        <br />
+            <br />
 
-        <div class="actsposition">
-            <div name="formlocation" id="formlocation">
+            <div class="actsposition">
+                <div name="formlocation" id="formlocation">
 
-            </div>
-
-            @*<div class="row">
-                <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
-                    <input type="button" class="btn btn-default" id="addnewlocation" name="addnewlocation" value="New Location" />
                 </div>
 
-            </div>*@
-        </div>
-        <br />
+                <div class="row">
+                    <div class="col-sm-1" style="margin-left:10px;margin-bottom:5px;">
+                        <input type="button" class="btn btn-default" id="addnewlocation" name="addnewlocation" value="New Location" />
+                    </div>
 
-        <div style="margin-left:10px">
-            <div class="row">
-                <div class="col-md-2" style="padding-bottom:5px;">
-                    @Html.Label("Over Rating:")
-                    @Html.DropDownListFor(m => m.OverAllRating, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
                 </div>
-                <div class="col-md-3" style="padding-bottom:5px;">
-                    @Html.Label("Number of Orgasms:")
-                    @Html.DropDownListFor(m => m.OrgamNumber, Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+            </div>
+
+
+            <div style="margin-left:25px">
+                <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
+
+                <div class="row"><div class="col">@Html.TextAreaFor(m => m.Notes, 10, 45, null)</div></div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Create" class="btn btn-default" />
                 </div>
             </div>
         </div>
-
-        <br />
-
-
-
-        <div style="margin-left:25px">
-            <div class="row"><div class="col">@Html.LabelFor(m => m.Notes):</div> </div>
-
-            <div class="row"><div class="col">@Html.TextAreaFor(m => m.Notes, 10, 45, null)</div></div>
-        </div>
-        <br />
-
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
     }
 
     <div name="formoutline" id="formoutline" style="display:none">
-        <div name="entryform__0" id="entryform__0" class="acts" onclick="Show(this.id)">
-            <div id="entrytext__0" style="display:none">Show</div>
-                <br />
-                <div class="row">
-                    <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-12">
-                        @foreach (var item in ViewBag.EventAction)
-            {
-                <label for="Acts[@item.ID][_0]">
-                    <input style="margin-left:5px" type="checkbox" name="EventDetails[_0]"
-                           id="Acts[@item.ID][_0]" value="@item.ID" />
-                    @item.Name
-                </label>
-}
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-2">to @Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].ToWho, new SelectList(ViewBag.People, "ID", "Name"))</div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-2 deleteme" id="remove__0">remove entry</div>
-                </div>
-                <br/>
+        <div name="entryform" id="entryform" class="acts">
+            <br />
+            <div class="row">
+                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
             </div>
-        </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.EventAction)
+                    {
+                        <label for="Acts[@item.ID][@NumberOfEntries]">
+                            <input style="margin-left:5px" type="checkbox" name="EventDetails[@NumberOfEntries].SelectedAction"
+                                   id="Acts[@item.ID][@NumberOfEntries]" value="@item.ID" />
+                            @item.Name
+                        </label>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">to @Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].ToWho, new SelectList(ViewBag.People, "ID", "Name"))</div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 deleteme" id="remove">remove entry</div>
+            </div>
 
+        </div>
+    </div>
 
     <div name="sexoutline" id="sexoutline" style="display:none;">
-        <div name="sexpositions_0" id="sexpositions_0" class="sexp" onclick="Show(this.id)">
-            <div id="sextext_0" style="display:none">Show</div>
-            <div id="sexhide_0">
-                <br />
-                <div class="row">
-                    <div class="col" style="margin-left:15px">
-                        @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
-                        @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
-                    </div>
+        <div name="sexpositions" id="sexpositions" class="sexp">
+            <br />
+            <div class="row">
+                <div class="col" style="margin-left:15px">
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-12">
-                        @foreach (var item in ViewBag.Positions)
-                {
-                    <label for="Positions[@item.ID][@NumberOfPositions]">
-                        <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition"
-                               id="Positions[@item.ID][@NumberOfPositions]" value="@item.ID" />
-                        @item.Type
-                    </label>
-        }
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-2 Fdeleteme" id="remove">remove positions</div>
-                </div>
-                <br />
             </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.Positions)
+                    {
+                        <label for="Positions[@item.ID][@NumberOfPositions]">
+                            <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition"
+                                   id="Positions[@item.ID][@NumberOfPositions]" value="@item.ID" />
+                            @item.Type
+                        </label>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 Fdeleteme" id="remove">remove positions</div>
+            </div>
+            <br />
         </div>
     </div>
 
     <div name="locationline" id="locationline" style="display:none;">
-        <div name="eventlocations_0" id="eventlocations_0" class="elocation" onclick="Show(this.id)">
-            <div id="eventtext_0" style="display:none">Show</div>
-            <div id="eventhide_0">
-                <br />
-                <div class="row">
-                    <div class="col-lg-12">
-                        @foreach (var item in ViewBag.Locations)
-                {
-                    <label for="Locations[@item.ID][@NumberOfLocations]">
-                        <input style="margin-left:5px" type="checkbox" name="Locations[@NumberOfLocations].SelectedLocations"
-                               id="Locations[@item.ID][@NumberOfLocations]" value="@item.ID" />
-                        @item.Name
-                    </label>
-        }
-                    </div>
+        <div name="eventlocations" id="eventlocations" class="elocation">
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    @foreach (var item in ViewBag.Locations)
+                    {
+                        <label for="Locations[@item.ID][@NumberOfLocations]">
+                            <input style="margin-left:5px" type="checkbox" name="Locations[@NumberOfLocations].SelectedLocations"
+                                   id="Locations[@item.ID][@NumberOfLocations]" value="@item.ID" />
+                            @item.Name
+                        </label>
+                    }
                 </div>
-                <br />
-                @*<div class="row">
-                    <div class="col-lg-2 Ldeleteme" id="remove">remove location</div>
-                </div>*@
             </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 Ldeleteme" id="remove">remove location</div>
+            </div>
+            <br />
         </div>
     </div>
 
@@ -219,7 +209,6 @@
     });
 
     $('form').on('click', '.deleteme', function () {
-        console.log(this.id);
         document.getElementById('form').removeChild(document.getElementById("entryform_" + this.id.split('_')[1]));
     });
 
@@ -229,34 +218,9 @@
 
     $('form').on('click', '.Ldeleteme', function () {
         document.getElementById('formlocation').removeChild(document.getElementById("eventlocations_" + this.id.split('_')[1]));
-     
+
     });
 
-
-    function Show(clickedID) {
-        var hideID = "#";
-        var textID = "#";
-
-        if (clickedID.search("form") > 0) {
-            hideID += clickedID.replace("form", "hide");
-            textID += clickedID.replace("form", "text");
-        }
-        else if (clickedID.search("positions") > 0) {
-            hideID += clickedID.replace("positions", "hide");
-            textID += clickedID.replace("positions", "text");
-        }
-
-        else if (clickedID.search("locations") > 0) {
-            hideID += clickedID.replace("locations", "hide");
-            textID += clickedID.replace("locations", "text");
-        }
-
-
-        //$(hideID).toggle();
-        //$(textID).toggle();
-        //console.log(textID);
-
-    }
 
     function addActions() {
 
@@ -265,18 +229,13 @@
             formoutline = "<hr>"
         }
         formoutline += $('#formoutline').html();
-        formoutline = formoutline.replace(/\_0/g, NumberOfEntries);
-
-       
+        formoutline = formoutline.replace(/\[0]/g, "[" + NumberOfEntries + "]")
+            .replace(/\entryform/g, "entryform_" + NumberOfEntries)
+            .replace("remove", "remove_" + NumberOfEntries)
 
         $(formoutline).appendTo("#form");
 
-        //$("#entryhide_" + (NumberOfEntries - 1)).toggle();
-        //$("#entrytext_" + (NumberOfEntries - 1)).toggle();
-
         NumberOfEntries++;
-
-       
 
     }
 
@@ -287,35 +246,33 @@
             sexoutline = "<hr>"
         }
         sexoutline += $('#sexoutline').html();
-        sexoutline = sexoutline.replace(/\"_0"/g, "_" + NumberOfPositions);
-        
+        sexoutline = sexoutline.replace(/\[0]/g, "[" + NumberOfPositions + "]")
+            .replace(/\"sexpositions"/g, "sexpositions_" + NumberOfPositions)
+            .replace("remove", "remove_" + NumberOfPositions);
+
         $("<hr>").appendTo(sexoutline);
         $(sexoutline).appendTo("#formpositions");
-
-        //$("#sexhide_" + (NumberOfPositions - 1)).toggle();
-        //$("#sextext_" + (NumberOfPositions - 1)).toggle();
 
         NumberOfPositions++;
 
     }
 
     function addLocation() {
-        
+
         var locationline = "";
         if (NumberOfLocations > 0) {
             locationline = "<hr>"
         }
         locationline += $('#locationline').html();
-        locationline = locationline.replace(/\"_0"/g, "_" + NumberOfLocations);
+        locationline = locationline.replace(/\[0]/g, "[" + NumberOfLocations + "]")
+            .replace(/\"eventlocations"/g, "eventlocations_" + NumberOfLocations)
+            .replace("remove", "remove_" + NumberOfLocations);
 
         $("<hr>").appendTo(locationline);
         $(locationline).appendTo("#formlocation");
 
-        //$("#eventhide_" + (NumberOfLocations - 1)).toggle();
-        //$("#eventtext_" + (NumberOfLocations - 1)).toggle();
-
         NumberOfLocations++;
-        
+
     }
 
 </script>
@@ -327,14 +284,13 @@
     }
 
     .actsposition {
-        border-style: solid;
-        border-color: #000000;
+        /*border-style: solid;
+        border-color: #000000;*/
     }
 
     .acts {
         border-style: solid;
         border-color: #0094ff;
-        
         margin: 10px 10px 10px 10px;
         padding-left: 10px;
     }
@@ -343,17 +299,16 @@
         border-style: solid;
         border-color: red;
         margin: 10px 10px 10px 10px;
-        
         padding-left: 10px;
         margin-bottom: 10px;
     }
 
     .elocation {
-        /*border-style: solid;
-        border-color: brown;*/
+        border-style: solid;
+        border-color: brown;
         margin: 10px 10px 10px 10px;
-        /*padding-left: 10px;*/
-        
+        padding-left: 10px;
+        margin-bottom: 10px;
     }
 
     .areasoutline {
@@ -369,9 +324,8 @@
         color: red;
     }
 
-    #Notes{
-        column-width:50;
-
+    #Notes {
+        column-width: 50;
     }
     /*[type=checkbox]:after {
         content: attr(value);

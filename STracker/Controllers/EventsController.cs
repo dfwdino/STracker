@@ -119,10 +119,12 @@ namespace STracker.Controllers
         {
             int OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
 
+            
+
             foreach (var item in ce.EventDetails)
             {
-              
-              if(item.ToWho == 0 || item.WhoDid == 0)
+             
+                if (item.ToWho == 0 || item.WhoDid == 0)
               {
                     ModelState.AddModelError("ce.EventDetails", "People are missing from the Actions");
                     break;
