@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Collections.Specialized;
 using System.Web.Routing;
+using System.Text;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace STracker.Controllers
 {
@@ -29,10 +32,17 @@ namespace STracker.Controllers
         [HttpPost]
         public ActionResult Index(Login login)
         {
-
-            Login user = db.Logins.Where(m => m.UserName == login.UserName && m.Password == login.Password).SingleOrDefault();
+            Login user = db.Logins.Where(m => m.UserName == login.UserName).SingleOrDefault();
+          
             if (user != null)
             {
+                if (!VerifyPassword(login.Password,user.Hash,user.Salt))
+                {
+                    ModelState.AddModelError(login.UserName, "Can't find user");
+                    return View();
+                }
+
+
                 HttpCookie siteCookie = new HttpCookie("Stacking");
 
                 siteCookie.Values.Add("HasAccess", "true");
@@ -43,10 +53,18 @@ namespace STracker.Controllers
                 return RedirectToAction("Index","Events");
             }
 
-            ModelState.AddModelError(login.UserName, "Can't find user");
+           
 
             return View();
         }
+
+       public bool VerifyPassword(string password, string hash, string salt){
+            var saltBytes = Convert.FromBase64String(salt);
+            var rfc289 = new Rfc2898DeriveBytes(password, saltBytes, 10000);
+            return Convert.ToBase64String(rfc289.GetBytes(256)) == hash;
+        }
+
+
 
         public static HttpRequest GetHttpRequest()
         {

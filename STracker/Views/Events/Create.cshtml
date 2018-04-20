@@ -102,7 +102,7 @@
         <div name="entryform" id="entryform" class="acts">
             <br />
             <div class="row">
-                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name")) did these things</div>
+                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name"),new { required = "required" }) did these things</div>
             </div>
             <br />
             <div class="row">

@@ -31,15 +31,15 @@
         <EntityTypeShape EntityType="STrackerModel.AskedQuestion" Width="1.5" PointX="12.5" PointY="0.5" />
         <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_AskedQuestions" />
         <AssociationConnector Association="STrackerModel.FK_AnsweredQuestions_People" />
-        <EntityTypeShape EntityType="STrackerModel.Login" Width="1.5" PointX="15.625" PointY="4.25" />
-        <AssociationConnector Association="STrackerModel.FK_Event_Login" />
-        <AssociationConnector Association="STrackerModel.FK_People_Login" />
         <EntityTypeShape EntityType="STrackerModel.EventLocation" Width="1.5" PointX="11.625" PointY="12.125" />
         <EntityTypeShape EntityType="STrackerModel.Location" Width="1.5" PointX="11.75" PointY="14.625" />
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Event" />
         <AssociationConnector Association="STrackerModel.FK_EventLocations_Locations" />
         <AssociationConnector Association="STrackerModel.FK_Locations_People" />
         <EntityTypeShape EntityType="STrackerModel.Logging" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="STrackerModel.Login" Width="1.5" PointX="14.25" PointY="4.625" />
+        <AssociationConnector Association="STrackerModel.FK_Event_Login" />
+        <AssociationConnector Association="STrackerModel.FK_People_Login" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

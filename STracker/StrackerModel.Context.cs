@@ -37,9 +37,9 @@ namespace STracker
         public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<AnsweredQuestion> AnsweredQuestions { get; set; }
         public virtual DbSet<AskedQuestion> AskedQuestions { get; set; }
-        public virtual DbSet<Login> Logins { get; set; }
         public virtual DbSet<EventLocation> EventLocations { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Logging> Loggings { get; set; }
+        public virtual DbSet<Login> Logins { get; set; }
     }
 }

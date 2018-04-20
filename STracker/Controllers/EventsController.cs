@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -119,26 +120,15 @@ namespace STracker.Controllers
         {
             int OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
 
-            
+            int test = ce.EventDetails.Where(m => m.ToWho == 0 || m.WhoDid == 0).Count();
 
-            foreach (var item in ce.EventDetails)
-            {
-             
-                if (item.ToWho == 0 || item.WhoDid == 0)
-              {
-                    ModelState.AddModelError("ce.EventDetails", "People are missing from the Actions");
-                    break;
-              }
-              
+            if(test>0){
+                ModelState.AddModelError("ce.EventDetails", "People are missing from the Actions");
             }
-
 
             if (ModelState.IsValid)
             {
-
-                    db.Database.Log = Console.Write;
-
-                    STracker.Event stEvent = new Event();
+                 STracker.Event stEvent = new Event();
 
                     stEvent.Date = ce.Date;
                     stEvent.Notes = ce.Notes;
@@ -156,8 +146,8 @@ namespace STracker.Controllers
                         {
                             EventDetail ed = new EventDetail();
 
-                            ed.WhoDid = item.WhoDid;
-                            ed.ToWho = item.ToWho;
+                            ed.WhoDid = (int)item.WhoDid;
+                            ed.ToWho = (int)item.ToWho;
                             ed.ActionDone = EventAction;
 
                             stEvent.EventDetails.Add(ed);
@@ -210,10 +200,16 @@ namespace STracker.Controllers
             List<Person> people = db.People.ToList();
             people.Add(new Person() { ID = 0, Name = "--Select---" });
             ViewBag.People = people.OrderBy(m => m.ID).ToList();
-            ViewBag.EventAction = db.EventActions.ToList().OrderBy(m => m.Name);
-            ViewBag.Positions = db.Positions.ToList().OrderBy(m => m.Type);
 
-            ViewBag.Selected.EventAction = ce.EventDetails;
+            int currentuserid = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
+            ViewBag.EventAction = db.EventActions.OrderBy(m => m.Name).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.Positions = db.Positions.OrderBy(m => m.Type).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.Locations = db.Locations.OrderBy(m => m.Name).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+
+            
+            ViewBag.SelectedEventAction = ce.EventDetails;
+
             ViewBag.SelectedPositions = ce.Fucks;
 
 
@@ -297,8 +293,8 @@ namespace STracker.Controllers
                         EventDetail eventDetail = new EventDetail();
 
                         eventDetail.EventID = ce.ID;
-                        eventDetail.WhoDid = item.WhoDid ;
-                        eventDetail.ToWho = item.ToWho;
+                        eventDetail.WhoDid = (int)item.WhoDid ;
+                        eventDetail.ToWho = (int)item.ToWho;
                         eventDetail.ActionDone = selectedAction;
 
                         sevent.EventDetails.Add(eventDetail);

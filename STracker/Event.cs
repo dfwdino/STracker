@@ -38,8 +38,8 @@ namespace STracker
         public virtual ICollection<Fucking> Fuckings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoleUsed> HoleUseds { get; set; }
-        public virtual Login Login { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventLocation> EventLocations { get; set; }
+        public virtual Login Login { get; set; }
     }
 }

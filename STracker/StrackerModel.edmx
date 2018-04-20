@@ -167,8 +167,10 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Hash" Type="nvarchar(max)" />
+          <Property Name="Salt" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_ActionsToEventActions">
           <End Role="EventActions" Type="Self.EventActions" Multiplicity="1" />
@@ -565,15 +567,6 @@
             <End Role="Person" EntitySet="People" />
             <End Role="AnsweredQuestion" EntitySet="AnsweredQuestions" />
           </AssociationSet>
-          <EntitySet Name="Logins" EntityType="STrackerModel.Login" />
-          <AssociationSet Name="FK_Event_Login" Association="STrackerModel.FK_Event_Login">
-            <End Role="Login" EntitySet="Logins" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK_People_Login" Association="STrackerModel.FK_People_Login">
-            <End Role="Login" EntitySet="Logins" />
-            <End Role="Person" EntitySet="People" />
-          </AssociationSet>
           <EntitySet Name="EventLocations" EntityType="STrackerModel.EventLocation" />
           <EntitySet Name="Locations" EntityType="STrackerModel.Location" />
           <AssociationSet Name="FK_EventLocations_Event" Association="STrackerModel.FK_EventLocations_Event">
@@ -589,6 +582,15 @@
             <End Role="Location" EntitySet="Locations" />
           </AssociationSet>
           <EntitySet Name="Loggings" EntityType="STrackerModel.Logging" />
+          <EntitySet Name="Logins" EntityType="STrackerModel.Login" />
+          <AssociationSet Name="FK_Event_Login" Association="STrackerModel.FK_Event_Login">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Login" Association="STrackerModel.FK_People_Login">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -605,8 +607,8 @@
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
           <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="Event" ToRole="HoleUsed" />
           <Property Name="OwnerID" Type="Int32" />
-          <NavigationProperty Name="Login" Relationship="STrackerModel.FK_Event_Login" FromRole="Event" ToRole="Login" />
           <NavigationProperty Name="EventLocations" Relationship="STrackerModel.FK_EventLocations_Event" FromRole="Event" ToRole="EventLocation" />
+          <NavigationProperty Name="Login" Relationship="STrackerModel.FK_Event_Login" FromRole="Event" ToRole="Login" />
         </EntityType>
         <EntityType Name="EventAction">
           <Key>
@@ -650,8 +652,8 @@
           <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
           <NavigationProperty Name="AnsweredQuestions" Relationship="STrackerModel.FK_AnsweredQuestions_People" FromRole="Person" ToRole="AnsweredQuestion" />
           <Property Name="OwnerID" Type="Int32" />
-          <NavigationProperty Name="Login" Relationship="STrackerModel.FK_People_Login" FromRole="Person" ToRole="Login" />
           <NavigationProperty Name="Locations" Relationship="STrackerModel.FK_Locations_People" FromRole="Person" ToRole="Location" />
+          <NavigationProperty Name="Login" Relationship="STrackerModel.FK_People_Login" FromRole="Person" ToRole="Login" />
         </EntityType>
         <EntityType Name="SocalSite">
           <Key>
@@ -914,42 +916,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Login">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Events" Relationship="STrackerModel.FK_Event_Login" FromRole="Login" ToRole="Event" />
-          <NavigationProperty Name="People" Relationship="STrackerModel.FK_People_Login" FromRole="Login" ToRole="Person" />
-        </EntityType>
-        <Association Name="FK_Event_Login">
-          <End Type="STrackerModel.Login" Role="Login" Multiplicity="0..1" />
-          <End Type="STrackerModel.Event" Role="Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Login">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="OwnerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_People_Login">
-          <End Type="STrackerModel.Login" Role="Login" Multiplicity="0..1" />
-          <End Type="STrackerModel.Person" Role="Person" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Login">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Person">
-              <PropertyRef Name="OwnerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EventLocation">
           <Key>
             <PropertyRef Name="ID" />
@@ -1021,6 +987,44 @@
           <Property Name="AbsoluteUri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Events" Relationship="STrackerModel.FK_Event_Login" FromRole="Login" ToRole="Event" />
+          <NavigationProperty Name="People" Relationship="STrackerModel.FK_People_Login" FromRole="Login" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_Event_Login">
+          <End Type="STrackerModel.Login" Role="Login" Multiplicity="0..1" />
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Login">
+          <End Type="STrackerModel.Login" Role="Login" Multiplicity="0..1" />
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1163,17 +1167,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Logins">
-            <EntityTypeMapping TypeName="STrackerModel.Login">
-              <MappingFragment StoreEntitySet="Login">
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EventLocations">
             <EntityTypeMapping TypeName="STrackerModel.EventLocation">
               <MappingFragment StoreEntitySet="EventLocations">
@@ -1204,6 +1197,19 @@
                 <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="STrackerModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Hash" ColumnName="Hash" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

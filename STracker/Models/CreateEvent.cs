@@ -8,8 +8,7 @@ using System.Web.Mvc;
 namespace STracker.Models
 {
     public class CreateEvent
-    {
-        
+    {   
         public int ID { get; set; }
 
         [DataType(DataType.DateTime), Required]
