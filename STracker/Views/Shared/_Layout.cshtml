@@ -13,6 +13,8 @@
         @if (HttpContext.Current.Request.Cookies["Stacking"]?.HasKeys == true)
         {
         <div class="container-fluid">
+            <a href=@Url.Action("Create", "Events") class="navbar-brand">New Events</a>
+            
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
@@ -25,9 +27,9 @@
 
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown-toggle">
+                    @*<li class="dropdown-toggle">
                         <a href=@Url.Action("Create", "Events")>New Events</a>
-                    </li>
+                    </li>*@
 
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
@@ -60,14 +62,14 @@
                             <li>@Html.ActionLink("List", "Index", "Positions", null, null)</li>
                         </ul>
                     </li>
-            
+
                     <li class="dropdown-toggle">
                         <a href=@Url.Action("Index", "Answers")>Answers</a>
                     </li>
 
                 </ul>
             </div>
-            
+
         </div>
         }
     </nav>

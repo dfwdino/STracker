@@ -42,7 +42,6 @@ namespace STracker.Controllers
                     return View();
                 }
 
-
                 HttpCookie siteCookie = new HttpCookie("Stacking");
 
                 siteCookie.Values.Add("HasAccess", "true");

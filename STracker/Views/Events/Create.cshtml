@@ -1,6 +1,10 @@
 ﻿@model STracker.Models.CreateEvent
+@using System.Globalization;
+
 
 @{
+
+
     STrackerEntities db = new STrackerEntities();
     int NumberOfEntries = 0;
     int NumberOfPositions = 0;
@@ -102,7 +106,7 @@
         <div name="entryform" id="entryform" class="acts">
             <br />
             <div class="row">
-                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name"),new { required = "required" }) did these things</div>
+                <div class="col" style="margin-left:15px">@Html.DropDownListFor(x => Model.EventDetails[@NumberOfEntries].WhoDid, new SelectList(ViewBag.People, "ID", "Name"), new { required = "required" }) did these things</div>
             </div>
             <br />
             <div class="row">
@@ -143,10 +147,13 @@
                 <div class="col-lg-12">
                     @foreach (var item in ViewBag.Positions)
                     {
+                        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
+
                         <label for="Positions[@item.ID][@NumberOfPositions]">
                             <input style="margin-left:5px" type="checkbox" name="Fucks[@NumberOfPositions].SelectedPosition"
                                    id="Positions[@item.ID][@NumberOfPositions]" value="@item.ID" />
-                            @item.Type
+                            @CultureInfo.CurrentCulture.TextInfo.ToTitleCase(@item.Type)
                         </label>
                     }
                 </div>
