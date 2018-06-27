@@ -70,8 +70,10 @@
                     <li class="dropdown-toggle">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            @*<li>@Html.ActionLink("Index", "Index", "Reports", null, null)</li>*@
                             <li>@Html.ActionLink("Actions Total", "SumAll", "Reports", null, null)</li>
-                            <li>@Html.ActionLink("Index", "Index", "Reports", null, null)</li>
+                            <li>@Html.ActionLink("Who Got What", "WhoGotWhat", "Reports", null, null)</li>
+                            <li>@Html.ActionLink("Who Did What", "WhoDidwhat", "Reports", null, null)</li>
                         </ul>
                     </li>
 

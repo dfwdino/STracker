@@ -318,6 +318,8 @@
     <Compile Include="Models\HoleModel.cs" />
     <Compile Include="Models\LocationsCreate.cs" />
     <Compile Include="Models\PeopleCreateModel.cs" />
+    <Compile Include="Models\SumAllByPersonViewModel.cs" />
+    <Compile Include="Models\SumAllViewModel.cs" />
     <Compile Include="Person.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
@@ -427,6 +429,8 @@
     <Content Include="Views\Logins\Index.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Reports\SumAll.cshtml" />
+    <Content Include="Views\Reports\WhoGotWhat.cshtml" />
+    <Content Include="Views\Reports\WhoDidWhat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

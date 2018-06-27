@@ -1,0 +1,33 @@
+﻿@model  List<STracker.Models.SumAllByPersonViewModel>
+
+@{
+    ViewBag.Title = "Who Did What";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Who Did What</h2>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <td scope="col">Who</td>
+            <td scope="col">Action</td>
+            <td scope="col">Times</td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.PersonName</td>
+                <td>@item.ActionName</td>
+                <td>@item.TotalNumber</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
