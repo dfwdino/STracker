@@ -271,6 +271,7 @@
     <Compile Include="Controllers\LoginsController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PositionsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Event.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
@@ -424,6 +425,8 @@
     <Content Include="Views\Logins\Details.cshtml" />
     <Content Include="Views\Logins\Edit.cshtml" />
     <Content Include="Views\Logins\Index.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\SumAll.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -28,8 +28,8 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     @*<li class="dropdown-toggle">
-                        <a href=@Url.Action("Create", "Events")>New Events</a>
-                    </li>*@
+            <a href=@Url.Action("Create", "Events")>New Events</a>
+        </li>*@
 
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
@@ -65,6 +65,14 @@
 
                     <li class="dropdown-toggle">
                         <a href=@Url.Action("Index", "Answers")>Answers</a>
+                    </li>
+
+                    <li class="dropdown-toggle">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Actions Total", "SumAll", "Reports", null, null)</li>
+                            <li>@Html.ActionLink("Index", "Index", "Reports", null, null)</li>
+                        </ul>
                     </li>
 
                 </ul>

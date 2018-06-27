@@ -1,0 +1,18 @@
+﻿@model  dynamic
+
+
+@{
+    ViewBag.Title = "SumAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SumAll</h2>
+
+
+@foreach (var item in Model)
+{
+    Array test = item.ToString().Split(',');
+<div>@(((string[])test)[0].Split('=')[1].Trim()) - @(((string[])test)[1].Split('=')[1].Replace("}","").Trim())</div>
+        }
+
+
