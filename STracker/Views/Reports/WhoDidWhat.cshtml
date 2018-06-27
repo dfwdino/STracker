@@ -9,7 +9,7 @@
 
 
 
-<table class="table">
+<table id="myTable" class="table display">
     <thead>
         <tr>
             <td scope="col">Who</td>
@@ -31,3 +31,17 @@
         }
     </tbody>
 </table>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>

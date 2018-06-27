@@ -2,6 +2,8 @@
 
 
 @{
+    /**/
+
     ViewBag.Title = "SumAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,12 +12,43 @@
 
 @if (Model.Count() > 0)
 {
-<div>Total Events: @Model[0].TotalEvents</div>
+    <div>Total Events: @Model[0].TotalEvents</div>
 }
 
-@foreach (var item in Model)
-{
-    <div>@item.Name - @item.TotalNumber </div>
-}
+<div style="margin-bottom:20px"></div>
+
+<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.TotalNumber
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
 
 
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
