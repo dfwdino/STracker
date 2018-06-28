@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -115,6 +116,18 @@ namespace STracker.Controllers
             return View(new Models.CreateEvent() {Date = DateTime.Now.AddDays(-1)});
         }
 
+        private DateTime? FixFuckenDate(string datetime)
+        {
+            if (datetime.Length.Equals(0))
+                return null;
+
+            var newstr = new string(datetime.Where(c => c < 128).ToArray());
+
+            return DateTime.Parse(newstr, new CultureInfo("en-US"), DateTimeStyles.None);
+           
+        }
+
+
         [HttpPost]
         public ActionResult Create(Models.CreateEvent ce)
         {
@@ -130,7 +143,7 @@ namespace STracker.Controllers
             {
                  STracker.Event stEvent = new Event();
 
-                    stEvent.Date = ce.Date;
+                    stEvent.Date = Convert.ToDateTime(FixFuckenDate(ce.Date.ToString()));
                     stEvent.Notes = ce.Notes;
                     stEvent.OrgamNumber = ce.OrgamNumber;
                     stEvent.OverAllRating = ce.OverAllRating;

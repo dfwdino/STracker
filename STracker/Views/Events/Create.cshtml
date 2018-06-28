@@ -25,7 +25,7 @@
         <div class="container">
 
             <div class="row" style="margin-left:10px !important">
-                <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date)</div>
+                <div class="col">@Html.Label("Date:") @Html.EditorFor(m => m.Date) <a onclick="GetCurrentDateTime()">Get Date</a> </div>
             </div>
             <br />
 
@@ -138,8 +138,8 @@
             <br />
             <div class="row">
                 <div class="col" style="margin-left:15px">
-                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name")) put
-                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name")) in these positions
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name"), new { required = "required" }) put
+                    @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name"), new { required = "required" }) in these positions
                 </div>
             </div>
             <br />
@@ -197,6 +197,11 @@
     var NumberOfPositions = 0;
     var NumberOfLocations = 0;
 
+    function GetCurrentDateTime() {
+        
+        var value = document.getElementById('Date').value = new Date().toLocaleDateString();
+    }
+
     $("#addnewentry").click(function () {
         addActions();
     });
@@ -211,7 +216,6 @@
 
     $(function () {
         addActions();
-        addPosition()
         addLocation()
     });
 
