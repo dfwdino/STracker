@@ -108,6 +108,7 @@
           <Property Name="Result" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PersonID" Type="int" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ResultsDate" Type="date" />
         </EntityType>
         <EntityType Name="Fucking">
           <Key>
@@ -676,6 +677,7 @@
           <Property Name="PersonID" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="STrackerModel.FK_STIREsults_People" FromRole="STIREsult" ToRole="Person" />
+          <Property Name="ResultsDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Fucking">
           <Key>
@@ -1093,6 +1095,7 @@
           <EntitySetMapping Name="STIREsults">
             <EntityTypeMapping TypeName="STrackerModel.STIREsult">
               <MappingFragment StoreEntitySet="STIREsults">
+                <ScalarProperty Name="ResultsDate" ColumnName="ResultsDate" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />

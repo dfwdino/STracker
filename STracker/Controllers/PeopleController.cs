@@ -63,7 +63,12 @@ namespace STracker.Controllers
                 {
                     tempperson.SocalSites.Add(item);
                 }
-                
+
+                foreach (STIREsult item in person.STIREsults)
+                {
+                    tempperson.STIREsults.Add(item);
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

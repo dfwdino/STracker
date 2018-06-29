@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="STrackerModel.Event" Width="1.5" PointX="11.375" PointY="7.875" />
         <EntityTypeShape EntityType="STrackerModel.EventAction" Width="1.5" PointX="0.75" PointY="3" />
         <EntityTypeShape EntityType="STrackerModel.EventDetail" Width="1.5" PointX="3" PointY="4.25" />
-        <EntityTypeShape EntityType="STrackerModel.Person" Width="1.5" PointX="9.875" PointY="2.75" />
+        <EntityTypeShape EntityType="STrackerModel.Person" Width="1.5" PointX="8.625" PointY="0.75" />
         <EntityTypeShape EntityType="STrackerModel.SocalSite" Width="1.5" PointX="0.75" PointY="10.625" />
         <EntityTypeShape EntityType="STrackerModel.STIREsult" Width="1.5" PointX="3" PointY="8.875" />
         <EntityTypeShape EntityType="STrackerModel.Fucking" Width="1.5" PointX="6" PointY="6.25" />

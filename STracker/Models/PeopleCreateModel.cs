@@ -10,6 +10,8 @@ namespace STracker.Models
         public string Name { get; set; }
         public string Notes { get; set; }
 
-        public List<SocalSite> SocalSites { get; set; }
+        public List<SocalSite> SocialSites { get; set; }
+
+        public List<STIREsult> STIResults { get; set; }
     }
 }

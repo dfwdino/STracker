@@ -133,11 +133,19 @@ namespace STracker.Controllers
         {
             int OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
 
-            int test = ce.EventDetails.Where(m => m.ToWho == 0 || m.WhoDid == 0).Count();
+            int EventDetailsPeople = ce.EventDetails.Where(m => m.ToWho == 0 || m.WhoDid == 0).Count();
 
-            if(test>0){
-                ModelState.AddModelError("ce.EventDetails", "People are missing from the Actions");
+            int FuckPeople = ce.Fucks.Where(m => m.TopPerson == 0 || m.BottomPerson == 0).Count();
+
+            if (EventDetailsPeople > 0){
+                ModelState.AddModelError("ce.EventDetails", "People are missing from the Details");
             }
+
+            if (FuckPeople > 0)
+            {
+                ModelState.AddModelError("ce.EventDetails", "People are missing from the Fucking");
+            }
+
 
             if (ModelState.IsValid)
             {

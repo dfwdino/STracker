@@ -19,6 +19,7 @@ namespace STracker
         public string Result { get; set; }
         public Nullable<int> PersonID { get; set; }
         public bool Deleted { get; set; }
+        public Nullable<System.DateTime> ResultsDate { get; set; }
     
         public virtual Person Person { get; set; }
     }
