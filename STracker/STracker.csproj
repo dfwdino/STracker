@@ -311,6 +311,7 @@
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AnswersCreateModel.cs" />
+    <Compile Include="Models\AnswersListModel.cs" />
     <Compile Include="Models\EventList.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Global.asax.cs">

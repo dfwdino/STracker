@@ -8,7 +8,7 @@
 
 <div class="container">
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderByDescending(m=> m.Key))
     {
     <h3>@item.ToList()[answercount].Person.Name - @item.ToList()[answercount].EventDate.ToShortDateString()</h3>
         <hr />
