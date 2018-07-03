@@ -1,4 +1,4 @@
-﻿@model IList<IGrouping<DateTime, AnsweredQuestion>>
+﻿@model List<STracker.Models.AnswersListModel>
 
 @{
     ViewBag.Title = "Index";
@@ -8,21 +8,21 @@
 
 <div class="container">
 
-    @foreach (var item in Model.OrderByDescending(m=> m.Key))
+    @foreach (var item in Model.OrderByDescending(m => m.EventDate))
     {
-    <h3>@item.ToList()[answercount].Person.Name - @item.ToList()[answercount].EventDate.ToShortDateString()</h3>
-        <hr />
-        foreach (var groups in item)
+        <h3>@item.EventDate.ToShortDateString() - @item.Name</h3>
+<br/>
+        for (int i = 0; i < item.Answer.Count - 1; i++)
         {
             <div style="margin-bottom:15px">
                 <div class="row">
-                    <label>@groups.AskedQuestion.Question</label>
+                        <label>@item.Questions[i]</label>
                 </div>
-                <div class="row">@groups.Answered</div>
+                <div class="row"><p>@item.Answer[i]</p></div>
             </div>
         }
         <hr />
-        answercount++;
     }
+
 </div>
 

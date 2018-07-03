@@ -25,5 +25,12 @@ namespace STracker
         {
             filters.Add(new PageViewLoggingAttribute());
         }
+
+        protected void Application_Error()
+        {
+            //var ex = Server.GetLastError();
+            //log the error!
+            //_Logger.Error(ex);
+        }
     }
 }

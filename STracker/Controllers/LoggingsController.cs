@@ -20,10 +20,28 @@ namespace STracker.Controllers
         
         public ActionResult Index()
         {
-            return View(db.Loggings.Where(m => m.IPAddress != "::1").OrderBy(m => m.ID).ToList());
+
+            var returnlogging = db.Loggings
+                                        .Where(m => m.IPAddress != "::1")
+                                        .OrderBy(m => m.ID);
+
+            return View(returnlogging);
         }
 
-       
+
+        public void CopyValues<T>(T target, T source)
+        {
+            Type t = typeof(T);
+
+            var properties = t.GetProperties().Where(prop => prop.CanRead && prop.CanWrite);
+
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(source, null);
+                if (value != null)
+                    prop.SetValue(target, value, null);
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -160,6 +160,7 @@
           <Property Name="ActionParameters" Type="nvarchar(max)" />
           <Property Name="AbsoluteUri" Type="nvarchar" MaxLength="50" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Time" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="Login">
           <Key>
@@ -988,6 +989,7 @@
           <Property Name="ActionParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AbsoluteUri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="Time" Precision="7" />
         </EntityType>
         <EntityType Name="Login">
           <Key>
@@ -1193,6 +1195,7 @@
           <EntitySetMapping Name="Loggings">
             <EntityTypeMapping TypeName="STrackerModel.Logging">
               <MappingFragment StoreEntitySet="Logging">
+                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="AbsoluteUri" ColumnName="AbsoluteUri" />
                 <ScalarProperty Name="ActionParameters" ColumnName="ActionParameters" />

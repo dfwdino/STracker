@@ -17,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.IPAddress)
             </th>
             <th>
@@ -34,7 +37,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
-            <th></th>
         </tr>
         </thead>
     <tbody>
@@ -42,7 +44,18 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @item.Date.ToShortDateString()
+            </td>
+            <td>
+                @if (item.Time != null)
+                {
+                    @item.Time
+                }
+                else
+                {
+                    @item.Date.ToShortTimeString()
+                }
+
             </td>
             <td>
                 <a href="http://www.ipaddresslocation.org/ip-address-locator.php?lookup=@item.IPAddress" target="blank">@item.IPAddress</a>
@@ -61,11 +74,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             </td>
         </tr>
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using STracker.Infrastructure;
 using STracker.Models;
 
 namespace STracker.Controllers
 {
+    [StrackerAccess]
     public class ReportsController : Controller
     {
 

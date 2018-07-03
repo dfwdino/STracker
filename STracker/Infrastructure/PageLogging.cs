@@ -10,6 +10,13 @@ namespace STracker.Infrastructure
     {
         private static readonly TimeSpan pageViewDumpToDatabaseTimeSpan = new TimeSpan(0, 0, 10);
 
+        //After the action method is called and before the result is executed (before view render).
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            //var test = "";
+        }
+
+        //just before the action method is called.
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             STrackerEntities _se = new STrackerEntities();
@@ -18,7 +25,8 @@ namespace STracker.Infrastructure
 
             myLogging.ControllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
             myLogging.ActionName = filterContext.ActionDescriptor.ActionName;
-            myLogging.Date = TimeZoneInfo.ConvertTime(filterContext.HttpContext.Timestamp, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+            myLogging.Date = TimeZoneInfo.ConvertTime(filterContext.HttpContext.Timestamp, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time")).Date;
+            myLogging.Time = TimeZoneInfo.ConvertTime(filterContext.HttpContext.Timestamp, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time")).TimeOfDay;
             myLogging.IPAddress = filterContext.HttpContext.Request.UserHostAddress;
             myLogging.ActionParameters = "";
 
@@ -43,16 +51,10 @@ namespace STracker.Infrastructure
 
             }
 
-            //if (myLogging.IPAddress.Trim().Equals("141.8.143.142"))
-            //{
-            //    filterContext.Result = new RedirectResult("http://www.kink.com");
-            //    return;
-
-            //}
-
         }
 
-
+        //OnResultExecuting(ResultExecutingContext filterContext) : Just before the result is executed(before view render).
+        //OnResultExecuted(ResultExecutedContext filterContext) : After the result is executed(after the view is rendered).
 
 
 

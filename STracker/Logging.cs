@@ -22,5 +22,6 @@ namespace STracker
         public string ActionParameters { get; set; }
         public string AbsoluteUri { get; set; }
         public string Notes { get; set; }
+        public Nullable<System.TimeSpan> Time { get; set; }
     }
 }

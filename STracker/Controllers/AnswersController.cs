@@ -19,12 +19,17 @@ namespace STracker.Controllers
         [StrackerAccess]
         public ActionResult Index()
         {
-            var test = db.AnsweredQuestions.Where(x => x.Deleted == false && x.Hide == false).OrderBy(m => m.EntryDate).GroupBy(x => x.EntryDate).ToList();
-                            
-            return View(test);
+            List<AnswersListModel> answersLists = db.AnsweredQuestions.Where(x => x.Deleted == false && x.Hide == false)
+                                        .OrderBy(m => m.EntryDate)
+                                        .GroupBy(x => new { x.EntryDate, x.Person.Name})
+                                        .Select(fl => new AnswersListModel { EventDate = fl.Key.EntryDate, Answer = fl.Select(x => x.Answered).ToList(),
+                                                                                    Questions = fl.Select(m =>m.AskedQuestion.Question).ToList(),
+                                                                                    Name = fl.Key.Name }).ToList();
+
+
+            return View(answersLists);
         }
         
-        // GET: Answers/Create
         public ActionResult Create(string id)
         {
             AnswersCreateModel answer = new AnswersCreateModel();
@@ -42,9 +47,6 @@ namespace STracker.Controllers
             return View();
         }
 
-        // POST: Answers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AnswersCreateModel answers)
@@ -88,9 +90,6 @@ namespace STracker.Controllers
             return View(answers);
         }
 
-        // POST: Answers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID")] AnswersCreateModel answers)
