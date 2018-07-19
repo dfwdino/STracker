@@ -121,6 +121,7 @@
           <Property Name="BottomPerson" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="OwnerID" Type="int" />
+          <Property Name="CondomUsed" Type="bit" />
         </EntityType>
         <EntityType Name="Holes">
           <Key>
@@ -507,17 +508,12 @@
           <EntitySet Name="People" EntityType="STrackerModel.Person" />
           <EntitySet Name="SocalSites" EntityType="STrackerModel.SocalSite" />
           <EntitySet Name="STIREsults" EntityType="STrackerModel.STIREsult" />
-          <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
           <EntitySet Name="Holes" EntityType="STrackerModel.Hole" />
           <EntitySet Name="HoleUseds" EntityType="STrackerModel.HoleUsed" />
           <EntitySet Name="Positions" EntityType="STrackerModel.Position" />
           <AssociationSet Name="FK_EventDetails_Event" Association="STrackerModel.FK_EventDetails_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="EventDetail" EntitySet="EventDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Fucking_Event" Association="STrackerModel.FK_Fucking_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Fucking" EntitySet="Fuckings" />
           </AssociationSet>
           <AssociationSet Name="FK_HoleUsed_Event" Association="STrackerModel.FK_HoleUsed_Event">
             <End Role="Event" EntitySet="Events" />
@@ -535,10 +531,6 @@
             <End Role="Person" EntitySet="People" />
             <End Role="EventDetail" EntitySet="EventDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Fucking_BottomPerson" Association="STrackerModel.FK_Fucking_BottomPerson">
-            <End Role="Person" EntitySet="People" />
-            <End Role="Fucking" EntitySet="Fuckings" />
-          </AssociationSet>
           <AssociationSet Name="FK_SocalSites_People" Association="STrackerModel.FK_SocalSites_People">
             <End Role="Person" EntitySet="People" />
             <End Role="SocalSite" EntitySet="SocalSites" />
@@ -546,14 +538,6 @@
           <AssociationSet Name="FK_STIREsults_People" Association="STrackerModel.FK_STIREsults_People">
             <End Role="Person" EntitySet="People" />
             <End Role="STIREsult" EntitySet="STIREsults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TopPerson" Association="STrackerModel.FK_TopPerson">
-            <End Role="Person" EntitySet="People" />
-            <End Role="Fucking" EntitySet="Fuckings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Fucking_Positions" Association="STrackerModel.FK_Fucking_Positions">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Fucking" EntitySet="Fuckings" />
           </AssociationSet>
           <AssociationSet Name="FK_HoleUsed_Holes" Association="STrackerModel.FK_HoleUsed_Holes">
             <End Role="Hole" EntitySet="Holes" />
@@ -593,6 +577,23 @@
             <End Role="Login" EntitySet="Logins" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
+          <EntitySet Name="Fuckings" EntityType="STrackerModel.Fucking" />
+          <AssociationSet Name="FK_Fucking_Event" Association="STrackerModel.FK_Fucking_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fucking_BottomPerson" Association="STrackerModel.FK_Fucking_BottomPerson">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopPerson" Association="STrackerModel.FK_TopPerson">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fucking_Positions" Association="STrackerModel.FK_Fucking_Positions">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Fucking" EntitySet="Fuckings" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -606,11 +607,11 @@
           <Property Name="OrgamNumber" Type="Int32" Nullable="false" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_EventDetails_Event" FromRole="Event" ToRole="EventDetail" />
-          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
           <NavigationProperty Name="HoleUseds" Relationship="STrackerModel.FK_HoleUsed_Event" FromRole="Event" ToRole="HoleUsed" />
           <Property Name="OwnerID" Type="Int32" />
           <NavigationProperty Name="EventLocations" Relationship="STrackerModel.FK_EventLocations_Event" FromRole="Event" ToRole="EventLocation" />
           <NavigationProperty Name="Login" Relationship="STrackerModel.FK_Event_Login" FromRole="Event" ToRole="Login" />
+          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
         </EntityType>
         <EntityType Name="EventAction">
           <Key>
@@ -648,14 +649,14 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EventDetails" Relationship="STrackerModel.FK_PeopleToWho" FromRole="Person" ToRole="EventDetail" />
           <NavigationProperty Name="EventDetails1" Relationship="STrackerModel.FK_PeopleWhoDid" FromRole="Person" ToRole="EventDetail" />
-          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Person" ToRole="Fucking" />
           <NavigationProperty Name="SocalSites" Relationship="STrackerModel.FK_SocalSites_People" FromRole="Person" ToRole="SocalSite" />
           <NavigationProperty Name="STIREsults" Relationship="STrackerModel.FK_STIREsults_People" FromRole="Person" ToRole="STIREsult" />
-          <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
           <NavigationProperty Name="AnsweredQuestions" Relationship="STrackerModel.FK_AnsweredQuestions_People" FromRole="Person" ToRole="AnsweredQuestion" />
           <Property Name="OwnerID" Type="Int32" />
           <NavigationProperty Name="Locations" Relationship="STrackerModel.FK_Locations_People" FromRole="Person" ToRole="Location" />
           <NavigationProperty Name="Login" Relationship="STrackerModel.FK_People_Login" FromRole="Person" ToRole="Login" />
+          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Person" ToRole="Fucking" />
+          <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
         </EntityType>
         <EntityType Name="SocalSite">
           <Key>
@@ -679,22 +680,6 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="STrackerModel.FK_STIREsults_People" FromRole="STIREsult" ToRole="Person" />
           <Property Name="ResultsDate" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="Fucking">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PoistionID" Type="Int32" Nullable="false" />
-          <Property Name="EventID" Type="Int32" Nullable="false" />
-          <Property Name="TopPerson" Type="Int32" Nullable="false" />
-          <Property Name="BottomPerson" Type="Int32" Nullable="false" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Fucking" ToRole="Event" />
-          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Fucking" ToRole="Person" />
-          <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
-          <NavigationProperty Name="Position" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Fucking" ToRole="Position" />
-          <Property Name="OwnerID" Type="Int32" />
         </EntityType>
         <EntityType Name="Hole">
           <Key>
@@ -723,8 +708,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Position" ToRole="Fucking" />
           <Property Name="OwnerID" Type="Int32" />
+          <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Position" ToRole="Fucking" />
         </EntityType>
         <Association Name="FK_EventDetails_Event">
           <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
@@ -734,18 +719,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EventDetail">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Fucking_Event">
-          <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
-          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Fucking">
               <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
@@ -798,18 +771,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Fucking_BottomPerson">
-          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
-          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Person">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Fucking">
-              <PropertyRef Name="BottomPerson" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SocalSites_People">
           <End Type="STrackerModel.Person" Role="Person" Multiplicity="0..1" />
           <End Type="STrackerModel.SocalSite" Role="SocalSite" Multiplicity="*" />
@@ -831,30 +792,6 @@
             </Principal>
             <Dependent Role="STIREsult">
               <PropertyRef Name="PersonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TopPerson">
-          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
-          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Person">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Fucking">
-              <PropertyRef Name="TopPerson" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Fucking_Positions">
-          <End Type="STrackerModel.Position" Role="Position" Multiplicity="1" />
-          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Fucking">
-              <PropertyRef Name="PoistionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1029,6 +966,71 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Fucking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PoistionID" Type="Int32" Nullable="false" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="TopPerson" Type="Int32" Nullable="false" />
+          <Property Name="BottomPerson" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="OwnerID" Type="Int32" />
+          <Property Name="CondomUsed" Type="Boolean" />
+          <NavigationProperty Name="Event" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Fucking" ToRole="Event" />
+          <NavigationProperty Name="Person" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Fucking" ToRole="Person" />
+          <NavigationProperty Name="Person1" Relationship="STrackerModel.FK_TopPerson" FromRole="Fucking" ToRole="Person" />
+          <NavigationProperty Name="Position" Relationship="STrackerModel.FK_Fucking_Positions" FromRole="Fucking" ToRole="Position" />
+        </EntityType>
+        <Association Name="FK_Fucking_Event">
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fucking">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fucking_BottomPerson">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fucking">
+              <PropertyRef Name="BottomPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopPerson">
+          <End Type="STrackerModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fucking">
+              <PropertyRef Name="TopPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fucking_Positions">
+          <End Type="STrackerModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="STrackerModel.Fucking" Role="Fucking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fucking">
+              <PropertyRef Name="PoistionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1102,19 +1104,6 @@
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="STI" ColumnName="STI" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fuckings">
-            <EntityTypeMapping TypeName="STrackerModel.Fucking">
-              <MappingFragment StoreEntitySet="Fucking">
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="BottomPerson" ColumnName="BottomPerson" />
-                <ScalarProperty Name="TopPerson" ColumnName="TopPerson" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="PoistionID" ColumnName="PoistionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1216,6 +1205,20 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fuckings">
+            <EntityTypeMapping TypeName="STrackerModel.Fucking">
+              <MappingFragment StoreEntitySet="Fucking">
+                <ScalarProperty Name="CondomUsed" ColumnName="CondomUsed" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="BottomPerson" ColumnName="BottomPerson" />
+                <ScalarProperty Name="TopPerson" ColumnName="TopPerson" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="PoistionID" ColumnName="PoistionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

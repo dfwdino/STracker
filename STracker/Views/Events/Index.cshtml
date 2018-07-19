@@ -53,8 +53,11 @@
                 <div class="row" style="margin-left:5px;">
                     <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
                 </div>
+
+                
         }
             </div>
+            <div> Condom used @item.Fucks.Where(m => m.BottonPerson != null).ToList()[0].CondomUsed </div>
     }
     else
     {<div class="row" style="margin-left:5px;margin-top:10px">

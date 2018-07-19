@@ -135,15 +135,18 @@ namespace STracker.Controllers
 
             int EventDetailsPeople = ce.EventDetails.Where(m => m.ToWho == 0 || m.WhoDid == 0).Count();
 
-            int FuckPeople = ce.Fucks.Where(m => m.TopPerson == 0 || m.BottomPerson == 0).Count();
-
+           
             if (EventDetailsPeople > 0){
                 ModelState.AddModelError("ce.EventDetails", "People are missing from the Details");
             }
 
-            if (FuckPeople > 0)
+            if (ce.Fucks != null)
             {
-                ModelState.AddModelError("ce.EventDetails", "People are missing from the Fucking");
+                int FuckPeople = ce.Fucks.Where(m => m.TopPerson == 0 || m.BottomPerson == 0).Count();
+                if (!FuckPeople.Equals(0))
+                {
+                    ModelState.AddModelError("ce.EventDetails", "People are missing from the Fucking");
+                }
             }
 
 
@@ -176,6 +179,8 @@ namespace STracker.Controllers
 
                     }
 
+                if (ce.Fucks != null)
+                {
                     foreach (var fuck in ce.Fucks)
                     {
                         if (fuck.SelectedPosition != null)
@@ -187,12 +192,13 @@ namespace STracker.Controllers
                                 f.TopPerson = fuck.TopPerson;
                                 f.BottomPerson = fuck.BottomPerson;
                                 f.PoistionID = fuckposition;
+                                f.CondomUsed = fuck.CondomUsed;
 
                                 stEvent.Fuckings.Add(f);
                             }
                         }
                     }
-
+                }
                     if (ce.Locations != null)
                     {
                         foreach (var location in ce.Locations)

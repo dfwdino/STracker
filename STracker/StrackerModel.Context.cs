@@ -31,7 +31,6 @@ namespace STracker
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<SocalSite> SocalSites { get; set; }
         public virtual DbSet<STIREsult> STIREsults { get; set; }
-        public virtual DbSet<Fucking> Fuckings { get; set; }
         public virtual DbSet<Hole> Holes { get; set; }
         public virtual DbSet<HoleUsed> HoleUseds { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
@@ -41,5 +40,6 @@ namespace STracker
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Logging> Loggings { get; set; }
         public virtual DbSet<Login> Logins { get; set; }
+        public virtual DbSet<Fucking> Fuckings { get; set; }
     }
 }

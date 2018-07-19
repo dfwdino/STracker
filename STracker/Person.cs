@@ -19,12 +19,12 @@ namespace STracker
         {
             this.EventDetails = new HashSet<EventDetail>();
             this.EventDetails1 = new HashSet<EventDetail>();
-            this.Fuckings = new HashSet<Fucking>();
             this.SocalSites = new HashSet<SocalSite>();
             this.STIREsults = new HashSet<STIREsult>();
-            this.Fuckings1 = new HashSet<Fucking>();
             this.AnsweredQuestions = new HashSet<AnsweredQuestion>();
             this.Locations = new HashSet<Location>();
+            this.Fuckings = new HashSet<Fucking>();
+            this.Fuckings1 = new HashSet<Fucking>();
         }
     
         public int ID { get; set; }
@@ -39,17 +39,17 @@ namespace STracker
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventDetail> EventDetails1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fucking> Fuckings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SocalSite> SocalSites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<STIREsult> STIREsults { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fucking> Fuckings1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnsweredQuestion> AnsweredQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Location> Locations { get; set; }
         public virtual Login Login { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Fucking> Fuckings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Fucking> Fuckings1 { get; set; }
     }
 }

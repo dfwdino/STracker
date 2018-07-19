@@ -11,5 +11,7 @@ namespace STracker.Models
         public string Poistion { get; set; }
         public string BottonPerson { get; set; }
         public List<int> SelectedAction { get; set; }
+
+        public bool CondomUsed { get;set; }
     }
 }

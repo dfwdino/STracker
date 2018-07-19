@@ -140,6 +140,7 @@
                 <div class="col" style="margin-left:15px">
                     @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].TopPerson, new SelectList(ViewBag.People, "ID", "Name"), new { required = "required" }) put
                     @Html.DropDownListFor(x => Model.Fucks[@NumberOfPositions].BottomPerson, new SelectList(ViewBag.People, "ID", "Name"), new { required = "required" }) in these positions
+                    and condom was used @Html.CheckBoxFor(x => Model.Fucks[@NumberOfPositions].CondomUsed)
                 </div>
             </div>
             <br />

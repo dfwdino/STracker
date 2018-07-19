@@ -4,28 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a30edb2e608f4d03b15952ce74eaa564" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="a30edb2e608f4d03b15952ce74eaa564" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="STrackerModel.Event" Width="1.5" PointX="11.375" PointY="7.875" />
         <EntityTypeShape EntityType="STrackerModel.EventAction" Width="1.5" PointX="0.75" PointY="3" />
         <EntityTypeShape EntityType="STrackerModel.EventDetail" Width="1.5" PointX="3" PointY="4.25" />
         <EntityTypeShape EntityType="STrackerModel.Person" Width="1.5" PointX="8.625" PointY="0.75" />
         <EntityTypeShape EntityType="STrackerModel.SocalSite" Width="1.5" PointX="0.75" PointY="10.625" />
         <EntityTypeShape EntityType="STrackerModel.STIREsult" Width="1.5" PointX="3" PointY="8.875" />
-        <EntityTypeShape EntityType="STrackerModel.Fucking" Width="1.5" PointX="6" PointY="6.25" />
         <EntityTypeShape EntityType="STrackerModel.Hole" Width="1.5" PointX="8.25" PointY="12.125" />
         <EntityTypeShape EntityType="STrackerModel.HoleUsed" Width="1.5" PointX="6" PointY="10.875" />
         <EntityTypeShape EntityType="STrackerModel.Position" Width="1.5" PointX="3.75" PointY="11.75" />
         <AssociationConnector Association="STrackerModel.FK_EventDetails_Event" />
-        <AssociationConnector Association="STrackerModel.FK_Fucking_Event" />
         <AssociationConnector Association="STrackerModel.FK_HoleUsed_Event" />
         <AssociationConnector Association="STrackerModel.FK_ActionsToEventActions" />
         <AssociationConnector Association="STrackerModel.FK_PeopleToWho" />
         <AssociationConnector Association="STrackerModel.FK_PeopleWhoDid" />
-        <AssociationConnector Association="STrackerModel.FK_Fucking_BottomPerson" />
         <AssociationConnector Association="STrackerModel.FK_SocalSites_People" />
         <AssociationConnector Association="STrackerModel.FK_STIREsults_People" />
-        <AssociationConnector Association="STrackerModel.FK_TopPerson" />
-        <AssociationConnector Association="STrackerModel.FK_Fucking_Positions" />
         <AssociationConnector Association="STrackerModel.FK_HoleUsed_Holes" />
         <EntityTypeShape EntityType="STrackerModel.AnsweredQuestion" Width="1.5" PointX="14.25" PointY="0.5" />
         <EntityTypeShape EntityType="STrackerModel.AskedQuestion" Width="1.5" PointX="12.5" PointY="0.5" />
@@ -40,6 +35,11 @@
         <EntityTypeShape EntityType="STrackerModel.Login" Width="1.5" PointX="14.25" PointY="4.625" />
         <AssociationConnector Association="STrackerModel.FK_Event_Login" />
         <AssociationConnector Association="STrackerModel.FK_People_Login" />
+        <EntityTypeShape EntityType="STrackerModel.Fucking" Width="1.5" PointX="14.625" PointY="8.625" />
+        <AssociationConnector Association="STrackerModel.FK_Fucking_Event" />
+        <AssociationConnector Association="STrackerModel.FK_Fucking_BottomPerson" />
+        <AssociationConnector Association="STrackerModel.FK_TopPerson" />
+        <AssociationConnector Association="STrackerModel.FK_Fucking_Positions" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
