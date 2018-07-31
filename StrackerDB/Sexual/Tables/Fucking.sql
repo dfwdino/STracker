@@ -6,12 +6,15 @@
     [BottomPerson] INT NOT NULL,
     [Deleted]      BIT CONSTRAINT [DF_Fucking_Deleted] DEFAULT ((0)) NOT NULL,
     [OwnerID]      INT NULL,
+    [CondomUsed]   BIT CONSTRAINT [DF_Fucking_CondomUsed] DEFAULT ((0)) NULL,
     CONSTRAINT [PK_Fucking] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_Fucking_BottomPerson] FOREIGN KEY ([BottomPerson]) REFERENCES [People].[People] ([ID]),
     CONSTRAINT [FK_Fucking_Event] FOREIGN KEY ([EventID]) REFERENCES [Events].[Event] ([ID]),
     CONSTRAINT [FK_Fucking_Positions] FOREIGN KEY ([PoistionID]) REFERENCES [Sexual].[Positions] ([ID]),
     CONSTRAINT [FK_TopPerson] FOREIGN KEY ([TopPerson]) REFERENCES [People].[People] ([ID])
 );
+
+
 
 
 

@@ -7,6 +7,9 @@
     [ActionParameters] NVARCHAR (MAX) NULL,
     [AbsoluteUri]      NVARCHAR (50)  NULL,
     [Notes]            NVARCHAR (MAX) NULL,
+    [Time]             TIME (7)       NULL,
     CONSTRAINT [PK_Logging] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 
