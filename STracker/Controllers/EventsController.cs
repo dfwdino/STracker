@@ -75,6 +75,7 @@ namespace STracker.Controllers
                         fl.TopPerson = item.Person1.Name;
                         fl.BottonPerson = item.Person.Name;
                         fl.Poistion = item.Position.Type;
+                        fl.CondomUsed = item.CondomUsed == true ? true : false;
                     }
                     
                 }
