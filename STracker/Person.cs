@@ -33,6 +33,8 @@ namespace STracker
         public bool Hide { get; set; }
         public bool Deleted { get; set; }
         public Nullable<int> OwnerID { get; set; }
+        public string WhereDidYouMeetThem { get; set; }
+        public string PhotoURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventDetail> EventDetails { get; set; }

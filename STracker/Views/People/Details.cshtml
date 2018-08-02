@@ -18,8 +18,37 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WhereDidYouMeetThem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WhereDidYouMeetThem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
 
     </dl>
+
+    <h2>Socal Sites</h2>
+    @foreach (var item in Model.SocalSites)
+    {
+        <div>@item.SiteName - @item.Link</div>
+    }
+
+    <h2>STI Results</h2>
+    @foreach (var item in Model.STIREsults)
+    {
+        <div>@item.STI - @item.Result - @item.ResultsDate</div>
+    }
+
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |

@@ -46,7 +46,7 @@ namespace STracker.Controllers
 
                 siteCookie.Values.Add("HasAccess", "true");
                 siteCookie.Values.Add("ID", user.ID.ToString());
-                siteCookie.Expires = DateTime.Now.Date.AddDays(1);
+                siteCookie.Expires = DateTime.Now.Date.AddDays(7);
                 this.ControllerContext.HttpContext.Response.Cookies.Add(siteCookie);
                   
                 return RedirectToAction("Index","Events");

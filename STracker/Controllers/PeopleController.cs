@@ -55,6 +55,7 @@ namespace STracker.Controllers
                 Person tempperson = new Person();
                 tempperson.Name = person.Name;
                 tempperson.Notes = person.Notes;
+                tempperson.WhereDidYouMeetThem = person.WhereDidYouMeetThem;
                 tempperson.OwnerID = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
                 
                 db.People.Add(tempperson);
@@ -96,7 +97,7 @@ namespace STracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name")] Person person)
+        public ActionResult Edit([Bind(Include = "ID,Name,Notes,WhereDidYouMeetThem")] Person person)
         {
             if (ModelState.IsValid)
             {

@@ -27,104 +27,119 @@
             </div>
             <br />
             <br />
-            <div class="row form-group"  style="display:none;margin-bottom:10px">
-                <div name="SocailArea" id="SocailArea">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">@Html.LabelFor(model => model.WhereDidYouMeetThem, htmlAttributes: new { @class = "control-label" })</div>
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.WhereDidYouMeetThem, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.WhereDidYouMeetThem, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <br />
+
+                <div class="row form-group" style="display:none;margin-bottom:10px">
+                    <div name="SocailArea" id="SocailArea">
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1" style="margin:10px 0 10px 5px">
+                        <input type="button" class="btn btn-default" id="addsocail" name="addsocail" value="New socail" />
+                    </div>
+                </div>
+
+
+
+                <div class="form-group" style="display:none;margin-bottom:10px">
+                    <div name="STIArea" id="STIArea">
+
+                    </div>
+                </div>
+
+
+                <div style="padding-bottom:10px"></div>
+                <div class="row">
+                    <div class="col-sm-1" style="margin:10px 0 10px 5px">
+                        <input type="button" class="btn btn-default" id="addSTI" name="addSTI" value="Add STI" />
+                    </div>
+                </div>
+
+                <div style="padding-bottom:50px"></div>
+
+                <div class="row">
+                    <div class="col-md-1">@Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label" })</div>
+                    <div class="col-md-2">
+                        @Html.TextAreaFor(m => m.Notes, 10, 45, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
 
                 </div>
-            </div>
-
-       
-            <div class="row">
-                <div class="col-sm-1" style="margin:10px 0 10px 5px">
-                    <input type="button" class="btn btn-default" id="addsocail" name="addsocail" value="New socail" />
-                </div>
-            </div>
-
-       
-
-            <div class="form-group" style="display:none;margin-bottom:10px">
-                <div name="STIArea" id="STIArea">
+                <div style="padding-bottom:10px">
 
                 </div>
-            </div>
 
-
-            <div style="padding-bottom:10px"></div>
-            <div class="row">
-                <div class="col-sm-1" style="margin:10px 0 10px 5px">
-                    <input type="button" class="btn btn-default" id="addSTI" name="addSTI" value="Add STI" />
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
                 </div>
+
             </div>
+        </div>
+        
 
-            <div style="padding-bottom:50px"></div>
 
-            <div class="row">
-                <div class="col-md-1">@Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label" })</div>
+        <div name="SocalOutline" id="SocalOutline" style="display:none;">
+            <div name="SocalForm" id="SocalForm">
                 <div class="col-md-2">
-                    @Html.TextAreaFor(m => m.Notes, 10, 45, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.Label("Socal Site:", htmlAttributes: new { @class = "control-label" })
                 </div>
-
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].SiteName, htmlAttributes: new { @placeholder = "Socail Site? Fetlife" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].Link, htmlAttributes: new { @placeholder = "www.site.com/username" })
+                </div>
             </div>
-            <div style="padding-bottom:10px">
+            <br />
+        </div>
 
-            </div>
+        <div name="STIOutline" id="STIOutline" style="display:none;">
+            <div name="STIForm" id="STIForm">
+                <div class="col-md-2">
+                    @Html.Label("STI's Resultes", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => Model.STIResults[@STINumber].STI, htmlAttributes: new { @placeholder = "STI Name" })
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => Model.STIResults[@STINumber].Result, htmlAttributes: new { @placeholder = "Positve or Negtive or ?????" })
+                </div>
+                <div class="col-md-2">
 
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                    <div class='input-group date' id='datetimepicker1'>
+                        @Html.TextBoxFor(m => Model.STIResults[@STINumber].ResultsDate, htmlAttributes: new { })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div style="padding-bottom:10px">
 
         </div>
-    </div>
+
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+        </div>
+
 }
 
-
-<div name="SocalOutline" id="SocalOutline" style="display:none;">
-    <div name="SocalForm" id="SocalForm">
-        <div class="col-md-2">
-            @Html.Label("Socal Site:", htmlAttributes: new { @class = "control-label" })
-        </div>
-        <div class="col-md-2">
-            @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].SiteName, htmlAttributes: new { @placeholder = "Socail Site? Fetlife" })
-        </div>
-        <div class="col-md-4">
-            @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].Link, htmlAttributes: new { @placeholder = "www.site.com/username" })
-        </div>
-    </div>
-    <br />
-</div>
-
-<div name="STIOutline" id="STIOutline" style="display:none;">
-    <div name="STIForm" id="STIForm">
-        <div class="col-md-2">
-            @Html.Label("STI's Resultes", htmlAttributes: new { @class = "control-label" })
-        </div>
-        <div class="col-md-2">
-            @Html.TextBoxFor(m => Model.STIResults[@STINumber].STI, htmlAttributes: new { @placeholder = "STI Name" })
-        </div>
-        <div class="col-md-2">
-            @Html.TextBoxFor(m => Model.STIResults[@STINumber].Result, htmlAttributes: new { @placeholder = "Positve or Negtive or ?????" })
-        </div>
-        <div class="col-md-2">
-
-            <div class='input-group date' id='datetimepicker1'>
-                @Html.TextBoxFor(m => Model.STIResults[@STINumber].ResultsDate, htmlAttributes: new { })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-
-            </div>
-    </div>
-</div>
-
-
-<div style="padding-bottom:10px">
-
-</div>
-
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
@@ -174,7 +189,7 @@
         var formoutline = "";
 
         if (SocailNumber > 0) {
-            formoutline = "<hr>"
+            formoutline = "<hr>";
         }
 
         formoutline += $('#SocalOutline').html();
@@ -216,3 +231,6 @@
         margin-left: 0px !important;
     }
 </style>
+
+
+

@@ -88,6 +88,8 @@
           <Property Name="Hide" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="OwnerID" Type="int" />
+          <Property Name="WhereDidYouMeetThem" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhotoURL" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="SocalSites">
           <Key>
@@ -657,6 +659,8 @@
           <NavigationProperty Name="Login" Relationship="STrackerModel.FK_People_Login" FromRole="Person" ToRole="Login" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_BottomPerson" FromRole="Person" ToRole="Fucking" />
           <NavigationProperty Name="Fuckings1" Relationship="STrackerModel.FK_TopPerson" FromRole="Person" ToRole="Fucking" />
+          <Property Name="WhereDidYouMeetThem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhotoURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SocalSite">
           <Key>
@@ -1076,6 +1080,8 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="STrackerModel.Person">
               <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="PhotoURL" ColumnName="PhotoURL" />
+                <ScalarProperty Name="WhereDidYouMeetThem" ColumnName="WhereDidYouMeetThem" />
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Hide" ColumnName="Hide" />
