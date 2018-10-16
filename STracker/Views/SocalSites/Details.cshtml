@@ -1,0 +1,51 @@
+﻿@model STracker.SocalSite
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SocalSite</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SiteName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiteName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

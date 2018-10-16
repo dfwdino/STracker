@@ -7,9 +7,12 @@ using System.Web;
 
 namespace STracker.Models
 {
-    public class PeopleCreateModel
+    public class PeopleDetailMode
     {
-        public int ID { get; set; }
+        public PeopleDetailMode() {
+            TheyDid = new List<ThingsDoneModel>();
+            WasDone = new List<ThingsDoneModel>();
+        }
 
         public string Name { get; set; }
         public string Notes { get; set; }
@@ -21,7 +24,10 @@ namespace STracker.Models
 
         public List<SocalSite> SocialSites { get; set; }
 
-        
         public List<STIREsult> STIResults { get; set; }
+
+        public List<ThingsDoneModel> TheyDid { get; set; }
+
+        public List<ThingsDoneModel> WasDone { get; set; }
     }
 }

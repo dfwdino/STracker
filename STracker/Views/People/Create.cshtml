@@ -38,8 +38,9 @@
                 <br />
                 <br />
 
-                <div class="row form-group" style="display:none;margin-bottom:10px">
-                    <div name="SocailArea" id="SocailArea">
+                <div class="row form-group" id="SocailArea" name="SocailArea" style="display:none;margin-bottom:10px">
+                    <h3>Socail</h3>
+                    <div>
 
                     </div>
                 </div>
@@ -47,14 +48,15 @@
 
                 <div class="row">
                     <div class="col-sm-1" style="margin:10px 0 10px 5px">
-                        <input type="button" class="btn btn-default" id="addsocail" name="addsocail" value="New socail" />
+                        <input type="button" class="btn btn-default" id="addsocial" name="addsocial" value="New social" />
                     </div>
                 </div>
 
 
 
-                <div class="form-group" style="display:none;margin-bottom:10px">
-                    <div name="STIArea" id="STIArea">
+                <div class="form-group" name="STIArea" id="STIArea" style="display:none;margin-bottom:10px">
+                    <h3>STI's Resultes</h3>
+                    <div>
 
                     </div>
                 </div>
@@ -91,14 +93,14 @@
 
         <div name="SocalOutline" id="SocalOutline" style="display:none;">
             <div name="SocalForm" id="SocalForm">
-                <div class="col-md-2">
-                    @Html.Label("Socal Site:", htmlAttributes: new { @class = "control-label" })
+
+                <div class="row">
+                    <div class="col">@Html.Label("Site")</div>
+                    <div class="col">@Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].SiteName, htmlAttributes: new { @placeholder = "Socail Site? Fetlife" })</div>
                 </div>
-                <div class="col-md-2">
-                    @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].SiteName, htmlAttributes: new { @placeholder = "Socail Site? Fetlife" })
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].Link, htmlAttributes: new { @placeholder = "www.site.com/username" })
+                <div class="row">
+                    <div class="col">@Html.Label("Link")</div>
+                    <div class="col"> @Html.TextBoxFor(m => Model.SocialSites[@SocailNumber].Link, htmlAttributes: new { @placeholder = "www.site.com/username" })</div>
                 </div>
             </div>
             <br />
@@ -106,24 +108,39 @@
 
         <div name="STIOutline" id="STIOutline" style="display:none;">
             <div name="STIForm" id="STIForm">
-                <div class="col-md-2">
-                    @Html.Label("STI's Resultes", htmlAttributes: new { @class = "control-label" })
+                <div class="row">
+                    <div class="col-sm-1">@Html.Label("STI")</div>
+                    <div class="col-md-2">@Html.TextBoxFor(m => Model.STIResults[@STINumber].STI, htmlAttributes: new { @placeholder = "STI Name" })</div>
                 </div>
-                <div class="col-md-2">
-                    @Html.TextBoxFor(m => Model.STIResults[@STINumber].STI, htmlAttributes: new { @placeholder = "STI Name" })
-                </div>
-                <div class="col-md-2">
-                    @Html.TextBoxFor(m => Model.STIResults[@STINumber].Result, htmlAttributes: new { @placeholder = "Positve or Negtive or ?????" })
-                </div>
-                <div class="col-md-2">
 
+                <div class="row">
+                    <div class="col">@Html.Label("Results")</div>
+                    <div class="col"> @Html.TextBoxFor(m => Model.STIResults[@STINumber].Result, htmlAttributes: new { @placeholder = "Positve or Negtive or ?????" })</div>
+                </div>
+
+                <div class="row">
+                    <div class="col">@Html.Label("Results Date")</div>
+                    <div class="col">
                     <div class='input-group date' id='datetimepicker1'>
-                        @Html.TextBoxFor(m => Model.STIResults[@STINumber].ResultsDate, htmlAttributes: new { })
-                        <span class="input-group-addon">
+                        @Html.TextBoxFor(m => Model.STIResults[@STINumber].ResultsDate, htmlAttributes: new { @placeholder = "Test Dates" })
+                            <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                            </span>
 
-                    </div>
+                            </div></div>
+                </div>
+
+
+
+                <div class="col-md-2">
+                    
+                </div>
+                <div class="col-md-2">
+                   
+                </div>
+                <div class="col-md-2">
+
+                    
                 </div>
             </div>
         </div>
@@ -161,9 +178,9 @@
     });
 
 
-    $("#addsocail").click(function () {
+    $("#addsocial").click(function () {
 
-        addSocail();
+        addSocial();
     });
 
     $("#addSTI").click(function () {
@@ -184,17 +201,24 @@
     //});
 
 
-    function addSocail() {
+    function addSocial() {
 
         var formoutline = "";
+        console.log("here I am");
+
+      
 
         if (SocailNumber > 0) {
             formoutline = "<hr>";
+
+        }
+        else {
+            $('#SocailArea').show();
         }
 
         formoutline += $('#SocalOutline').html();
         formoutline = formoutline.replace(/\[0]/g, "[" + SocailNumber + "]")
-            .replace(/\SocalForm/g, "SocalForm_" + SocailNumber)
+            .replace(/\SocalForm/g, "SocalForm_" + SocailNumber);
         //.replace("remove", "remove_" + NumberOfEntries)
 
         $(formoutline).appendTo("#SocailArea");
@@ -209,6 +233,9 @@
 
         if (STINumber > 0) {
             formoutline = "<hr>";
+        }
+        else {
+            $('#STIArea').show();
         }
 
         formoutline += $('#STIOutline').html();

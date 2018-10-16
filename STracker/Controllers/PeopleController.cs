@@ -34,7 +34,48 @@ namespace STracker.Controllers
             {
                 return HttpNotFound();
             }
-            return View(person);
+
+            Models.PeopleDetailMode tempperson = new Models.PeopleDetailMode();
+
+            //tempperson.ID = person.ID;
+            tempperson.Name = person.Name;
+            tempperson.Notes = person.Notes;
+            tempperson.SocialSites = person.SocalSites.ToList();
+            tempperson.STIResults = person.STIREsults.ToList();
+            tempperson.WhereDidYouMeetThem = person.WhereDidYouMeetThem;
+            
+
+            var FromThem = db.EventDetails.Where(m => m.Person.ID == person.ID)
+                                    .GroupBy(m => m.EventAction)
+                                    .Select(n => new { Act = n.Key.Name, TimeDone = n.Count()}).ToList();
+
+            foreach (var item in FromThem)
+            {
+                Models.ThingsDoneModel tempFromThem = new Models.ThingsDoneModel();
+
+                tempFromThem.Act = item.Act;
+                tempFromThem.TimeDone = item.TimeDone;
+
+                tempperson.WasDone.Add(tempFromThem);
+            }
+
+
+            var ToThem = db.EventDetails.Where(m => m.Person1.ID == person.ID)
+                                    .GroupBy(m => m.EventAction)
+                                    .Select(n => new { Act = n.Key.Name, TimeDone = n.Count() }).ToList();
+
+            foreach (var item in ToThem)
+            {
+                Models.ThingsDoneModel tempFromThem = new Models.ThingsDoneModel();
+
+                tempFromThem.Act = item.Act;
+                tempFromThem.TimeDone = item.TimeDone;
+
+                tempperson.TheyDid.Add(tempFromThem);
+            }
+
+
+            return View(tempperson);
         }
 
         // GET: People/Create
@@ -51,7 +92,7 @@ namespace STracker.Controllers
         public ActionResult Create(Person person)
         {
             if (ModelState.IsValid)
-            {
+           {
                 Person tempperson = new Person();
                 tempperson.Name = person.Name;
                 tempperson.Notes = person.Notes;
@@ -65,11 +106,13 @@ namespace STracker.Controllers
                     tempperson.SocalSites.Add(item);
                 }
 
-                foreach (STIREsult item in person.STIREsults)
+                if (person.STIREsults.First().Person != null)
                 {
-                    tempperson.STIREsults.Add(item);
+                    foreach (STIREsult item in person.STIREsults)
+                    {
+                        tempperson.STIREsults.Add(item);
+                    }
                 }
-
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
