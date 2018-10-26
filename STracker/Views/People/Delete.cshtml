@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string buttontext = Model.Deleted == true ? "Enable" : "Remove";
+
 }
+
+
 
 <h2>Delete</h2>
 
@@ -26,7 +31,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-.EventAction. no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value=@buttontext class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

@@ -457,6 +457,7 @@
     <Content Include="Views\SocalSites\Details.cshtml" />
     <Content Include="Views\SocalSites\Edit.cshtml" />
     <Content Include="Views\SocalSites\Index.cshtml" />
+    <Content Include="Views\People\PopUpSocialSite.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

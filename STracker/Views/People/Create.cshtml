@@ -88,7 +88,7 @@
 
             </div>
         </div>
-        
+
 
 
         <div name="SocalOutline" id="SocalOutline" style="display:none;">
@@ -121,26 +121,27 @@
                 <div class="row">
                     <div class="col">@Html.Label("Results Date")</div>
                     <div class="col">
-                    <div class='input-group date' id='datetimepicker1'>
-                        @Html.TextBoxFor(m => Model.STIResults[@STINumber].ResultsDate, htmlAttributes: new { @placeholder = "Test Dates" })
+                        <div class='input-group date' id='datetimepicker1'>
+                            @Html.TextBoxFor(m => Model.STIResults[@STINumber].ResultsDate, htmlAttributes: new { @placeholder = "Test Dates" })
                             <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="glyphicon glyphicon-calendar"></span>
                             </span>
 
-                            </div></div>
+                        </div>
+                    </div>
                 </div>
 
 
 
                 <div class="col-md-2">
-                    
-                </div>
-                <div class="col-md-2">
-                   
+
                 </div>
                 <div class="col-md-2">
 
-                    
+                </div>
+                <div class="col-md-2">
+
+
                 </div>
             </div>
         </div>
@@ -153,16 +154,17 @@
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
-        </div>
+    </div>
 
 }
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
 
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
@@ -206,7 +208,7 @@
         var formoutline = "";
         console.log("here I am");
 
-      
+
 
         if (SocailNumber > 0) {
             formoutline = "<hr>";

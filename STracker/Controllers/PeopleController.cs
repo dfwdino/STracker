@@ -37,7 +37,7 @@ namespace STracker.Controllers
 
             Models.PeopleDetailMode tempperson = new Models.PeopleDetailMode();
 
-            //tempperson.ID = person.ID;
+            tempperson.ID = person.ID;
             tempperson.Name = person.Name;
             tempperson.Notes = person.Notes;
             tempperson.SocialSites = person.SocalSites.ToList();
@@ -132,7 +132,27 @@ namespace STracker.Controllers
             {
                 return HttpNotFound();
             }
+
+            var ss = db.SocalSites.Where(m => m.PersonID == id).ToList();
+
             return View(person);
+        }
+
+        public PartialViewResult PopUpSocialSite()
+        {
+            
+            return PartialView(new SocalSite());
+        }
+
+
+        [HttpPost]
+        public ActionResult PopUpSocialSite(SocalSite socalSite)
+        {
+           
+            db.SocalSites.Add(socalSite);
+            db.SaveChanges();
+           
+            return View();
         }
 
         // POST: People/Edit/5
@@ -172,8 +192,8 @@ namespace STracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Person person = db.People.Find(id);
-            person.Deleted = false;
-            db.People.Remove(person);
+            person.Deleted = !person.Deleted;
+            //db.People.Remove(person);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

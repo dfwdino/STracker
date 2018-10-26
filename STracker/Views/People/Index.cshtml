@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string DeleteEnable;
 }
 
 <h2>Index</h2>
@@ -19,6 +20,11 @@
     </tr>
 
 @foreach (var item in Model) {
+
+    {
+        DeleteEnable = item.Deleted == true ? "Enable" : "Disable";
+    }
+
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -26,7 +32,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink(DeleteEnable, "Delete", new { id=item.ID })
         </td>
     </tr>
 }

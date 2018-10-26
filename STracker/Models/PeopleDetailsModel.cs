@@ -14,7 +14,10 @@ namespace STracker.Models
             WasDone = new List<ThingsDoneModel>();
         }
 
+        public int ID { get; set; }
+
         public string Name { get; set; }
+
         public string Notes { get; set; }
 
         [DisplayName("Where did you Meet Them")]

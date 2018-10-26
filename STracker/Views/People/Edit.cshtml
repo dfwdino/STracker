@@ -10,12 +10,13 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>Person</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ID)
+    
 
     <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -42,12 +43,15 @@
     </div>
 
     <h2>Socal Sites</h2>
+    <a id="addss" href="#Socal" rel="modal:open">Add Socal Site</a>
+
     @foreach (var item in Model.SocalSites)
     {
         <div>@item.SiteName - @item.Link</div>
     }
 
     <h2>STI Results</h2>
+    <a href="#STI" rel="modal:open">Add STI Report</a>
     @foreach (var item in Model.STIREsults)
     {
         <div>@item.STI - @item.Result - @item.ResultsDate</div>
@@ -61,6 +65,58 @@
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<!-- Modal HTML embedded directly into document -->
+    <div id="Socal" class=".ui-dialog .ui-dialog-titlebar-close">
+            @Html.Partial("~/Views/people/PopUpSocialSite.cshtml", new SocalSite() { PersonID = Model.ID })
+            <a href="#" rel="modal:close">Close</a>
+        </div>
+        <div id="STI" class="modal">
+            @Html.Partial("~/Views/STIREsults/Create.cshtml", new STIREsult() { PersonID = Model.ID })
+            <a href="#" rel="modal:close">Close</a>
+        </div>
+
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+
+        <script>
+    $(document).ready(function() {
+        $("#addss").click(function(event) {
+
+            $("#Socal").dialog({
+                //width: 200,
+                auto:true,
+                //resizable: true,
+                //draggable: true,
+                title: "New Socail Site",
+                model: true,
+                cache: false,
+                closeText: 'X',
+                //closeOnEscape: true,
+                open: function (event, ui) {
+                    $(this).parent().appendTo($("form:first"));
+                    //Load the Partial View Here using Controller and Action
+                    $("#Socal").load('@Url.Action("PopUpSocialSite", "people")');
+                },
+                close: function() {
+                     //LoadInfo();
+                }
+            });
+        });
+        });
+        </script>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+                integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+                crossorigin="anonymous"></script>
+
+
