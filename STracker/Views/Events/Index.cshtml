@@ -10,96 +10,109 @@
         </div>
     </div>
     <br />
-
-    @foreach (var item in Model)
-    {
-    <div class="entry">
-
-        <div class="row">
-            <div class="col-lg-12"><h2>@Html.Label("Date:") @item.EventDate.ToShortDateString()</h2></div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
-        </div>
-        
-
-        <div style="margin-top:15px;"></div>
-        <div class="row">
-            <div class="col-md-2">@Html.Label("Orgams had:") @item.OrgamNumber</div>
-            <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
-        </div>
-
-        <h3>Actions</h3>
-        <div style="" class="acts">
-            <div style="padding-top:10px;padding-left:5px;">
-                @foreach (var acts in item.EventActs)
-            {
-                <div class="row" style="margin-left:5px;">
-                    <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
-                </div>
-
-        }
-            </div>
-        </div>
-
-
-        <h3>Sex</h3>
-        <div class="sexp" style="">
-            @if (item.Fucks.Where(m => m.BottonPerson != null).Count() > 0)
+    <div class="container">
+        @foreach (var item in Model)
         {
-            <div style="margin-top:10px;margin-left:5px;">
-                @foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
-            {
-                <div class="row" style="margin-left:5px;">
-                    <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
-                    <div> Condom used @acts.CondomUsed </div>
+           <div class="entry" style="z-index:0">
+
+                <div class="row">
+                    <div class="col-lg-12"><h3>@Html.Label("Date:") @Html.ActionLink(@item.EventDate.ToLongDateString(), "Edit", new { id = item.ID })</h3></div>
                 </div>
 
-                
-        }
+                <div style="margin-top:15px;"></div>
+                <div class="row">
+                    <div class="col-md-2">@Html.Label("Orgams had:") @item.OrgamNumber</div>
+                    <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
+                </div>
+
+                <h3>Actions</h3>
+                <div style="" class="acts">
+                    <div style="padding-top:10px;padding-left:5px;">
+                        @foreach (var acts in item.EventActs)
+                        {
+                            <div class="row" style="margin-left:5px;">
+                                <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+
+                <h3>Sex</h3>
+                <div class="sexp" style="">
+                    @if (item.Fucks.Where(m => m.BottonPerson != null).Count() > 0)
+                    {
+                        <div style="margin-top:10px;margin-left:5px;">
+                            @foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
+                            {
+                            <div class="row" style="margin-left:5px;">
+                                <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
+                                @if (@acts.CondomUsed)
+                                {
+                                    <div>Condom was used </div>
+                                }
+                                else
+                                {
+                                    <div>Condom was NOT used </div>
+                                }
+                            </div>
+
+
+                            }
+                        </div>
+
+                    }
+                    else
+                    {<div class="row" style="margin-left:5px;margin-top:10px">
+                            <div class="col-12">NONE.</div>
+                        </div>
+                        <span></span>
+                    }
+                </div>
+
+                <h3>Location</h3>
+                <div class="location" style="">
+                    @if (item.Locations != null)
+                    {<div style="margin-top:10px;margin-left:5px;">
+
+                            <div class="row" style="margin-left:5px;">
+                                <div class="col-12">@item.Locations</div>
+                            </div>
+
+                        </div> }
+                    else
+                    {<div class="row" style="margin-left:5px;margin-top:10px">
+                            <div class="col-12">NONE.</div>
+                        </div>
+                        <span></span>
+                    }
+                </div>
+
+
+                <br />
+                <div class="row">
+                    <div class="col-md-1">@Html.Label("Notes:")</div>
+                </div>
+                <div class="col-12" style="padding-bottom:15px;margin-left:10px">@item.Notes</div>
             </div>
-            
-    }
-    else
-    {<div class="row" style="margin-left:5px;margin-top:10px">
-            <div class="col-12">NONE.</div>
-        </div>
-        <span></span>
-}
-        </div>
 
-        <h3>Location</h3>
-        <div class="location" style="">
-            @if (item.Locations != null)
-        {<div style="margin-top:10px;margin-left:5px;">
-
-                <div class="row" style="margin-left:5px;">
-                    <div class="col-12">@item.Locations</div>
-                </div>
-
-            </div> }
-    else
-    {<div class="row" style="margin-left:5px;margin-top:10px">
-            <div class="col-12">NONE.</div>
-        </div>
-        <span></span>
-}
-        </div>
-
-
-        <br />
-        <div class="row">
-            <div class="col-md-1">@Html.Label("Notes:")</div>
-        </div>
-        <div class="col-12" style="padding-bottom:15px;margin-left:10px">@item.Notes</div>
+        }
     </div>
-    }
-</div>
+    </div>
 
 <style>
+
+    .container .entry:nth-child(odd) {
+        background-color: white;
+    }
+    .container .entry:nth-child(even) {
+        background-color: #e1e1e1;
+    }
+
     .entry {
         border-bottom: solid;
-        border-bottom-color: blue;
+        border-bottom-color: red;
         margin-bottom: 25px;
     }
 

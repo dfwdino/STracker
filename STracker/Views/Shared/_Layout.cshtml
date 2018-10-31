@@ -12,9 +12,9 @@
     <nav class="navbar navbar-inverse">
         @if (HttpContext.Current.Request.Cookies["Stacking"]?.HasKeys == true)
         {
-        <div class="container-fluid">
-            <a href=@Url.Action("List", "Index") class="navbar-brand">New Events</a>
-            <a href=@Url.Action("Create", "Events") class="navbar-brand">New Events</a>
+        <div class="container-fluid">su reboot
+            <a href=@Url.Action("Index", "Events") class="navbar-brand">Home</a>
+            <a href=@Url.Action("Create", "Events") class="navbar-brand">New Event</a>
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
