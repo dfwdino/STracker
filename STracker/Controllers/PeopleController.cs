@@ -138,10 +138,10 @@ namespace STracker.Controllers
             return View(person);
         }
 
-        public PartialViewResult PopUpSocialSite()
+        public PartialViewResult PopUpSocialSite(int PersonID)
         {
             
-            return PartialView(new SocalSite());
+            return PartialView(new SocalSite() {PersonID = PersonID });
         }
 
 
