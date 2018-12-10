@@ -16,7 +16,7 @@ namespace STracker.Controllers
         // GET: Positions
         public ActionResult Index()
         {
-            return View(db.Positions.OrderBy(m => m.Type).ToList());
+            return View(db.Positions.Where(m => m.Deleted != true).OrderBy(m => m.Type).ToList());
         }
 
         // GET: Positions/Details/5
@@ -110,7 +110,7 @@ namespace STracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Position position = db.Positions.Find(id);
-            position.Deleted = false;
+            position.Deleted = true;
             //db.Positions.Remove(position);
             db.SaveChanges();
             return RedirectToAction("Index");
