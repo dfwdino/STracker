@@ -19,7 +19,7 @@ namespace STracker.Controllers
         // GET: EventActions
         public ActionResult Index()
         {
-            return View(db.EventActions.OrderBy(m => m.Name).ToList());
+            return View(db.EventActions.Where(m => m.Deleted == false).OrderBy(m => m.Name).ToList());
         }
 
         // GET: EventActions/Details/5
@@ -113,8 +113,8 @@ namespace STracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             EventAction action = db.EventActions.Find(id);
-            action.Deleted = false;
-            db.EventActions.Remove(action);
+            action.Deleted = true;
+            //db.EventActions.Remove(action);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

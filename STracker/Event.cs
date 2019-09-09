@@ -31,6 +31,8 @@ namespace STracker
         public int OrgamNumber { get; set; }
         public bool Deleted { get; set; }
         public Nullable<int> OwnerID { get; set; }
+        public Nullable<int> LoadSize { get; set; }
+        public Nullable<bool> Squirt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventDetail> EventDetails { get; set; }
@@ -41,5 +43,8 @@ namespace STracker
         public virtual Login Login { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fucking> Fuckings { get; set; }
+        public virtual Event Event1 { get; set; }
+        public virtual Event Event2 { get; set; }
+        public virtual LoadSize LoadSize1 { get; set; }
     }
 }

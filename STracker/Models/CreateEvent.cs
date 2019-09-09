@@ -23,6 +23,10 @@ namespace STracker.Models
 
         public int OrgamNumber { get; set; }
 
+        public int LoadSize { get; set; }
+
+        public bool Squirt { get; set; }
+
         public IList<CreateEventDetail> EventDetails { get; set; }
         
         public IList<SelectListItem> ListToWho { get; set; }
@@ -30,6 +34,7 @@ namespace STracker.Models
         public IList<CreateFuckingList> Fucks { get; set; }
         
         public IList<LocationsCreate> Locations { get; set; }
+
 
     }
 }

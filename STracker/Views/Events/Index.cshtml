@@ -1,6 +1,8 @@
 ﻿@model List<STracker.Models.EventList>
-@{
+@using System.Globalization;
 
+@{
+    TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
 }
 <div class="index">
 
@@ -23,6 +25,8 @@
                 <div class="row">
                     <div class="col-md-2">@Html.Label("Orgams had:") @item.OrgamNumber</div>
                     <div class="col-md-3">@Html.Label("Over All Rating:") @item.OverAllRating</div>
+                    <div class="col-md-3">@Html.Label("Load Size:") @item.LoadSize</div>
+                    <div class="col-md-3">@Html.Label("Squirt:") @item.Squirt</div>
                 </div>
 
                 <h3>Actions</h3>
@@ -31,7 +35,7 @@
                         @foreach (var acts in item.EventActs)
                         {
                             <div class="row" style="margin-left:5px;">
-                                <div class="col-12">@Html.Label(acts.Who) - @acts.DidWhat - @Html.Label(acts.ToWho)</div>
+                                <div class="col-12">@Html.Label(acts.Who) - @ti.ToTitleCase(acts.DidWhat) - @Html.Label(acts.ToWho)</div>
                             </div>
 
                         }
@@ -46,22 +50,31 @@
                         <div style="margin-top:10px;margin-left:5px;">
                             @foreach (var acts in item.Fucks.Where(m => m.BottonPerson != null))
                             {
-                            <div class="row" style="margin-left:5px;">
-                                <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
-                                @if (@acts.CondomUsed)
-                                {
-                                    <div>Condom was used </div>
-                                }
-                                else
-                                {
-                                    <div>Condom was NOT used </div>
-                                }
-                            </div>
+                                <div class="row" style="margin-left:5px;">
+                                    <div class="col-12">@Html.Label(acts.TopPerson) - @acts.Poistion - @Html.Label(acts.BottonPerson)</div>
+                                    @if (@acts.CondomUsed)
+                                    {
+                                        <div>Condom was used </div>
+                                    }
+                                    else
+                                    {
+                                        <div>Condom was NOT used </div>
+                                    }
+                                </div>
 
 
                             }
                         </div>
-
+                        <div>
+                            @if (Convert.ToBoolean(item.Squirt))
+                            {
+                                <div>She Squirted </div>
+                            }
+                            else
+                            {
+                                <div>She did not Squirt</div>
+                            }
+                        </div>
                     }
                     else
                     {<div class="row" style="margin-left:5px;margin-top:10px">

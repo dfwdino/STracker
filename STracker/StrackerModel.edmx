@@ -39,6 +39,8 @@
           <Property Name="OrgamNumber" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="OwnerID" Type="int" />
+          <Property Name="LoadSize" Type="int" />
+          <Property Name="Squirt" Type="bit" />
         </EntityType>
         <EntityType Name="EventActions">
           <Key>
@@ -142,6 +144,13 @@
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="LoadSizes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Positions">
           <Key>
             <PropertyRef Name="ID" />
@@ -210,6 +219,30 @@
             </Principal>
             <Dependent Role="AnsweredQuestions">
               <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Event1" Type="Self.Event" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_LoadSizes">
+          <End Role="LoadSizes" Type="Self.LoadSizes" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoadSizes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="LoadSize" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -419,6 +452,7 @@
           <EntitySet Name="Fucking" EntityType="Self.Fucking" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Holes" EntityType="Self.Holes" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="HoleUsed" EntityType="Self.HoleUsed" Schema="Sexual" store:Type="Tables" />
+          <EntitySet Name="LoadSizes" EntityType="Self.LoadSizes" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="Sexual" store:Type="Tables" />
           <EntitySet Name="Logging" EntityType="Self.Logging" Schema="Stracker" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="Stracker" store:Type="Tables" />
@@ -433,6 +467,14 @@
           <AssociationSet Name="FK_AnsweredQuestions_People" Association="Self.FK_AnsweredQuestions_People">
             <End Role="People" EntitySet="People" />
             <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Event" Association="Self.FK_Event_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Event1" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_LoadSizes" Association="Self.FK_Event_LoadSizes">
+            <End Role="LoadSizes" EntitySet="LoadSizes" />
+            <End Role="Event" EntitySet="Event" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Login" Association="Self.FK_Event_Login">
             <End Role="Login" EntitySet="Login" />
@@ -596,6 +638,15 @@
             <End Role="Position" EntitySet="Positions" />
             <End Role="Fucking" EntitySet="Fuckings" />
           </AssociationSet>
+          <EntitySet Name="LoadSizes" EntityType="STrackerModel.LoadSize" />
+          <AssociationSet Name="FK_Event_Event" Association="STrackerModel.FK_Event_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event1" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_LoadSizes" Association="STrackerModel.FK_Event_LoadSizes">
+            <End Role="LoadSize" EntitySet="LoadSizes" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -614,6 +665,11 @@
           <NavigationProperty Name="EventLocations" Relationship="STrackerModel.FK_EventLocations_Event" FromRole="Event" ToRole="EventLocation" />
           <NavigationProperty Name="Login" Relationship="STrackerModel.FK_Event_Login" FromRole="Event" ToRole="Login" />
           <NavigationProperty Name="Fuckings" Relationship="STrackerModel.FK_Fucking_Event" FromRole="Event" ToRole="Fucking" />
+          <Property Name="LoadSize" Type="Int32" />
+          <Property Name="Squirt" Type="Boolean" />
+          <NavigationProperty Name="Event1" Relationship="STrackerModel.FK_Event_Event" FromRole="Event" ToRole="Event1" />
+          <NavigationProperty Name="Event2" Relationship="STrackerModel.FK_Event_Event" FromRole="Event1" ToRole="Event" />
+          <NavigationProperty Name="LoadSize1" Relationship="STrackerModel.FK_Event_LoadSizes" FromRole="Event" ToRole="LoadSize" />
         </EntityType>
         <EntityType Name="EventAction">
           <Key>
@@ -1035,6 +1091,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LoadSize">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Events" Relationship="STrackerModel.FK_Event_LoadSizes" FromRole="LoadSize" ToRole="Event" />
+          <Property Name="Amount" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Event_Event">
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="STrackerModel.Event" Role="Event1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_LoadSizes">
+          <End Type="STrackerModel.LoadSize" Role="LoadSize" Multiplicity="0..1" />
+          <End Type="STrackerModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoadSize">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="LoadSize" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1044,6 +1132,8 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="STrackerModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Squirt" ColumnName="Squirt" />
+                <ScalarProperty Name="LoadSize" ColumnName="LoadSize" />
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="OrgamNumber" ColumnName="OrgamNumber" />
@@ -1225,6 +1315,14 @@
                 <ScalarProperty Name="TopPerson" ColumnName="TopPerson" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="PoistionID" ColumnName="PoistionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoadSizes">
+            <EntityTypeMapping TypeName="STrackerModel.LoadSize">
+              <MappingFragment StoreEntitySet="LoadSizes">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

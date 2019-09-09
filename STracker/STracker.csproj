@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -308,6 +309,9 @@
     <Compile Include="Infrastructure\Access.cs" />
     <Compile Include="Infrastructure\MyEntitiesDbContext.cs" />
     <Compile Include="Infrastructure\PageLogging.cs" />
+    <Compile Include="LoadSize.cs">
+      <DependentUpon>StrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Location.cs">
       <DependentUpon>StrackerModel.tt</DependentUpon>
     </Compile>

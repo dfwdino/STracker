@@ -17,6 +17,10 @@ namespace STracker.Models
 
         public int? OrgamNumber { get; set; }
 
+        public int? LoadSize { get; set; }
+
+        public bool? Squirt { get; set; }
+
         public List<EventListDetails> EventActs { get; set; }
 
         public List<FuckingList> Fucks { get; set; }

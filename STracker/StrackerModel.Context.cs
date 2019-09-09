@@ -41,5 +41,6 @@ namespace STracker
         public virtual DbSet<Logging> Loggings { get; set; }
         public virtual DbSet<Login> Logins { get; set; }
         public virtual DbSet<Fucking> Fuckings { get; set; }
+        public virtual DbSet<LoadSize> LoadSizes { get; set; }
     }
 }

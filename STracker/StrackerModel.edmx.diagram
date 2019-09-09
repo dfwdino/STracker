@@ -40,6 +40,9 @@
         <AssociationConnector Association="STrackerModel.FK_Fucking_BottomPerson" />
         <AssociationConnector Association="STrackerModel.FK_TopPerson" />
         <AssociationConnector Association="STrackerModel.FK_Fucking_Positions" />
+        <EntityTypeShape EntityType="STrackerModel.LoadSize" Width="1.5" PointX="5.375" PointY="0.875" />
+        <AssociationConnector Association="STrackerModel.FK_Event_Event" />
+        <AssociationConnector Association="STrackerModel.FK_Event_LoadSizes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

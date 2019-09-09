@@ -22,6 +22,8 @@ namespace STracker.Controllers
 
             DateTime dt = DateTime.Now.AddMonths(-1);
             int currentid = Convert.ToInt16(Request.Cookies["Stacking"]["ID"]);
+            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+
             foreach (var stevent in db.Events.Where(m => m.Date >= dt && m.Deleted == false && m.OwnerID == currentid).OrderByDescending(m => m.ID))
             {
                 Models.EventList el = new Models.EventList();
@@ -39,11 +41,13 @@ namespace STracker.Controllers
                 el.Notes = stevent.Notes;
                 el.OrgamNumber = stevent.OrgamNumber;
                 el.OverAllRating = stevent.OverAllRating;
+                el.LoadSize = stevent.LoadSize;
+                el.Squirt = stevent.Squirt;
 
                 foreach (var item in stevent.EventDetails.Where(m => m.Deleted == false))
                 {
                     if (item.Person1.Name.Equals(eld.Who) && item.Person.Name.Equals(eld.ToWho)) {
-                        eld.DidWhat += eld.DidWhat.Length.Equals(0) ? item.EventAction.Name : ", " + item.EventAction.Name;
+                        eld.DidWhat += eld.DidWhat.Length.Equals(0) ? ti.ToTitleCase(item.EventAction.Name) : ", " + ti.ToTitleCase(item.EventAction.Name);
                     }
                     else
                     {
@@ -54,7 +58,7 @@ namespace STracker.Controllers
                         eld = new Models.EventListDetails();
                         eld.Who = item.Person1.Name;
                         eld.ToWho = item.Person.Name;
-                        eld.DidWhat = item.EventAction.Name;
+                        eld.DidWhat = ti.ToTitleCase(item.EventAction.Name);
                     }
                     
                 }
@@ -63,7 +67,7 @@ namespace STracker.Controllers
                 {
                     if (item.Person1.Name.Equals(fl.TopPerson) && item.Person.Name.Equals(fl.BottonPerson))
                     {
-                        fl.Poistion += fl.Poistion == null ? item.Position.Type : ", " + item.Position.Type;
+                        fl.Poistion += fl.Poistion == null ? ti.ToTitleCase(item.Position.Type) : ", " + ti.ToTitleCase(item.Position.Type);
                     }
                     else
                     {
@@ -84,11 +88,11 @@ namespace STracker.Controllers
                 {
                     if(el.Locations == null)
                     {
-                        el.Locations = item.Location.Name;
+                        el.Locations = ti.ToTitleCase(item.Location.Name);
                     }
                     else
                     {
-                        el.Locations += ", " + item.Location.Name;
+                        el.Locations += ", " + ti.ToTitleCase(item.Location.Name);
                     }
                 }
 
@@ -111,6 +115,7 @@ namespace STracker.Controllers
             ViewBag.EventAction = db.EventActions.OrderBy(m => m.Name).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
             ViewBag.Positions = db.Positions.OrderBy(m => m.Type).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
             ViewBag.Locations = db.Locations.OrderBy(m => m.Name).Where(m => m.Deleted == false && (m.OwnerID == currentuserid || m.OwnerID == null)).ToList();
+            ViewBag.LoadSize = db.LoadSizes.OrderBy(m => m.Amount).OrderBy(m => m.ID).ToList();
             ViewBag.OneToTen = Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             //ViewBag.Holes = db.Holes.OrderBy(m => m.Area).ToList();
 
@@ -159,6 +164,8 @@ namespace STracker.Controllers
                     stEvent.Notes = ce.Notes;
                     stEvent.OrgamNumber = ce.OrgamNumber;
                     stEvent.OverAllRating = ce.OverAllRating;
+                    stEvent.LoadSize = ce.LoadSize;
+                    stEvent.Squirt = ce.Squirt;
                     stEvent.OwnerID = OwnerID;
 
 
